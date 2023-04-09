@@ -10,9 +10,8 @@ import { UserPageComponent } from './pages/user-page/user-page.component';
 import { PostDashboardTableItemComponent } from './components/post-dashboard-table-item/post-dashboard-table-item.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { AuthenticationPageComponent } from './pages/authentication-page/authentication-page.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LogoutComponent } from './components/logout/logout.component';
 import { SearchComponent } from './components/search/search.component';
@@ -31,7 +30,6 @@ import { UserPostsComponent } from './pages/user-posts/user-posts.component';
     PostDashboardTableItemComponent,
     NavbarComponent,
     SidebarComponent,
-    AuthenticationPageComponent,
     LoginComponent,
     RegisterComponent,
     LogoutComponent,

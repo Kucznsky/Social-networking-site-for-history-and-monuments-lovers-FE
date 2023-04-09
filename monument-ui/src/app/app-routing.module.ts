@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PostDashboardComponent } from './pages/post-dashboard/post-dashboard.component';
 import { CreatePostComponent } from './pages/create-post/create-post.component';
-import { AuthenticationPageComponent } from './pages/authentication-page/authentication-page.component';
 import { PostPageComponent } from './pages/post-page/post-page.component';
 import { SavedPostsComponent } from './pages/saved-posts/saved-posts.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { UserPostsComponent } from './pages/user-posts/user-posts.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
 { path: '', children:[
@@ -40,7 +39,7 @@ const routes: Routes = [
   //canActivate: some component checking if use is logged
   },
   {path: 'register', component: RegisterComponent
-  //canActivate: some component checking if use is logged
+    //canActivate: some component checking if use is logged
   },
 ] },
 
