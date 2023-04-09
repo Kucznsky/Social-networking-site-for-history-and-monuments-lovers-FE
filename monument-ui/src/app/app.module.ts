@@ -19,6 +19,7 @@ import { CommentsDashboardComponent } from './components/comments-dashboard/comm
 import { CommentComponent } from './components/comment/comment.component';
 import { SavedPostsComponent } from './pages/saved-posts/saved-posts.component';
 import { UserPostsComponent } from './pages/user-posts/user-posts.component';
+import { InteractiveMapComponent } from './components/interactive-map/interactive-map.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { UserPostsComponent } from './pages/user-posts/user-posts.component';
     CommentsDashboardComponent,
     CommentComponent,
     SavedPostsComponent,
-    UserPostsComponent
+    UserPostsComponent,
+    InteractiveMapComponent
   ],
   imports: [
     BrowserModule,
