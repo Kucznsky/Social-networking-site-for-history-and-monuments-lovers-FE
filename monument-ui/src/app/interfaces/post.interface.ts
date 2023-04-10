@@ -2,7 +2,7 @@ import { Category } from "../enums/post-category.enum"
 import { User } from "./user.interface"
 
 export interface Post {
-    id: string
+    id: string;
     title: string;
     category: Category;
     likes: number;

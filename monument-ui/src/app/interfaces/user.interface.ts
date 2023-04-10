@@ -1,8 +1,8 @@
 export interface User {
-    id: string
+    id: string;
     nickname: string;
-    dateOfJoin: Date;
-    favouritePosts: string[]
-    avatar: string
-    userDescription: string
+    dateOfJoin: string;
+    favouritePosts: string[];
+    avatar: string;
+    userDescription: string;
 }
