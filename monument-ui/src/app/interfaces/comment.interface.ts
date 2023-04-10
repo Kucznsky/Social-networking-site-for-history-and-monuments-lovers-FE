@@ -1,7 +1,7 @@
-import { User } from "./user.interface"
+import { UserResponse } from "./user.interface"
 
-export interface Post {
+export interface CommentResponse {
     id: string
     content: string;
-    author: User;
+    author: UserResponse;
 }
