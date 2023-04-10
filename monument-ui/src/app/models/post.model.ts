@@ -1,23 +1,32 @@
 import { Category } from "../enums/post-category.enum";
+import { PostResponse } from "../interfaces/post.interface";
 import { Localisation } from "./localisation.model";
 import { User } from "./user.model";
+import { Comment } from "./comment.model";
+export class PostToDisplay {
+    public id: string = '';
+    public title: string = '';
+    public category: Category = Category.Other;
+    public likes: number = 0;
+    public isLiked: boolean = false;
+    public comments: Comment[] = [];
+    public author: User = new User; 
+    public localisation: Localisation = new Localisation;
+    public thumbnail: string = '';
+    public modernImages: string[] = [];
+    public archivalImages: string[] = [];
+    public description: string = '';
 
-export class Posts {
-    id: string = '';
-    title: string = '';
-    category: Category = Category.Other;
-    likes: number = 0;
-    isLiked: boolean = false;
-    comments: Comment[] = [];
-    author: User = new User; 
-    localisation: Localisation = new Localisation;
-    thumbnail: string = '';
-    modernImages: string[] = [];
-    archivalImages: string[] = [];
-    description: string = '';
-
-    constructor(data: any){
-        Object.assign(this, data);
-        return;
+    constructor(data: PostResponse){
+        Object.keys(data).forEach((key) => {
+            if(key === 'comments') {
+                this[key] = data[key].map((comment) => new Comment(comment))
+            } else {
+                this[key] = data[key]
+            }
+        })
+        
+            
+        }
     }
 }
