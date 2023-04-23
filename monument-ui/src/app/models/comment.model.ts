@@ -1,11 +1,11 @@
-import { User } from "./user.model";
-import { CommentResponse } from "../interfaces/comment.interface";
+import { User } from './user.model';
+import { CommentResponse } from '../interfaces/comment.interface';
 
-export class Comment {
-    id: string = ''
-    content: string = '';
-    author: User = new User; 
-    constructor(data: CommentResponse){
-
-    }
+export class UserComment {
+  id: string = '';
+  content: string = '';
+  authorId: string = ''
+  constructor(commentResponseData: CommentResponse) {
+    Object.assign(this, commentResponseData);
+  }
 }

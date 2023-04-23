@@ -2,31 +2,24 @@ import { Category } from "../enums/post-category.enum";
 import { PostResponse } from "../interfaces/post.interface";
 import { Localisation } from "./localisation.model";
 import { User } from "./user.model";
-import { Comment } from "./comment.model";
+import { UserComment } from "./comment.model";
+import { PostPageComponent } from "../pages/post-page/post-page.component";
 export class PostToDisplay {
     public id: string = '';
     public title: string = '';
     public category: Category = Category.Other;
     public likes: number = 0;
     public isLiked: boolean = false;
-    public comments: Comment[] = [];
+    public usersCommentsId: string[] = [];
     public author: User = new User; 
-    public localisation: Localisation = new Localisation;
+    public localisation: Localisation = new Localisation();
     public thumbnail: string = '';
     public modernImages: string[] = [];
     public archivalImages: string[] = [];
     public description: string = '';
 
-    constructor(data: PostResponse){
-        Object.keys(data).forEach((key) => {
-            if(key === 'comments') {
-                this[key] = data[key].map((comment) => new Comment(comment))
-            } else {
-                this[key] = data[key]
-            }
-        })
-        
-            
-        }
+    constructor(postResponseData: PostResponse){
+        // Object.keys(postResponseData).forEach((key) =>{ if(key === 'userComments'){this.userComments = postResponseData[key].map((comment) => {new UserComment(comment)})} else if(key === 'author'){this.author = new User(postResponseData[key])} else if(key === 'localisation'){this.localisation = new Localisation(postResponseData[key])} else {this[key] = postResponseData[key]}})
+        Object.assign(this, postResponseData);
     }
 }

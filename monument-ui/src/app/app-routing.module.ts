@@ -10,43 +10,75 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
-{ path: '', children:[
-  { path: 'home', component: PostDashboardComponent, data: {
-    //permissions
-  } },
-  { path: 'user-page/:id', component: UserPageComponent, data: {
-    //permissions
-  } },
-  { path: 'user-posts/:id', component: UserPostsComponent, data: {
-    //permissions
-  } },
-  { path: 'create-post', component: CreatePostComponent, data: {
-    //permissions
-  }   //canActivate: some component checking if use is logged
+  {
+    path: '',
+    children: [
+      {
+        path: 'home',
+        component: PostDashboardComponent,
+        data: {
+          //permissions
+        },
+      },
+      {
+        path: 'user-page/:id',
+        component: UserPageComponent,
+        data: {
+          //permissions
+        },
+      },
+      {
+        path: 'user-posts/:id',
+        component: UserPostsComponent,
+        data: {
+          //permissions
+        },
+      },
+      {
+        path: 'create-post',
+        component: CreatePostComponent,
+        data: {
+          //permissions
+        }, //canActivate: some component checking if use is logged
+      },
+      {
+        path: 'post/:id',
+        component: PostPageComponent,
+        data: {
+          //permissions
+        },
+      },
+      {
+        path: 'saved-posts/:id',
+        component: SavedPostsComponent,
+        data: {
+          //permissions
+        },
+        //canActivate: some component checking if use is logged
+      },
+    ],
   },
-  { path: 'post/:id', component: PostPageComponent, data: {
-    //permissions
-  } },
-  { path: 'saved-posts/:id', component: SavedPostsComponent, data: {
-    //permissions
-  } 
-    //canActivate: some component checking if use is logged
+  {
+    path: 'auth',
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent,
+        //canActivate: some component checking if use is logged
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        //canActivate: some component checking if use is logged
+      },
+    ],
   },
-], 
-},
-{ path: 'auth', children: [
-  {path: 'login', component: LoginComponent
-  //canActivate: some component checking if use is logged
-  },
-  {path: 'register', component: RegisterComponent
-    //canActivate: some component checking if use is logged
-  },
-] },
 
-{ path: '**', redirectTo: 'home' },];
+  { path: '**', redirectTo: 'home' },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
