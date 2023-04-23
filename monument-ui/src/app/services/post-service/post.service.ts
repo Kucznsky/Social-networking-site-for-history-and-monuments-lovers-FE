@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { tap, Observable, Subject, BehaviorSubject, of } from 'rxjs';
-import { Post } from '../../interfaces/post.interface';
-import { PostMock } from 'src/app/mocks/post.mock';
+import { tap, Observable, BehaviorSubject, map } from 'rxjs';
+import { PostApiService } from './post.api.service';
+import { PostToDisplay } from 'src/app/models/post.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class postApiService {
-  private posts: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
+export class PostService {
+  private posts: BehaviorSubject<PostToDisplay[]> = new BehaviorSubject<PostToDisplay[]>([]);
 
   constructor(
-    private postApiService: postApiService,
-    private postMock: PostMock,
+    private postApiService: PostApiService,
   ) {}
 
-  getAllPosts(): void {
-    //this.postApiService.fetchAllPosts().subscribe((posts) => {this.posts.next(posts)})
-    this.posts.next(this.postMock.postsMock);
+  public getAllPosts(): Observable<PostToDisplay[]> {
+    // this.postApiService.fetchAllPosts().subscribe((posts) => {this.posts.next(posts)})
+    this.postApiService.fetchAllPosts().subscribe((posts) => {this.posts.next(posts.map((post) => new PostToDisplay(post)))})
+    return this.posts.asObservable()
   }
+
+
 }
