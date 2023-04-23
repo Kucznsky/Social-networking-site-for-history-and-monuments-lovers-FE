@@ -11,7 +11,7 @@ export const PostMock: PostResponse[] = [
     category: Category.PalacesAndVillas,
     likes: 10,
     isLiked: false,
-    userComments: [CommentMock],
+    usersCommentsId: ['qwertyuiop1234', 'qwertyuiop1235'],
     author: UserMock,
     location: LocalisationMock,
     thumbnail:

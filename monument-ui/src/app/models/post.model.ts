@@ -2,8 +2,7 @@ import { Category } from "../enums/post-category.enum";
 import { PostResponse } from "../interfaces/post.interface";
 import { Localisation } from "./localisation.model";
 import { User } from "./user.model";
-import { UserComment } from "./comment.model";
-import { PostPageComponent } from "../pages/post-page/post-page.component";
+
 export class PostToDisplay {
     public id: string = '';
     public title: string = '';

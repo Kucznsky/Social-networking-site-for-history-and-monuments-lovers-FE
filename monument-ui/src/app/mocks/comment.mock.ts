@@ -4,5 +4,5 @@ import { UserMock } from './user.mock';
 export const CommentMock: CommentResponse = {
   id: 'qwertyuiop1234',
   content: 'Ok',
-  author: UserMock,
+  authorId: 'abcd123',
 };
