@@ -1,0 +1,11 @@
+//colors
+$azure: #07c4e8;
+$light_blue: #03a9f4;
+$white: rgb(255,255,255);
+$light_gray: rgb(208,208,208);
+$grey: #989898;
+$dark_grey: #575757;
+
+@mixin linkStyle {
+    text-decoration: none;
+}
