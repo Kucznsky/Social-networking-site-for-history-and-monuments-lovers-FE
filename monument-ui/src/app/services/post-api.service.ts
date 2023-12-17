@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { PostResponse } from '../interfaces/post.interface';
 import { POST_URL } from '../consts/endpoint-url.const';
-import { UsersPost } from '../models/post.model';
 import { NewPost } from '../models/newPost.model';
 
 @Injectable({

@@ -4,16 +4,15 @@ import { LocalisationResponse } from './localisation.interface';
 import { UserResponse } from './user.interface';
 
 export interface PostResponse {
-  id: string;
+  _id: string;
   title: string;
   category: Category;
   likes: number;
-  isLiked: boolean;
   usersCommentsId: string[];
   author: UserResponse;
   location: LocalisationResponse;
   thumbnail: string;
   modernImages: string[];
   archivalImages: string[];
-  description: string;
+  content: string;
 }
