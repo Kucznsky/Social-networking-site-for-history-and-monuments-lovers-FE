@@ -12,13 +12,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     AppComponent,
     NavigationBarComponent,
     HomePageComponent,
-    SidebarComponent
+    SidebarComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
