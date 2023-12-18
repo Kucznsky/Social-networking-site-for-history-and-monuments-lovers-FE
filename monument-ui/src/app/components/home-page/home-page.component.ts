@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { UsersPost } from 'src/app/models/post.model';
 import { PostService } from 'src/app/services/post.service';
 
@@ -8,17 +9,26 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./home-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
   public posts: UsersPost[];
-  public blb = [1,2,3,4,5,,6,7,8,9,10]
+  private readonly unsubscriber: Subject<void> = new Subject();
 
-  constructor( public readonly postService: PostService){}
+  constructor( private readonly postService: PostService, private readonly changeDetectorRef: ChangeDetectorRef){}
 
-  ngOnInit() {
-    this.postService.getAllPosts().subscribe((posts) => {
-      console.log(posts)
-      this.posts = posts;
-      console.log(this.posts)
+  public ngOnInit() {
+    this.postService.getAllPosts()
+    this.observeListOfPosts()
+  }
+
+  public ngOnDestroy() {
+    this.unsubscriber.next();
+    this.unsubscriber.complete();
+  }
+
+  private observeListOfPosts(): void {
+    this.postService.getPostsObservable().pipe(takeUntil(this.unsubscriber)).subscribe((posts)=> {
+      this.posts = posts
+      this.changeDetectorRef.markForCheck()
     })
   }
 }

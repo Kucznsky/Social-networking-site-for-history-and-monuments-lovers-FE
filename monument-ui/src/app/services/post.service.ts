@@ -13,10 +13,13 @@ export class PostService {
 
   constructor(private postApiService: PostApiService) {}
 
-  public getAllPosts(): Observable<UsersPost[]> {
+  public getAllPosts(): void {
     this.postApiService.fetchAllPosts().subscribe((posts) => {
       this.posts.next(posts.map((post) => new UsersPost(post)));
     });
-    return this.posts.asObservable();
+  }
+
+  public getPostsObservable(): Observable<UsersPost[]> {
+    return this.posts.asObservable()
   }
 }
