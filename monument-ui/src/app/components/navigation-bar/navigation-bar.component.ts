@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./navigation-bar.component.scss'],
 })
 export class NavigationBarComponent {
-  constructor(private readonly router: Router){}
+  constructor(private readonly router: Router) {}
   public redirectToHomePage(): void {
-    this.router.navigateByUrl('/home')
+    this.router.navigateByUrl('/home');
   }
 }

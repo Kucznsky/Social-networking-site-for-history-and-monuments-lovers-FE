@@ -20,6 +20,6 @@ export class PostService {
   }
 
   public getPostsObservable(): Observable<UsersPost[]> {
-    return this.posts.asObservable()
+    return this.posts.asObservable();
   }
 }
