@@ -9,6 +9,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PostListItemComponent } from './components/post-list-item/post-list-item.component';
 import { FiltersComponent } from './components/filters/filters.component';
+import { PostPageComponent } from './components/post-page/post-page.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { FiltersComponent } from './components/filters/filters.component';
     SidebarComponent,
     PostListItemComponent,
     FiltersComponent,
+    PostPageComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],

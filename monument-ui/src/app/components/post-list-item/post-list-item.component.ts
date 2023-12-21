@@ -13,7 +13,10 @@ export class PostListItemComponent implements OnDestroy {
   @Input() post: UsersPost;
   private readonly unsubscriber: Subject<void> = new Subject();
 
-  constructor(private readonly likesApiService: LikesApiService, private readonly router: Router) {}
+  constructor(
+    private readonly likesApiService: LikesApiService,
+    private readonly router: Router,
+  ) {}
 
   public ngOnDestroy() {
     this.unsubscriber.next();
@@ -39,8 +42,8 @@ export class PostListItemComponent implements OnDestroy {
         });
     }
   }
-  
+
   public navigateToPostPage(postId: string): void {
-    this.router.navigateByUrl
+    this.router.navigateByUrl(`/post/${postId}`);
   }
 }
