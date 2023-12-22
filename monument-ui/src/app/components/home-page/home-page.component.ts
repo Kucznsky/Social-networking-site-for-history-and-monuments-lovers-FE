@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { UsersPost } from 'src/app/models/post.model';
+import { LikesService } from 'src/app/services/likes.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -16,17 +17,21 @@ import { PostService } from 'src/app/services/post.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  public posts: UsersPost[];
   private readonly unsubscriber: Subject<void> = new Subject();
+
+  public posts: UsersPost[];
 
   constructor(
     private readonly postService: PostService,
+    private readonly likesService: LikesService,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   public ngOnInit() {
     this.postService.getAllPosts();
     this.observeListOfPosts();
+    this.likesService.getUsersLikes('somePlaceholder');
+    this.observeUsersLikes();
   }
 
   public ngOnDestroy() {
@@ -41,6 +46,20 @@ export class HomePageComponent implements OnInit, OnDestroy {
       .subscribe((posts) => {
         this.posts = posts;
         this.changeDetectorRef.markForCheck();
+      });
+  }
+
+  private observeUsersLikes(): void {
+    this.likesService
+      .getUsersLikesObservable()
+      .pipe(takeUntil(this.unsubscriber))
+      .subscribe((likes) => {
+        this.posts.forEach((post) => {
+          if (likes.some((like) => like.postId === post._id)) {
+            post.isLiked = true;
+          }
+          this.changeDetectorRef.detectChanges();
+        });
       });
   }
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersPost } from 'src/app/models/post.model';
 import { LikesApiService } from 'src/app/services/likes-api.service';
+import { LikesService } from 'src/app/services/likes.service';
 
 @Component({
   selector: 'app-post-list-item',
@@ -14,7 +15,7 @@ export class PostListItemComponent implements OnDestroy {
   private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(
-    private readonly likesApiService: LikesApiService,
+    private readonly likesService: LikesService,
     private readonly router: Router,
   ) {}
 
@@ -25,16 +26,16 @@ export class PostListItemComponent implements OnDestroy {
 
   public addRemoveLike(isLiked: boolean): void {
     if (isLiked) {
-      this.likesApiService
-        .removeLike({ userId: 'userIdPlaceholder', postId: this.post._id })
+      this.likesService
+        .removeLike('userIdPlaceholder', this.post._id)
         .pipe(takeUntil(this.unsubscriber))
         .subscribe(() => {
           this.post.isLiked = !isLiked;
           this.post.numberOfLikes += 1;
         });
     } else {
-      this.likesApiService
-        .addNewLike({ userId: 'userIdPlaceholder', postId: this.post._id })
+      this.likesService
+        .addLike('userIdPlaceholder', this.post._id)
         .pipe(takeUntil(this.unsubscriber))
         .subscribe(() => {
           this.post.isLiked = !isLiked;
