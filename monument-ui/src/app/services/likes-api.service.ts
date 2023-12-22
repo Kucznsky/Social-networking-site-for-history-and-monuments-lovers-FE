@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LIKE_URL } from '../consts/endpoint-url.const';
 import { LikeRequestBody } from '../interfaces/like-request-body.interface';
+import { LikeResponseBody } from '../interfaces/like-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,5 +18,9 @@ export class LikesApiService {
   public removeLike(body: LikeRequestBody): Observable<void> {
     const options = { body: body };
     return this.http.post<void>(`${LIKE_URL}/remove`, options);
+  }
+
+  public fetchUserLikes(userId: string): Observable<LikeResponseBody[]> {
+    return this.http.get<LikeResponseBody[]>(`${LIKE_URL}/${userId}`);
   }
 }
