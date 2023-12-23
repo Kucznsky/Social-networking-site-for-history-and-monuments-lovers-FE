@@ -1,5 +1,5 @@
 import { User } from './user.model';
-import { CommentResponse } from '../interfaces/comment.interface';
+import { CommentResponse } from '../interfaces';
 
 export class UserComment {
   id: string = '';

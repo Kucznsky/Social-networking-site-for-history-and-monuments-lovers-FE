@@ -1,4 +1,4 @@
-import { LocalisationResponse } from '../interfaces/localisation.interface';
+import { LocalisationResponse } from '../interfaces';
 
 export class Localisation {
   latitude: string = '';

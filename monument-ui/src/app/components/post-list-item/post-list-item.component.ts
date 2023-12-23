@@ -1,8 +1,7 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { UsersPost } from 'src/app/models/post.model';
-import { LikesApiService } from 'src/app/services/likes-api.service';
+import { UsersPost } from 'src/app/models';
 import { LikesService } from 'src/app/services/likes.service';
 
 @Component({

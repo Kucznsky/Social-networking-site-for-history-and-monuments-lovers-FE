@@ -5,8 +5,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { UsersPost } from 'src/app/models/post.model';
+import { Subject, takeUntil } from 'rxjs';
+import { UsersPost } from 'src/app/models';
 import { LikesService } from 'src/app/services/likes.service';
 import { PostService } from 'src/app/services/post.service';
 

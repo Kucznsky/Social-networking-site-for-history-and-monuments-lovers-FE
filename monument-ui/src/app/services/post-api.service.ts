@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PostResponse } from '../interfaces/post.interface';
+import { PostResponse } from '../interfaces';
 import { POST_URL } from '../consts/endpoint-url.const';
-import { NewPost } from '../models/newPost.model';
+import { NewPost } from '../models';
 
 @Injectable({
   providedIn: 'root',

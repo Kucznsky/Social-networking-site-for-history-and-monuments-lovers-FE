@@ -1,4 +1,4 @@
-import { UserResponse } from '../interfaces/user.interface';
+import { UserResponse } from '../interfaces';
 
 export class User {
   id: string = '';

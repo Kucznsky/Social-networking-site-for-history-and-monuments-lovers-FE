@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LikesApiService } from './likes-api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { LikeResponseBody } from '../interfaces/like-response.interface';
+import { LikeResponseBody } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',

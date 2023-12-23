@@ -1,5 +1,5 @@
 import { Category } from '../enums';
-import { PostResponse } from '../interfaces/post.interface';
+import { PostResponse } from '../interfaces';
 import { Localisation } from './localisation.model';
 import { User } from './user.model';
 
