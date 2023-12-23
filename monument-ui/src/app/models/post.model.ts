@@ -15,6 +15,7 @@ export class UsersPost {
   public modernImages: string[] = [];
   public archivalImages: string[] = [];
   public content: string = '';
+  public published: Date;
   public isLiked = false;
 
   constructor(postResponseData: PostResponse) {

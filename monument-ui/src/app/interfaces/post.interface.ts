@@ -15,4 +15,5 @@ export interface PostResponse {
   modernImages: string[];
   archivalImages: string[];
   content: string;
+  published: Date;
 }

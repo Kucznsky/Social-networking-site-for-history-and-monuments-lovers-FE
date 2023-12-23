@@ -1,3 +1,3 @@
 export enum SessionStorageKeys {
-    SelectedFilter = 'selected_filter'
+  SelectedFilter = 'selected_filter',
 }

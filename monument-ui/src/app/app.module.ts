@@ -8,7 +8,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PostListItemComponent } from './components/post-list-item/post-list-item.component';
-import { FiltersComponent } from './components/filters/filters.component';
+import { SortComponent } from './components/filters/sorting.component';
 import { PostPageComponent } from './components/post-page/post-page.component';
 
 @NgModule({
@@ -18,7 +18,7 @@ import { PostPageComponent } from './components/post-page/post-page.component';
     HomePageComponent,
     SidebarComponent,
     PostListItemComponent,
-    FiltersComponent,
+    SortComponent,
     PostPageComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],

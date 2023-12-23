@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SessionStorageService {
-
-  constructor() { }
+  constructor() {}
 
   public getItem(key: string) {
     return sessionStorage.getItem(key);
