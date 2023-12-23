@@ -1,4 +1,4 @@
-import { Category } from '../enums/post-category.enum';
+import { Category } from '../enums';
 
 export class NewPost {
   // public id: string = '';

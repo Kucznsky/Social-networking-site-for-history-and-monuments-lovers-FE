@@ -1,4 +1,4 @@
-import { Category } from '../enums/post-category.enum';
+import { Category } from '../enums';
 import { PostResponse } from '../interfaces/post.interface';
 import { Localisation } from './localisation.model';
 import { User } from './user.model';
