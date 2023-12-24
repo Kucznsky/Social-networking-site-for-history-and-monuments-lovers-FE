@@ -1,7 +1,7 @@
 export enum SortingOptions {
   New = 'new',
-  TopToday = 'today',
-  TopThisWeek = 'this week',
+  TopDay = 'today',
+  TopLastSevenDays = 'this week',
   TopThisMonth = 'this month',
   TopThisYear = 'this year',
   TopAllTime = 'all time',

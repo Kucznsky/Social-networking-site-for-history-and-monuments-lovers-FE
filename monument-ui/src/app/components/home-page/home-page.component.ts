@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { subDays } from 'date-fns/subDays';
 import { Subject, takeUntil } from 'rxjs';
 import { SortingOptions } from 'src/app/enums';
 import { UsersPost } from 'src/app/models';
@@ -52,7 +53,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
           );
         });
         break;
-      case SortingOptions.TopToday:
+      case SortingOptions.TopDay:
         this.filteredPosts = this.posts.filter(
           (post) =>
             new Date(post.published).getDate() ===
@@ -62,11 +63,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
           return b.numberOfLikes - a.numberOfLikes;
         });
         break;
-      case SortingOptions.TopThisWeek:
+      case SortingOptions.TopLastSevenDays:
         this.filteredPosts = this.posts.filter(
           (post) =>
-            post.published.getDate() >= this.currentDate.getDate() &&
-            post.published.getDate() <= this.currentDate.getDate() - 7,
+          new Date(post.published).getTime() <= new Date(this.currentDate).getTime() &&
+          new Date(post.published).getTime() >= subDays(new Date(this.currentDate), 7).getTime(),
         );
         this.filteredPosts.sort((a, b) => {
           return b.numberOfLikes - a.numberOfLikes;
@@ -75,8 +76,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
       case SortingOptions.TopThisMonth:
         this.filteredPosts = this.posts.filter(
           (post) =>
-            post.published.getDate() >= this.currentDate.getDate() &&
-            post.published.getDate() <= this.currentDate.getDate() - 30,
+          new Date(post.published).getTime() <= new Date(this.currentDate).getTime() &&
+          new Date(post.published).getTime() >= subDays(new Date(this.currentDate), 30).getTime(),
         );
         this.filteredPosts.sort((a, b) => {
           return b.numberOfLikes - a.numberOfLikes;
@@ -85,8 +86,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
       case SortingOptions.TopThisYear:
         this.filteredPosts = this.filteredPosts.filter(
           (post) =>
-            post.published.getDate() >= this.currentDate.getDate() &&
-            post.published.getDate() <= this.currentDate.getDate() - 365,
+          new Date(post.published).getTime() <= new Date(this.currentDate).getTime() &&
+          new Date(post.published).getTime() >= subDays(new Date(this.currentDate), 365).getTime(),
         );
         this.filteredPosts.sort((a, b) => {
           return b.numberOfLikes - a.numberOfLikes;
