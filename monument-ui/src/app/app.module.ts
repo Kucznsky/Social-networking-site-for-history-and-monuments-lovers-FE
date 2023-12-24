@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PostListItemComponent } from './components/post-list-item/post-list-item.component';
 import { SortComponent } from './components/filters/sorting.component';
 import { PostPageComponent } from './components/post-page/post-page.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { PostPageComponent } from './components/post-page/post-page.component';
     PostListItemComponent,
     SortComponent,
     PostPageComponent,
+    SearchComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
