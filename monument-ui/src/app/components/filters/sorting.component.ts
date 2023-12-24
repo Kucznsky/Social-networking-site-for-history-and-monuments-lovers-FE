@@ -4,7 +4,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { SortingOptions } from 'src/app/enums';
+import { Category, SortingOptions } from 'src/app/enums';
 
 @Component({
   selector: 'app-sorting',
@@ -17,6 +17,7 @@ export class SortComponent {
   public dateFilterClicked = true;
   public sortingOptions = SortingOptions;
   public dateFilterLabel = SortingOptions.TopAllTime;
+  public categories = Category;
 
   constructor() {}
 
