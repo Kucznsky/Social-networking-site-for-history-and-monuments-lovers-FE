@@ -5,12 +5,14 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { subDays } from 'date-fns/subDays';
-import { Subject, takeUntil } from 'rxjs';
-import { SortingOptions } from 'src/app/enums';
+import { Subject, take, takeUntil } from 'rxjs';
+import { SearchBy, SortingOptions } from 'src/app/enums';
 import { UsersPost } from 'src/app/models';
 import { LikesService } from 'src/app/services/likes.service';
 import { PostService } from 'src/app/services/post.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home-page',
@@ -28,14 +30,17 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(
     private readonly postService: PostService,
     private readonly likesService: LikesService,
+    private readonly userService: UserService,
     private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly activatedRoute: ActivatedRoute,
   ) {}
 
   public ngOnInit() {
     this.postService.getAllPosts();
     this.observeListOfPosts();
-    this.likesService.getUsersLikes('somePlaceholder');
-    this.observeUsersLikes();
+    this.observeQueryParams()
+    // this.likesService.getUsersLikes('somePlaceholder');
+    // this.observeUsersLikes();
   }
 
   public ngOnDestroy() {
@@ -66,8 +71,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
       case SortingOptions.TopLastSevenDays:
         this.filteredPosts = this.posts.filter(
           (post) =>
-          new Date(post.published).getTime() <= new Date(this.currentDate).getTime() &&
-          new Date(post.published).getTime() >= subDays(new Date(this.currentDate), 7).getTime(),
+            new Date(post.published).getTime() <=
+              new Date(this.currentDate).getTime() &&
+            new Date(post.published).getTime() >=
+              subDays(new Date(this.currentDate), 7).getTime(),
         );
         this.filteredPosts.sort((a, b) => {
           return b.numberOfLikes - a.numberOfLikes;
@@ -76,8 +83,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
       case SortingOptions.TopThisMonth:
         this.filteredPosts = this.posts.filter(
           (post) =>
-          new Date(post.published).getTime() <= new Date(this.currentDate).getTime() &&
-          new Date(post.published).getTime() >= subDays(new Date(this.currentDate), 30).getTime(),
+            new Date(post.published).getTime() <=
+              new Date(this.currentDate).getTime() &&
+            new Date(post.published).getTime() >=
+              subDays(new Date(this.currentDate), 30).getTime(),
         );
         this.filteredPosts.sort((a, b) => {
           return b.numberOfLikes - a.numberOfLikes;
@@ -86,8 +95,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
       case SortingOptions.TopThisYear:
         this.filteredPosts = this.filteredPosts.filter(
           (post) =>
-          new Date(post.published).getTime() <= new Date(this.currentDate).getTime() &&
-          new Date(post.published).getTime() >= subDays(new Date(this.currentDate), 365).getTime(),
+            new Date(post.published).getTime() <=
+              new Date(this.currentDate).getTime() &&
+            new Date(post.published).getTime() >=
+              subDays(new Date(this.currentDate), 365).getTime(),
         );
         this.filteredPosts.sort((a, b) => {
           return b.numberOfLikes - a.numberOfLikes;
@@ -127,5 +138,22 @@ export class HomePageComponent implements OnInit, OnDestroy {
           this.changeDetectorRef.detectChanges();
         });
       });
+  }
+
+  private observeQueryParams(): void {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params) {
+        if(params['searchBy'] === SearchBy.Title){
+          this.filteredPosts = this.posts.filter((post) => post.title === params['searchedPost'])
+          this.changeDetectorRef.markForCheck()
+        } else {
+          let userId: string;
+          this.userService.getUserByUserName(params['searchedPost']).pipe(takeUntil(this.unsubscriber)).subscribe((user)=>{
+            this.filteredPosts = this.posts.filter((post) => post.author.toString() === user.id)
+            this.changeDetectorRef.markForCheck()
+          })
+        }
+     }
+    });
   }
 }

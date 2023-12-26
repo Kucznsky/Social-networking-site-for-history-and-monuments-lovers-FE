@@ -1,16 +1,16 @@
 <div class="join ml-48">
+<div>
     <div>
-      <div>
-        <input class="input input-bordered join-item w-96 bg-white shadow-sm" placeholder="Search"/>
+        <input [(ngModel)]="searchFormControl" class="input input-bordered join-item w-96 bg-white shadow-sm" placeholder="Search"/>
       </div>
     </div>
-    <select class="select select-bordered join-item bg-white shadow-sm">
-      <option disabled selected>Serch by</option>
-      <option>Title</option>
-      <option>User</option>
-      <option>Localisation</option>
+    <select [(ngModel)] = "selectedOption" class="select select-bordered join-item bg-white shadow-sm">
+      <option class="font-semibold" disabled selected>Serch by</option>
+      <option [ngValue]="searchOptions.Title" value="searchOptions.Title" class="font-semibold">{{searchOptions.Title}}</option>
+      <option [ngValue]="searchOptions.User" value="searchOptions.User" class="font-semibold">{{searchOptions.User}}</option>
+      <option [ngValue]="searchOptions.Localisation" value="searchOptions.Label" class="font-semibold">{{searchOptions.Localisation}}</option>
     </select>
     <div class="indicator">
-      <button class="btn join-item bg-main border-none text-white">Search</button>
+      <button class="btn join-item bg-main border-none text-white" (click)="serchForPost()">Search</button>
     </div>
 </div>
