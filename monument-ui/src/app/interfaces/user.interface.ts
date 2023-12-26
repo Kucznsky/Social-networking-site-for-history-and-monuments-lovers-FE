@@ -1,8 +1,12 @@
 export interface UserResponse {
   id: string;
-  nickname: string;
-  dateOfJoin: string;
-  favouritePosts: string[];
-  avatar: string;
-  userDescription: string;
+  email: string;
+  userName: string;
+  // favouritePosts: string[];
+  // avatar: string;
+  // userDescription: string;
+  dateOfJoining: Date;
+  isStaff: boolean;
+  isAdmin: boolean;
+  isActive: boolean;
 }
