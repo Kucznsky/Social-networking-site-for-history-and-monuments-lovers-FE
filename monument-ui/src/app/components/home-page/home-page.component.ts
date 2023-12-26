@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { subDays } from 'date-fns/subDays';
 import { Subject, take, takeUntil } from 'rxjs';
-import { SearchBy, SortingOptions } from 'src/app/enums';
+import { Category, SearchBy, SortingOptions } from 'src/app/enums';
 import { UsersPost } from 'src/app/models';
 import { LikesService } from 'src/app/services/likes.service';
 import { PostService } from 'src/app/services/post.service';
@@ -21,11 +21,10 @@ import { UserService } from 'src/app/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  private readonly unsubscriber: Subject<void> = new Subject();
-
   public posts: UsersPost[];
   public filteredPosts: UsersPost[];
   public currentDate = new Date();
+  private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(
     private readonly postService: PostService,
@@ -38,7 +37,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.postService.getAllPosts();
     this.observeListOfPosts();
-    this.observeQueryParams()
+    this.observeQueryParams();
     // this.likesService.getUsersLikes('somePlaceholder');
     // this.observeUsersLikes();
   }
@@ -113,6 +112,13 @@ export class HomePageComponent implements OnInit, OnDestroy {
     }
   }
 
+  public filterByCategory(activeFilters: Category[]): void {
+    this.filteredPosts = this.posts.filter((post) =>
+      activeFilters.some((filter) => filter === post.category),
+    );
+    this.changeDetectorRef.markForCheck();
+  }
+
   private observeListOfPosts(): void {
     this.postService
       .getPostsObservable()
@@ -142,24 +148,31 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   private observeQueryParams(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
-      if (!!params['searchBy']) {
-        if(params['searchBy'] === SearchBy.Title){
-          if(params['searchedPost'] === ''){
-            this.filteredPosts = this.posts
+      if (params['searchBy']) {
+        if (params['searchBy'] === SearchBy.Title) {
+          if (params['searchedPost'] === '') {
+            this.filteredPosts = this.posts;
           } else {
-            this.filteredPosts = this.posts.filter((post) => post.title === params['searchedPost'])
+            this.filteredPosts = this.posts.filter(
+              (post) => post.title === params['searchedPost'],
+            );
           }
-          this.changeDetectorRef.markForCheck()
+          this.changeDetectorRef.markForCheck();
         } else {
-          this.userService.getUserByUserName(params['searchedPost']).pipe(takeUntil(this.unsubscriber)).subscribe((user)=>{
-            this.filteredPosts = this.posts.filter((post) => post.author.toString() === user.id)
-            this.changeDetectorRef.markForCheck()
-          })
+          this.userService
+            .getUserByUserName(params['searchedPost'])
+            .pipe(takeUntil(this.unsubscriber))
+            .subscribe((user) => {
+              this.filteredPosts = this.posts.filter(
+                (post) => post.author.toString() === user.id,
+              );
+              this.changeDetectorRef.markForCheck();
+            });
         }
-     } else {
-      this.filteredPosts = this.posts
-      this.changeDetectorRef.markForCheck()
-     }
+      } else {
+        this.filteredPosts = this.posts;
+        this.changeDetectorRef.markForCheck();
+      }
     });
   }
 }

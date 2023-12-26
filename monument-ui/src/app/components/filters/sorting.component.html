@@ -45,9 +45,9 @@
     </svg>
     </div>
     <ul tabindex="0" class="dropdown-content z-[1] menu p-0 py-4 rounded-box w-52 bg-white shadow-xl">
-      <ng-container *ngFor="let category of categories | keyvalue">
+      <ng-container *ngFor="let category of categories">
         <li class="flex flex-row pl-2 py-2 font-semibold">
-          {{category.value}} <input type="checkbox" class="checkbox p-1 ml-2 border-light-grey checked:border-main [--chkbg:#07c4e8] [--chkfg:#ffffff]" />
+          {{category.name}} <input type="checkbox" [(ngModel)]="category.isSelected" (change)="emitActiveFilters()" class="checkbox p-1 ml-2 border-light-grey checked:border-main [--chkbg:#07c4e8] [--chkfg:#ffffff]" />
         </li>
       </ng-container>
     </ul>

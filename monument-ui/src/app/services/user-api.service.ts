@@ -5,7 +5,7 @@ import { USER_URL } from '../consts/endpoint-url.const';
 import { UserResponse } from '../interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserApiService {
   constructor(private http: HttpClient) {}
@@ -15,7 +15,7 @@ export class UserApiService {
   }
 
   public fetchUserByUserName(userName: string): Observable<UserResponse> {
-    return this.http.get<UserResponse>(`${USER_URL}/userName/${userName}`)
+    return this.http.get<UserResponse>(`${USER_URL}/userName/${userName}`);
   }
 
   public deleteUser(id: string): Observable<void> {

@@ -25,7 +25,6 @@ export class SearchComponent {
   }
 
   public serchForPost(): void {
-
     this.router.navigate(['home'], {
       relativeTo: this.activatedRoute,
       queryParams: {

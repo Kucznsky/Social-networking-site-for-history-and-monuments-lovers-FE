@@ -14,10 +14,17 @@ import { Category, SortingOptions } from 'src/app/enums';
 })
 export class SortComponent {
   @Output() currentSortingCondition = new EventEmitter<SortingOptions>();
+  @Output() activeCategoryFilters = new EventEmitter<Category[]>();
   public dateFilterClicked = true;
   public sortingOptions = SortingOptions;
   public dateFilterLabel = SortingOptions.TopAllTime;
-  public categories = Category;
+  public categories = [
+    { name: Category.IndustrialObjects, isSelected: true },
+    { name: Category.MilitaryStructures, isSelected: true },
+    { name: Category.Other, isSelected: true },
+    { name: Category.PalacesAndVillas, isSelected: true },
+    { name: Category.ReligiousObjects, isSelected: true },
+  ];
 
   constructor() {}
 
@@ -25,5 +32,15 @@ export class SortComponent {
     this.dateFilterClicked = filterBy !== SortingOptions.New;
     this.dateFilterLabel = filterBy;
     this.currentSortingCondition.emit(filterBy);
+  }
+
+  public emitActiveFilters(): void {
+    const activeFilters: Category[] = [];
+    this.categories.forEach((category) => {
+      if (category.isSelected) {
+        activeFilters.push(category.name);
+      }
+    });
+    this.activeCategoryFilters.emit(activeFilters);
   }
 }
