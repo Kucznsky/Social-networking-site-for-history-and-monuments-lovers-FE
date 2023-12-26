@@ -142,17 +142,23 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   private observeQueryParams(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
-      if (params) {
+      if (!!params['searchBy']) {
         if(params['searchBy'] === SearchBy.Title){
-          this.filteredPosts = this.posts.filter((post) => post.title === params['searchedPost'])
+          if(params['searchedPost'] === ''){
+            this.filteredPosts = this.posts
+          } else {
+            this.filteredPosts = this.posts.filter((post) => post.title === params['searchedPost'])
+          }
           this.changeDetectorRef.markForCheck()
         } else {
-          let userId: string;
           this.userService.getUserByUserName(params['searchedPost']).pipe(takeUntil(this.unsubscriber)).subscribe((user)=>{
             this.filteredPosts = this.posts.filter((post) => post.author.toString() === user.id)
             this.changeDetectorRef.markForCheck()
           })
         }
+     } else {
+      this.filteredPosts = this.posts
+      this.changeDetectorRef.markForCheck()
      }
     });
   }
