@@ -1,13 +1,20 @@
-<button class="btn" onclick="register_modal.showModal()">Sign up</button>
+<button class="btn bg-white shadow-md border-light-grey hover:bg-white hover:border-light-grey" onclick="register_modal.showModal()">Sign up</button>
 <dialog id="register_modal" class="modal">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg">Hello!</h3>
-    <p class="py-4">Press ESC key or click the button below to close</p>
-    <div class="modal-action">
-      <form method="dialog">
-        <!-- if there is a button in form, it will close the modal -->
-        <button class="btn">Close</button>
+  <div class="modal-box bg-white">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+  </form>
+  <h3 class="font-bold text-lg text-main">Sign In</h3>
+  <div class="modal-action justify-center">
+      <form method="dialog" (submit)="register()">
+          <div class="flex flex-col">
+              <input type="text" placeholder="user name" class="input input-bordered bg-white shadow-sm w-full max-w-xs mb-4" />
+              <input type="email" placeholder="Email" class="input input-bordered bg-white shadow-sm w-full max-w-xs mb-4" />
+              <input type="password" placeholder="Password" class="input input-bordered bg-white shadow-sm w-full max-w-xs" />
+              <span class="text-sm mt-4 flex flex-row">You already have an account? <p class="link text-sm ml-1">Log in</p></span>
+              <button class="btn bg-main text-white border-none mt-2 w-80 hover:bg-main hover:opacity-70">Sign up</button>
+          </div>
       </form>
-    </div>
+  </div>
   </div>
 </dialog>
