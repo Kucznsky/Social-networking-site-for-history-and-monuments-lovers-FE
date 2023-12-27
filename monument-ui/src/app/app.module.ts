@@ -13,6 +13,8 @@ import { SortComponent } from './components/filters/sorting.component';
 import { PostPageComponent } from './components/post-page/post-page.component';
 import { SearchComponent } from './components/search/search.component';
 import { NewPostComponent } from './components/new-post/new-post.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { NewPostComponent } from './components/new-post/new-post.component';
     PostPageComponent,
     SearchComponent,
     NewPostComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
