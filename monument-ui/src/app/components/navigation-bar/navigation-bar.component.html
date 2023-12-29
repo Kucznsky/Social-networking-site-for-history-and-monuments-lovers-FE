@@ -31,8 +31,8 @@
         </div>
       </ng-container>
       <ng-template #registerLoginPanel>
-        <app-login></app-login>
-        <app-register></app-register>
+        <app-login (goToRegister)="openRegisterModal()"></app-login>
+        <app-register (goToLogin)="openLoginModal()"></app-register>
       </ng-template>
     </div>
   </div>
