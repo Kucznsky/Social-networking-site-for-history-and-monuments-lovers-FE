@@ -26,12 +26,12 @@ export class NavigationBarComponent implements OnInit {
   }
 
   public openLoginModal(): void {
-    this.register.closeBtn.nativeElement.click()
-    this.login.openModalBtn.nativeElement.click()
+    this.register.closeBtn.nativeElement.click();
+    this.login.openModalBtn.nativeElement.click();
   }
 
   public openRegisterModal(): void {
-    this.login.closeBtn.nativeElement.click()
-    this.register.openModalBtn.nativeElement.click()
+    this.login.closeBtn.nativeElement.click();
+    this.register.openModalBtn.nativeElement.click();
   }
 }

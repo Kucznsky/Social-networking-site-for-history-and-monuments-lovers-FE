@@ -15,6 +15,11 @@ import { SearchComponent } from './components/search/search.component';
 import { NewPostComponent } from './components/new-post/new-post.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem('jwt_token');
+}
 
 @NgModule({
   declarations: [
@@ -30,7 +35,19 @@ import { RegisterComponent } from './components/register/register.component';
     LoginComponent,
     RegisterComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:3000'],
+      },
+    }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

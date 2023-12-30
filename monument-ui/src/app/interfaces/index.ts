@@ -4,4 +4,5 @@ export * from '../interfaces/like-response.interface';
 export * from '../interfaces/localisation.interface';
 export * from '../interfaces/post.interface';
 export * from '../interfaces/user.interface';
-export * from '../interfaces/user.interface';
+export * from '../interfaces/login-response.interface';
+export * from '../interfaces/user-credentials.interface';
