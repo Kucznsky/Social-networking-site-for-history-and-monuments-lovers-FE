@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtHelperService: JwtHelperService,
     private readonly localStorageService: LocalStorageService,
-    private readonly sessionStorageService: SessionStorageService,
+    // private readonly sessionStorageService: SessionStorageService,
   ) {}
 
   canActivate(
@@ -32,10 +32,10 @@ export class AuthGuard implements CanActivate {
     const jwtToken = this.localStorageService.getItem(LocalStorageKeys.JWT);
 
     if (!jwtToken || this.jwtHelperService.isTokenExpired(jwtToken)) {
-      this.sessionStorageService.setItem(
-        SessionStorageKeys.ShouldOpenLoginModal,
-        true,
-      );
+      // this.sessionStorageService.setItem(
+      //   SessionStorageKeys.ShouldOpenLoginModal,
+      //   true,
+      // );
       return false;
     } else {
       return true;

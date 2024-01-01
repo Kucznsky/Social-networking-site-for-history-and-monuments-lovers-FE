@@ -18,6 +18,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { UsersPostComponent } from './components/users-post/users-post.component';
 import { LikedPostsComponent } from './components/liked-posts/liked-posts.component';
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt_token');
@@ -38,6 +39,7 @@ export function tokenGetter() {
     RegisterComponent,
     UsersPostComponent,
     LikedPostsComponent,
+    UserAvatarComponent,
   ],
   imports: [
     BrowserModule,

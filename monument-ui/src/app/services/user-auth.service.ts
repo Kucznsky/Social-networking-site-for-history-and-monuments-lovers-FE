@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { AuthApiService } from './auth-api.service';
 import { LocalStorageKeys } from '../enums';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, finalize } from 'rxjs';
 import { User } from '../models';
 import { UserApiService } from './user-api.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -11,7 +11,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root',
 })
 export class UserAuthService {
-  private loggedUser: BehaviorSubject<User>;
+  private loggedUser: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
 
   constructor(
     private readonly authApiService: AuthApiService,
@@ -23,6 +23,7 @@ export class UserAuthService {
   public login(email: string, password: string): void {
     this.authApiService
       .login({ email: email, password: password })
+      .pipe(finalize(()=>{window.location.reload()}))
       .subscribe((response) => {
         const token = response.jwtToken.access_token;
         this.localStorageService.setItem(LocalStorageKeys.JWT, token);
@@ -38,5 +39,9 @@ export class UserAuthService {
 
   public getLoggedUserObservable(): Observable<User> {
     return this.loggedUser.asObservable();
+  }
+
+  public resetLoggedUserData(): void {
+    this.loggedUser.next(null)
   }
 }
