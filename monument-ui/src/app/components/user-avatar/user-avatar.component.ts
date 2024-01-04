@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LocalStorageKeys } from 'src/app/enums';
+import { JwtService } from 'src/app/services/jwt.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 
@@ -10,10 +11,10 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
 })
 export class UserAvatarComponent {
 
-  constructor( private readonly localStorageService: LocalStorageService, private readonly userAuthService: UserAuthService ){}
+  constructor( private readonly userAuthService: UserAuthService, private readonly jwtService: JwtService ){}
 
   public logout(): void {
-    this.localStorageService.removeItem(LocalStorageKeys.JWT);
+    this.jwtService.removeToken();
     this.userAuthService.resetLoggedUserData();
     window.location.reload()
   }

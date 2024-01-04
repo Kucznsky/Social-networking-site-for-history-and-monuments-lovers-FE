@@ -11,6 +11,7 @@ import { LikesService } from 'src/app/services/likes.service';
 })
 export class PostListItemComponent implements OnDestroy {
   @Input() post: UsersPost;
+  @Input() isUsersPostSection: boolean;
   private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(

@@ -6,6 +6,8 @@ import { LoginComponent } from '../login/login.component';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { LocalStorageKeys, SessionStorageKeys } from 'src/app/enums';
 import { Subject, of, takeUntil } from 'rxjs';
+import { UserAuthService } from 'src/app/services/user-auth.service';
+import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -20,12 +22,17 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly router: Router,
-    private readonly localStorageService: LocalStorageService,
-    private readonly sessionStorageService: SessionStorageService,
+    // private readonly localStorageService: LocalStorageService,
+    // private readonly sessionStorageService: SessionStorageService,
+    private readonly jwtService: JwtService,
+    private readonly userAuthService: UserAuthService
   ) {}
 
   public ngOnInit(): void {
-    this.isUserLoggedIn = !!this.localStorageService.getItem(LocalStorageKeys.JWT)
+    this.isUserLoggedIn = this.jwtService.isTokenValid()
+    if(this.jwtService.isTokenValid()){
+      this.userAuthService.getLoggedUser()
+    }
   }
 
   public ngOnDestroy() {

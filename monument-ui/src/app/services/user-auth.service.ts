@@ -5,7 +5,7 @@ import { LocalStorageKeys } from '../enums';
 import { BehaviorSubject, Observable, finalize } from 'rxjs';
 import { User } from '../models';
 import { UserApiService } from './user-api.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtService } from './jwt.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class UserAuthService {
     private readonly authApiService: AuthApiService,
     private readonly userApiService: UserApiService,
     private readonly localStorageService: LocalStorageService,
-    private jwtHelperService: JwtHelperService,
+    private jwtService: JwtService,
   ) {}
 
   public login(email: string, password: string): void {
@@ -26,19 +26,28 @@ export class UserAuthService {
       .pipe(finalize(()=>{window.location.reload()}))
       .subscribe((response) => {
         const token = response.jwtToken.access_token;
-        this.localStorageService.setItem(LocalStorageKeys.JWT, token);
-        const tokenData = this.jwtHelperService.decodeToken(token);
-        this.userApiService
-          .fetchUser(tokenData.sub)
-          .subscribe((userResponse) => {
-            this.loggedUser.next(userResponse);
-          });
-        // console.log(this.jwtHelperService.decodeToken(token))
+        this.jwtService.saveTokenToStorage(token)
+        this.getLoggedUser()
       });
+  }
+
+  public getLoggedUser(): void {
+    if(this.jwtService.isTokenValid()){
+      const loggedUsersId = this.jwtService.getLoggedUsersId()
+      this.userApiService
+      .fetchUser(loggedUsersId)
+      .subscribe((userResponse) => {
+        this.loggedUser.next(userResponse);
+      });
+    }
   }
 
   public getLoggedUserObservable(): Observable<User> {
     return this.loggedUser.asObservable();
+  }
+
+  public getLoggedUserValue(): User {
+    return this.loggedUser.value()
   }
 
   public resetLoggedUserData(): void {

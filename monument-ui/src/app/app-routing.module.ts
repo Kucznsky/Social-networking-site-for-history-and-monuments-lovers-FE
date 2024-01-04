@@ -35,7 +35,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'my-posts',
+        path: 'users-posts/:id',
         component: UsersPostComponent,
         data: {
           //permissions
@@ -43,7 +43,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'liked-posts',
+        path: 'liked-posts/:id',
         component: LikedPostsComponent,
         data: {
           //permissions
