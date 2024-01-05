@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersPost } from 'src/app/models';
+import { JwtService } from 'src/app/services/jwt.service';
 import { LikesService } from 'src/app/services/likes.service';
 import { PostService } from 'src/app/services/post.service';
 
@@ -25,14 +26,15 @@ export class UsersPostComponent implements OnInit, OnDestroy {
     private readonly postService: PostService,
     private readonly likesService: LikesService,
     private readonly activatedRoute: ActivatedRoute,
+    private readonly jwtService: JwtService,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   public ngOnInit(): void {
     this.postService.getAllPosts();
     this.observeListOfPosts();
-    // this.likesService.getUsersLikes('somePlaceholder');
-    // this.observeUsersLikes();
+    this.likesService.getUsersLikes('somePlaceholder');
+    this.observeUsersLikes();
   }
 
   public ngOnDestroy() {
@@ -66,5 +68,9 @@ export class UsersPostComponent implements OnInit, OnDestroy {
           this.changeDetectorRef.detectChanges();
         });
       });
+  }
+
+  private getUsersLikes(): void {
+    this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId());
   }
 }

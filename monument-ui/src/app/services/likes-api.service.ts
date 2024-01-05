@@ -36,8 +36,7 @@ export class LikesApiService {
     const httpOptions = {
       headers: header,
     };
-    const options = { body: body };
-    return this.http.post<void>(`${LIKE_URL}/remove`, options, httpOptions);
+    return this.http.post<void>(`${LIKE_URL}/remove`, body, httpOptions);
   }
 
   public fetchUserLikes(userId: string): Observable<LikeResponseBody[]> {

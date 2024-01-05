@@ -27,7 +27,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
   public posts: UsersPost[];
   public filteredPosts: UsersPost[];
   public currentDate = new Date();
-  // private loggedUser: User;
   private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(
@@ -37,7 +36,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly activatedRoute: ActivatedRoute,
     private readonly jwtService: JwtService
-    // private readonly userAuthService: UserAuthService,
   ) {}
 
   public ngOnInit() {
@@ -183,18 +181,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  // private getLoggedUser(): void {
-  //   this.userAuthService
-  //     .getLoggedUserObservable()
-  //     .pipe(take(1), takeUntil(this.unsubscriber))
-  //     .subscribe((user) => {
-  //       this.loggedUser = user;
-  //       if(user){
-  //         this.getUsersLikes(this.loggedUser.id);
-  //       }
-  //     });
-  // }
 
   private getUsersLikes(): void {
     this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId());

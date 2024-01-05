@@ -12,6 +12,7 @@ import { LikesService } from 'src/app/services/likes.service';
 export class PostListItemComponent implements OnDestroy {
   @Input() post: UsersPost;
   @Input() isUsersPostSection: boolean;
+  @Input() userId: string;
   private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(
@@ -25,22 +26,24 @@ export class PostListItemComponent implements OnDestroy {
   }
 
   public addRemoveLike(isLiked: boolean): void {
-    if (isLiked) {
-      this.likesService
-        .removeLike('userIdPlaceholder', this.post._id)
-        .pipe(takeUntil(this.unsubscriber))
-        .subscribe(() => {
-          this.post.isLiked = !isLiked;
-          this.post.numberOfLikes += 1;
-        });
-    } else {
-      this.likesService
-        .addLike('userIdPlaceholder', this.post._id)
-        .pipe(takeUntil(this.unsubscriber))
-        .subscribe(() => {
-          this.post.isLiked = !isLiked;
-          this.post.numberOfLikes += 1;
-        });
+    if(this.userId){
+      if (isLiked) {
+        this.likesService
+          .removeLike(this.userId, this.post._id)
+          .pipe(takeUntil(this.unsubscriber))
+          .subscribe(() => {
+            this.post.isLiked = !isLiked;
+            this.post.numberOfLikes += 1;
+          });
+      } else {
+        this.likesService
+          .addLike(this.userId, this.post._id)
+          .pipe(takeUntil(this.unsubscriber))
+          .subscribe(() => {
+            this.post.isLiked = !isLiked;
+            this.post.numberOfLikes += 1;
+          });
+      }
     }
   }
 
