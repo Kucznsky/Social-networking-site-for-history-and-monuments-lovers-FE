@@ -25,13 +25,13 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     // private readonly localStorageService: LocalStorageService,
     // private readonly sessionStorageService: SessionStorageService,
     private readonly jwtService: JwtService,
-    private readonly userAuthService: UserAuthService
+    private readonly userAuthService: UserAuthService,
   ) {}
 
   public ngOnInit(): void {
-    this.isUserLoggedIn = this.jwtService.isTokenValid()
-    if(this.jwtService.isTokenValid()){
-      this.userAuthService.getLoggedUser()
+    this.isUserLoggedIn = this.jwtService.isTokenValid();
+    if (this.jwtService.isTokenValid()) {
+      this.userAuthService.getLoggedUser();
     }
   }
 
@@ -45,7 +45,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   }
 
   public openLoginModal(isRegisterModalOpen: boolean = true): void {
-    if(isRegisterModalOpen){
+    if (isRegisterModalOpen) {
       this.register.closeBtn.nativeElement.click();
     }
     this.login.openModalBtn.nativeElement.click();

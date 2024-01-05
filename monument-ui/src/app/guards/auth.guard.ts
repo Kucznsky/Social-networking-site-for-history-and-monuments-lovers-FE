@@ -12,9 +12,7 @@ import { JwtService } from '../services/jwt.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly jwtService: JwtService) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -24,7 +22,6 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-
     if (!this.jwtService.isTokenValid()) {
       // this.sessionStorageService.setItem(
       //   SessionStorageKeys.ShouldOpenLoginModal,

@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersPost } from 'src/app/models';
@@ -20,7 +26,7 @@ export class UsersPostComponent implements OnInit, OnDestroy {
     private readonly likesService: LikesService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly changeDetectorRef: ChangeDetectorRef,
-  ){}
+  ) {}
 
   public ngOnInit(): void {
     this.postService.getAllPosts();
@@ -39,7 +45,11 @@ export class UsersPostComponent implements OnInit, OnDestroy {
       .getPostsObservable()
       .pipe(takeUntil(this.unsubscriber))
       .subscribe((posts) => {
-        this.posts = posts.filter((post)=> post.author.toString() === this.activatedRoute.snapshot.paramMap.get('id'));
+        this.posts = posts.filter(
+          (post) =>
+            post.author.toString() ===
+            this.activatedRoute.snapshot.paramMap.get('id'),
+        );
         this.changeDetectorRef.markForCheck();
       });
   }

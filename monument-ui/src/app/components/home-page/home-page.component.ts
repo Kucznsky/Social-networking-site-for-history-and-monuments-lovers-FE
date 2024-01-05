@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -9,9 +10,11 @@ import { ActivatedRoute } from '@angular/router';
 import { subDays } from 'date-fns/subDays';
 import { Subject, take, takeUntil } from 'rxjs';
 import { Category, SearchBy, SortingOptions } from 'src/app/enums';
-import { UsersPost } from 'src/app/models';
+import { User, UsersPost } from 'src/app/models';
+import { JwtService } from 'src/app/services/jwt.service';
 import { LikesService } from 'src/app/services/likes.service';
 import { PostService } from 'src/app/services/post.service';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -24,6 +27,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   public posts: UsersPost[];
   public filteredPosts: UsersPost[];
   public currentDate = new Date();
+  // private loggedUser: User;
   private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(
@@ -32,14 +36,18 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private readonly userService: UserService,
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly activatedRoute: ActivatedRoute,
+    private readonly jwtService: JwtService
+    // private readonly userAuthService: UserAuthService,
   ) {}
 
   public ngOnInit() {
     this.postService.getAllPosts();
     this.observeListOfPosts();
     this.observeQueryParams();
-    // this.likesService.getUsersLikes('somePlaceholder');
-    // this.observeUsersLikes();
+    if(this.jwtService.isTokenValid()){
+      this.getUsersLikes()
+      this.observeUsersLikes();
+    }
   }
 
   public ngOnDestroy() {
@@ -174,5 +182,21 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.changeDetectorRef.markForCheck();
       }
     });
+  }
+
+  // private getLoggedUser(): void {
+  //   this.userAuthService
+  //     .getLoggedUserObservable()
+  //     .pipe(take(1), takeUntil(this.unsubscriber))
+  //     .subscribe((user) => {
+  //       this.loggedUser = user;
+  //       if(user){
+  //         this.getUsersLikes(this.loggedUser.id);
+  //       }
+  //     });
+  // }
+
+  private getUsersLikes(): void {
+    this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId());
   }
 }

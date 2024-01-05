@@ -8,9 +8,8 @@ describe('LikedPostsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LikedPostsComponent ]
-    })
-    .compileComponents();
+      declarations: [LikedPostsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LikedPostsComponent);
     component = fixture.componentInstance;

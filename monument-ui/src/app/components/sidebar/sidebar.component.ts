@@ -10,12 +10,12 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnInit{
+export class SidebarComponent implements OnInit {
   public userId: string;
 
-  constructor( private readonly jwtService: JwtService) {}
+  constructor(private readonly jwtService: JwtService) {}
 
   public ngOnInit() {
-    this.userId = this.jwtService.getLoggedUsersId()
+    this.userId = this.jwtService.getLoggedUsersId();
   }
 }

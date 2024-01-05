@@ -4,30 +4,32 @@ import { LocalStorageKeys } from '../enums';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class JwtService {
+  constructor(
+    private readonly jwtHelperService: JwtHelperService,
+    private readonly localStorageService: LocalStorageService,
+  ) {}
 
-  constructor(private readonly jwtHelperService: JwtHelperService, private readonly localStorageService: LocalStorageService) {}
-
-  public getAccessToken(): string | null{
-    return this.localStorageService.getItem(LocalStorageKeys.JWT)
+  public getAccessToken(): string | null {
+    return this.localStorageService.getItem(LocalStorageKeys.JWT);
   }
 
   public getLoggedUsersId(): string {
-    const token = this.getAccessToken()
-    if(token) {
-      const decodedToken = this.jwtHelperService.decodeToken(token)
-      return decodedToken.sub
+    const token = this.getAccessToken();
+    if (token) {
+      const decodedToken = this.jwtHelperService.decodeToken(token);
+      return decodedToken.sub;
     } else {
-      return ''
+      return '';
     }
   }
 
   public isTokenValid(): boolean {
     const token = this.getAccessToken();
-    if(token) {
-      return !this.jwtHelperService.isTokenExpired(token)
+    if (token) {
+      return !this.jwtHelperService.isTokenExpired(token);
     } else {
       return false;
     }
@@ -38,6 +40,6 @@ export class JwtService {
   }
 
   public removeToken(): void {
-    this.localStorageService.removeItem(LocalStorageKeys.JWT)
+    this.localStorageService.removeItem(LocalStorageKeys.JWT);
   }
 }
