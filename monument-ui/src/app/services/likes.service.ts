@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LikesApiService } from './likes-api.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, take, takeUntil } from 'rxjs';
 import { LikeResponseBody } from '../interfaces';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class LikesService {
   }
 
   public getUsersLikes(userId: string): void {
-    this.likesApiService.fetchUserLikes(userId).subscribe((usersLikes) => {
+    this.likesApiService.fetchUserLikes(userId).pipe(take(1)).subscribe((usersLikes) => {
       this.usersLikes.next(usersLikes);
     });
   }

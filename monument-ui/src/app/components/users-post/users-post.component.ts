@@ -33,8 +33,6 @@ export class UsersPostComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.postService.getAllPosts();
     this.observeListOfPosts();
-    this.likesService.getUsersLikes('somePlaceholder');
-    this.observeUsersLikes();
   }
 
   public ngOnDestroy() {
@@ -52,6 +50,10 @@ export class UsersPostComponent implements OnInit, OnDestroy {
             post.author.toString() ===
             this.activatedRoute.snapshot.paramMap.get('id'),
         );
+        if(this.jwtService.isTokenValid()){
+          this.getUsersLikes();
+          this.observeUsersLikes();
+        }
         this.changeDetectorRef.markForCheck();
       });
   }
