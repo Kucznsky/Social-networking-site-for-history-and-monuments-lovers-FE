@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersPost } from 'src/app/models';
@@ -8,6 +8,7 @@ import { LikesService } from 'src/app/services/likes.service';
   selector: 'app-post-list-item',
   templateUrl: './post-list-item.component.html',
   styleUrls: ['./post-list-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostListItemComponent implements OnDestroy {
   @Input() post: UsersPost;
@@ -18,6 +19,7 @@ export class PostListItemComponent implements OnDestroy {
   constructor(
     private readonly likesService: LikesService,
     private readonly router: Router,
+    private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   public ngOnDestroy() {
@@ -33,7 +35,8 @@ export class PostListItemComponent implements OnDestroy {
           .pipe(takeUntil(this.unsubscriber))
           .subscribe(() => {
             this.post.isLiked = !isLiked;
-            this.post.numberOfLikes += 1;
+            this.post.numberOfLikes -= 1;
+            this.changeDetectorRef.markForCheck()
           });
       } else {
         this.likesService
@@ -42,6 +45,7 @@ export class PostListItemComponent implements OnDestroy {
           .subscribe(() => {
             this.post.isLiked = !isLiked;
             this.post.numberOfLikes += 1;
+            this.changeDetectorRef.markForCheck()
           });
       }
     }

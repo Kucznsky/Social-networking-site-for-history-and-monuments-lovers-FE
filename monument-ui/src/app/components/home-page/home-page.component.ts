@@ -14,7 +14,6 @@ import { User, UsersPost } from 'src/app/models';
 import { JwtService } from 'src/app/services/jwt.service';
 import { LikesService } from 'src/app/services/likes.service';
 import { PostService } from 'src/app/services/post.service';
-import { UserAuthService } from 'src/app/services/user-auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -33,9 +32,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private readonly postService: PostService,
     private readonly likesService: LikesService,
     private readonly userService: UserService,
-    private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   public ngOnInit() {

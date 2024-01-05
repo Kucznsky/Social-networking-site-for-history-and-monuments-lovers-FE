@@ -30,4 +30,8 @@ export class LikesService {
   public getUsersLikesObservable(): Observable<LikeResponseBody[]> {
     return this.usersLikes.asObservable();
   }
+
+  public getUsersLikesValue(): LikeResponseBody[] {
+    return this.usersLikes.getValue();
+  }
 }
