@@ -18,34 +18,13 @@ export class CommentService {
     userId: string,
     postId: string,
     content: string,
-  ): Observable<UserComment> {
+  ): Observable<CommentResponse> {
     return this.commentApiService
       .createComment({ postId: postId, authorId: userId, content: content })
-      .pipe(map((comment) => new UserComment(comment)));
   }
 
-  public getComments(postId: string): Observable<UserComment[]> {
+  public getComments(postId: string): Observable<CommentResponse[]> {
     return this.commentApiService
       .getComments(postId)
-      .pipe(
-        map((comments) =>
-          comments.map((comment) => this.createCommentObject(comment)),
-        ),
-      );
-  }
-
-  private createCommentObject(commentResponse: CommentResponse): UserComment {
-    let author: User;
-    this.userService
-      .getUserById(commentResponse.author)
-      .pipe(take(1))
-      .subscribe((user) => {
-        console.log(user)
-        author = new User(user);
-      });
-    const comment = new UserComment(commentResponse);
-    comment.author = author;
-    console.log(author)
-    return comment;
   }
 }

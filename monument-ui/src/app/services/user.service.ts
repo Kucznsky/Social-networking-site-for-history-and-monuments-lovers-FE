@@ -20,4 +20,8 @@ export class UserService {
       .fetchUserByUserName(userName)
       .pipe(map((user) => new User(user)));
   }
+
+  public getAuthorsOfTheComments(postId: string): Observable<User[]> {
+    return this.userApiService.fetchUsersByPostId(postId);
+  }
 }

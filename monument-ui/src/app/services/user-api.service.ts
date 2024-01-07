@@ -18,6 +18,10 @@ export class UserApiService {
     return this.http.get<UserResponse>(`${USER_URL}/userName/${userName}`);
   }
 
+  public fetchUsersByPostId(postId): Observable<UserResponse[]>{
+    return this.http.get<UserResponse[]>(`${USER_URL}/commented-post/${postId}`);
+  }
+
   public deleteUser(id: string): Observable<void> {
     return this.http.delete<void>(`${USER_URL}/${id}`);
   }

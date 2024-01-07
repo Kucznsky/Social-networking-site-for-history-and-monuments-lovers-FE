@@ -1,6 +1,6 @@
 <div class="bg-white shadow-lg p-10 mx-10 mt-4 mb-10 rounded-2xl">
-    <form (submit)="createComment()">
-        <input type="text" placeholder="Type a comment" (click)="commentInputClicked()" class="input w-full bg-white border-light-grey" />
+    <form [formGroup]="commentFormGroup" (submit)="createComment()">
+        <input type="text" formControlName="comment" placeholder="Type a comment" (click)="commentInputClicked()" class="input w-full bg-white border-light-grey" />
         <div *ngIf="isClicked" class="gap-2 flex justify-end mt-2">
             <button class="btn bg-white shadow-md border-light-grey hover:bg-white hover:border-light-grey" (click)="cancelClicked()">Cancel</button>
             <button type="submit" class="btn bg-main text-white border-none hover:bg-main hover:opacity-70">Comment</button>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CommentRequestBody, CommentResponse } from '../interfaces';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { JwtService } from './jwt.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { COMMENT_URL } from '../consts/endpoint-url.const';
@@ -23,7 +23,7 @@ export class CommentApiService {
     const httpOptions = {
       headers: header,
     };
-    return this.http.post<CommentResponse>(`${COMMENT_URL}`, body, httpOptions);
+    return this.http.post<any>(`${COMMENT_URL}`, body, httpOptions).pipe(map((response)=> response.createdComment));
   }
 
   public getComments(postId): Observable<CommentResponse[]> {

@@ -7,7 +7,7 @@ export class UserComment {
   post: string;
   content: string = '';
   creationDate: Date;
-  constructor(commentResponseData: CommentResponse) {
+  constructor(commentResponseData: any) {
     Object.assign(this, commentResponseData);
   }
 }

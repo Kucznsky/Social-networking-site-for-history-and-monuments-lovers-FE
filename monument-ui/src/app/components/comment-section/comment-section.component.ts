@@ -6,11 +6,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { CommentService } from '../../services/comment.service';
-import { JwtService } from 'src/app/services/jwt.service';
-import { FormControl, Validators } from '@angular/forms';
+import { JwtService } from '../../services/jwt.service';
+import { UserService } from '../../services/user.service';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { UserComment } from 'src/app/models';
-import { Subject, takeUntil } from 'rxjs';
+import { User, UserComment } from '../../models';
+import { Subject, map, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-comment-section',
@@ -19,10 +20,14 @@ import { Subject, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentSectionComponent implements OnInit, OnDestroy{
-  public commentFormControl: FormControl = new FormControl<string>('', [
-    Validators.required,
-  ]);
+  public commentFormGroup: UntypedFormGroup = new UntypedFormGroup({
+    comment: new FormControl<string>('', [
+      Validators.required,
+    ])
+  })
   public comments: UserComment[];
+  public commentAuthors: User[];
+  public loggedUser: User;
   public isClicked = false;
 
   private postId: string
@@ -30,6 +35,7 @@ export class CommentSectionComponent implements OnInit, OnDestroy{
 
   constructor(
     private readonly commentService: CommentService,
+    private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly changeDetectorRef: ChangeDetectorRef,
@@ -37,9 +43,18 @@ export class CommentSectionComponent implements OnInit, OnDestroy{
 
   public ngOnInit(): void {
     this.getPostId()
-    this.commentService.getComments(this.postId).pipe(takeUntil(this.unsubscriber)).subscribe((comments)=>{
-      this.comments = comments
-      this.changeDetectorRef.markForCheck()
+    this.getLoggedUser()
+    this.userService.getAuthorsOfTheComments(this.postId).pipe(takeUntil(this.unsubscriber)).subscribe((authors)=>{
+      this.commentService.getComments(this.postId).pipe(takeUntil(this.unsubscriber)).subscribe((comments)=>{
+        this.comments = comments.map((comment)=>{
+          const author = authors.find((author)=>author.id === comment.author.toString())
+          const commentObj = new UserComment(comment)
+          commentObj.author = author
+          return commentObj
+        });
+        
+        this.changeDetectorRef.markForCheck()
+      })
     })
   }
 
@@ -50,9 +65,19 @@ export class CommentSectionComponent implements OnInit, OnDestroy{
 
   public createComment(): void {
     const authorId = this.jwtService.getLoggedUsersId();
-    const comment = this.commentFormControl.getRawValue();
-    if (this.commentFormControl.valid)
-      this.commentService.createComment(authorId, this.postId, comment);
+    const comment = this.commentFormGroup.controls['comment'].getRawValue();
+    if (this.commentFormGroup.valid)
+      this.commentService.createComment(authorId, this.postId, comment).pipe(takeUntil(this.unsubscriber)).subscribe((comment)=>{
+      let newComment = new UserComment({
+        _id: comment._id,
+        author: this.loggedUser,
+        content: comment.content,
+        creationDate: comment.creationDate,
+        post:comment.post,
+      });
+      this.comments.unshift(newComment)
+      this.changeDetectorRef.markForCheck()
+    });
   }
 
   public commentInputClicked(): void {
@@ -65,5 +90,11 @@ export class CommentSectionComponent implements OnInit, OnDestroy{
 
   private getPostId(): void {
     this.postId = this.activatedRoute.snapshot.paramMap.get('id')
+  }
+
+  private getLoggedUser(): void {
+    this.userService.getUserById(this.jwtService.getLoggedUsersId()).pipe(takeUntil(this.unsubscriber)).subscribe((user)=>{
+      this.loggedUser = user;
+    })
   }
 }
