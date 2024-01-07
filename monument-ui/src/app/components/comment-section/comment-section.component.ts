@@ -19,18 +19,16 @@ import { Subject, map, takeUntil } from 'rxjs';
   styleUrls: ['./comment-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommentSectionComponent implements OnInit, OnDestroy{
+export class CommentSectionComponent implements OnInit, OnDestroy {
   public commentFormGroup: UntypedFormGroup = new UntypedFormGroup({
-    comment: new FormControl<string>('', [
-      Validators.required,
-    ])
-  })
+    comment: new FormControl<string>('', [Validators.required]),
+  });
   public comments: UserComment[];
   public commentAuthors: User[];
   public loggedUser: User;
   public isClicked = false;
 
-  private postId: string
+  private postId: string;
   private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(
@@ -42,20 +40,28 @@ export class CommentSectionComponent implements OnInit, OnDestroy{
   ) {}
 
   public ngOnInit(): void {
-    this.getPostId()
-    this.getLoggedUser()
-    this.userService.getAuthorsOfTheComments(this.postId).pipe(takeUntil(this.unsubscriber)).subscribe((authors)=>{
-      this.commentService.getComments(this.postId).pipe(takeUntil(this.unsubscriber)).subscribe((comments)=>{
-        this.comments = comments.map((comment)=>{
-          const author = authors.find((author)=>author.id === comment.author.toString())
-          const commentObj = new UserComment(comment)
-          commentObj.author = author
-          return commentObj
-        });
-        
-        this.changeDetectorRef.markForCheck()
-      })
-    })
+    this.getPostId();
+    this.getLoggedUser();
+    this.userService
+      .getAuthorsOfTheComments(this.postId)
+      .pipe(takeUntil(this.unsubscriber))
+      .subscribe((authors) => {
+        this.commentService
+          .getComments(this.postId)
+          .pipe(takeUntil(this.unsubscriber))
+          .subscribe((comments) => {
+            this.comments = comments.map((comment) => {
+              const author = authors.find(
+                (author) => author.id === comment.author.toString(),
+              );
+              const commentObj = new UserComment(comment);
+              commentObj.author = author;
+              return commentObj;
+            });
+
+            this.changeDetectorRef.markForCheck();
+          });
+      });
   }
 
   public ngOnDestroy(): void {
@@ -67,17 +73,20 @@ export class CommentSectionComponent implements OnInit, OnDestroy{
     const authorId = this.jwtService.getLoggedUsersId();
     const comment = this.commentFormGroup.controls['comment'].getRawValue();
     if (this.commentFormGroup.valid)
-      this.commentService.createComment(authorId, this.postId, comment).pipe(takeUntil(this.unsubscriber)).subscribe((comment)=>{
-      let newComment = new UserComment({
-        _id: comment._id,
-        author: this.loggedUser,
-        content: comment.content,
-        creationDate: comment.creationDate,
-        post:comment.post,
-      });
-      this.comments.unshift(newComment)
-      this.changeDetectorRef.markForCheck()
-    });
+      this.commentService
+        .createComment(authorId, this.postId, comment)
+        .pipe(takeUntil(this.unsubscriber))
+        .subscribe((comment) => {
+          const newComment = new UserComment({
+            _id: comment._id,
+            author: this.loggedUser,
+            content: comment.content,
+            creationDate: comment.creationDate,
+            post: comment.post,
+          });
+          this.comments.unshift(newComment);
+          this.changeDetectorRef.markForCheck();
+        });
   }
 
   public commentInputClicked(): void {
@@ -89,12 +98,15 @@ export class CommentSectionComponent implements OnInit, OnDestroy{
   }
 
   private getPostId(): void {
-    this.postId = this.activatedRoute.snapshot.paramMap.get('id')
+    this.postId = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
   private getLoggedUser(): void {
-    this.userService.getUserById(this.jwtService.getLoggedUsersId()).pipe(takeUntil(this.unsubscriber)).subscribe((user)=>{
-      this.loggedUser = user;
-    })
+    this.userService
+      .getUserById(this.jwtService.getLoggedUsersId())
+      .pipe(takeUntil(this.unsubscriber))
+      .subscribe((user) => {
+        this.loggedUser = user;
+      });
   }
 }

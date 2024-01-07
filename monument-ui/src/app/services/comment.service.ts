@@ -19,12 +19,14 @@ export class CommentService {
     postId: string,
     content: string,
   ): Observable<CommentResponse> {
-    return this.commentApiService
-      .createComment({ postId: postId, authorId: userId, content: content })
+    return this.commentApiService.createComment({
+      postId: postId,
+      authorId: userId,
+      content: content,
+    });
   }
 
   public getComments(postId: string): Observable<CommentResponse[]> {
-    return this.commentApiService
-      .getComments(postId)
+    return this.commentApiService.getComments(postId);
   }
 }

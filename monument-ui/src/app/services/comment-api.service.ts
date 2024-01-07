@@ -23,7 +23,9 @@ export class CommentApiService {
     const httpOptions = {
       headers: header,
     };
-    return this.http.post<any>(`${COMMENT_URL}`, body, httpOptions).pipe(map((response)=> response.createdComment));
+    return this.http
+      .post<any>(`${COMMENT_URL}`, body, httpOptions)
+      .pipe(map((response) => response.createdComment));
   }
 
   public getComments(postId): Observable<CommentResponse[]> {
