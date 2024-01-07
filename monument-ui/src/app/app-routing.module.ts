@@ -7,6 +7,8 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UsersPostComponent } from './components/users-post/users-post.component';
 import { LikedPostsComponent } from './components/liked-posts/liked-posts.component';
+import { RegisterComponent } from './components/register/register.component';
+import { MessageComponent } from './components/message/message.component';
 
 const routes: Routes = [
   {
@@ -50,6 +52,10 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard],
       },
+      {
+        path: 'user-registered',
+        component: MessageComponent,
+      }
     ],
   },
   { path: '**', redirectTo: 'home' },

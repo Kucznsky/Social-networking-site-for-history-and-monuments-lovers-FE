@@ -23,8 +23,6 @@ export class LoginComponent {
   @ViewChild('openModalBtn') openModalBtn: ElementRef;
   @ViewChild('closeBtn') closeBtn: ElementRef;
 
-  constructor(private readonly userAuthService: UserAuthService) {}
-
   public loginFormGroup: UntypedFormGroup = new UntypedFormGroup({
     email: new UntypedFormControl(null, [
       Validators.required,
@@ -32,6 +30,8 @@ export class LoginComponent {
     ]),
     password: new UntypedFormControl(null, [Validators.required]),
   });
+
+  constructor(private readonly userAuthService: UserAuthService) {}
 
   public logIn(): void {
     if (this.loginFormGroup.valid) {

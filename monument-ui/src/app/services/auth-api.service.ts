@@ -15,6 +15,6 @@ export class AuthApiService {
   }
 
   public register(body: userCredentials): Observable<void> {
-    return this.http.post<void>(`${AUTH_URL}/login`, body);
+    return this.http.post<void>(`${AUTH_URL}/register`, body);
   }
 }

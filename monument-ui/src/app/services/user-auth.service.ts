@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { AuthApiService } from './auth-api.service';
 import { LocalStorageKeys } from '../enums';
-import { BehaviorSubject, Observable, finalize } from 'rxjs';
+import { BehaviorSubject, Observable, finalize, take } from 'rxjs';
 import { User } from '../models';
 import { UserApiService } from './user-api.service';
 import { JwtService } from './jwt.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,15 @@ export class UserAuthService {
   constructor(
     private readonly authApiService: AuthApiService,
     private readonly userApiService: UserApiService,
-    private jwtService: JwtService,
+    private readonly jwtService: JwtService,
+    private readonly router: Router,
   ) {}
+
+  public register(userName: string, email: string, password: string): void {
+    this.authApiService.register({email: email, password: password, userName: userName}).pipe(take(1)).subscribe(()=> {
+      this.router.navigate(['user-registered'])
+    })
+  }
 
   public login(email: string, password: string): void {
     this.authApiService
