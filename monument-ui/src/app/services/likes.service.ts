@@ -22,9 +22,12 @@ export class LikesService {
   }
 
   public getUsersLikes(userId: string): void {
-    this.likesApiService.fetchUserLikes(userId).pipe(take(1)).subscribe((usersLikes) => {
-      this.usersLikes.next(usersLikes);
-    });
+    this.likesApiService
+      .fetchUserLikes(userId)
+      .pipe(take(1))
+      .subscribe((usersLikes) => {
+        this.usersLikes.next(usersLikes);
+      });
   }
 
   public getUsersLikesObservable(): Observable<LikeResponseBody[]> {

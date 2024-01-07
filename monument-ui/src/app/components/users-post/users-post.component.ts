@@ -50,7 +50,7 @@ export class UsersPostComponent implements OnInit, OnDestroy {
             post.author.toString() ===
             this.activatedRoute.snapshot.paramMap.get('id'),
         );
-        if(this.jwtService.isTokenValid()){
+        if (this.jwtService.isTokenValid()) {
           this.getUsersLikes();
           this.observeUsersLikes();
         }

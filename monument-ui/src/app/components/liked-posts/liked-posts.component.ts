@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersPost } from '../../models';
@@ -40,12 +44,13 @@ export class LikedPostsComponent {
       .getPostsObservable()
       .pipe(takeUntil(this.unsubscriber))
       .subscribe((posts) => {
-        const likes = this.likesService.getUsersLikesValue()
-        this.posts = posts.filter(
-          (post) =>
-            likes.some((like)=> like.postId === post._id)
+        const likes = this.likesService.getUsersLikesValue();
+        this.posts = posts.filter((post) =>
+          likes.some((like) => like.postId === post._id),
         );
-        this.posts.map((post)=> {return post.isLiked = true})
+        this.posts.map((post) => {
+          return (post.isLiked = true);
+        });
         this.changeDetectorRef.markForCheck();
       });
   }

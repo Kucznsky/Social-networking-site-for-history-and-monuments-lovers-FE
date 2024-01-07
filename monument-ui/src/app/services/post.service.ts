@@ -10,9 +10,9 @@ export class PostService {
   private listOfPosts: BehaviorSubject<UsersPost[]> = new BehaviorSubject<
     UsersPost[]
   >([]);
-  private post: BehaviorSubject<UsersPost> = new BehaviorSubject<
-  UsersPost
->(undefined);
+  private post: BehaviorSubject<UsersPost> = new BehaviorSubject<UsersPost>(
+    undefined,
+  );
 
   constructor(private postApiService: PostApiService) {}
 
@@ -27,7 +27,9 @@ export class PostService {
   }
 
   public getPostById(postId: string): Observable<UsersPost> {
-    return this.postApiService.fetchPost(postId).pipe(map((post)=>new UsersPost(post)))
+    return this.postApiService
+      .fetchPost(postId)
+      .pipe(map((post) => new UsersPost(post)));
   }
 
   // public getPostValue(): UsersPost {

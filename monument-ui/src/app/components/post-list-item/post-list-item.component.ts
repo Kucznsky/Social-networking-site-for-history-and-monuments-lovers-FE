@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersPost } from 'src/app/models';
@@ -28,7 +34,7 @@ export class PostListItemComponent implements OnDestroy {
   }
 
   public addRemoveLike(isLiked: boolean): void {
-    if(this.userId){
+    if (this.userId) {
       if (isLiked) {
         this.likesService
           .removeLike(this.userId, this.post._id)
@@ -36,7 +42,7 @@ export class PostListItemComponent implements OnDestroy {
           .subscribe(() => {
             this.post.isLiked = !isLiked;
             this.post.numberOfLikes -= 1;
-            this.changeDetectorRef.markForCheck()
+            this.changeDetectorRef.markForCheck();
           });
       } else {
         this.likesService
@@ -45,7 +51,7 @@ export class PostListItemComponent implements OnDestroy {
           .subscribe(() => {
             this.post.isLiked = !isLiked;
             this.post.numberOfLikes += 1;
-            this.changeDetectorRef.markForCheck()
+            this.changeDetectorRef.markForCheck();
           });
       }
     }

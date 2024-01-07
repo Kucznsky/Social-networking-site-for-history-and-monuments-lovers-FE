@@ -55,7 +55,7 @@ const routes: Routes = [
       {
         path: 'user-registered',
         component: MessageComponent,
-      }
+      },
     ],
   },
   { path: '**', redirectTo: 'home' },

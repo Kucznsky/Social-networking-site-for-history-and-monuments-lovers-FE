@@ -11,13 +11,13 @@ export class PostsListComponent implements OnInit {
   @Input() posts: UsersPost[];
   @Input() isUsersPostSection = false;
 
-  public userId: string
+  public userId: string;
 
-  constructor(private readonly jwtService: JwtService){}
+  constructor(private readonly jwtService: JwtService) {}
 
   public ngOnInit(): void {
-    if(this.jwtService.isTokenValid()){
-      this.userId = this.jwtService.getLoggedUsersId()
+    if (this.jwtService.isTokenValid()) {
+      this.userId = this.jwtService.getLoggedUsersId();
     }
   }
 }

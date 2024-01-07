@@ -21,6 +21,8 @@ import { LikedPostsComponent } from './components/liked-posts/liked-posts.compon
 import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 import { PostsListComponent } from './components/posts-list/posts-list.component';
 import { MessageComponent } from './components/message/message.component';
+import { CommentSectionComponent } from './components/comment-section/comment-section.component';
+import { CommentListItemComponent } from './components/comment-list-item/comment-list-item.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt_token');
@@ -44,6 +46,8 @@ export function tokenGetter() {
     UserAvatarComponent,
     PostsListComponent,
     MessageComponent,
+    CommentSectionComponent,
+    CommentListItemComponent,
   ],
   imports: [
     BrowserModule,

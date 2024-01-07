@@ -1,7 +1,9 @@
 import { UserResponse } from './user.interface';
 
 export interface CommentResponse {
-  id: string;
+  _id: string;
+  author: string;
+  post: string;
   content: string;
-  authorId: string;
+  creationDate: Date;
 }

@@ -24,9 +24,12 @@ export class UserAuthService {
   ) {}
 
   public register(userName: string, email: string, password: string): void {
-    this.authApiService.register({email: email, password: password, userName: userName}).pipe(take(1)).subscribe(()=> {
-      this.router.navigate(['user-registered'])
-    })
+    this.authApiService
+      .register({ email: email, password: password, userName: userName })
+      .pipe(take(1))
+      .subscribe(() => {
+        this.router.navigate(['user-registered']);
+      });
   }
 
   public login(email: string, password: string): void {

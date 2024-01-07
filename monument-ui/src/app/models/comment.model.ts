@@ -2,9 +2,11 @@ import { User } from './user.model';
 import { CommentResponse } from '../interfaces';
 
 export class UserComment {
-  id: string = '';
+  _id: string = '';
+  author: User;
+  post: string;
   content: string = '';
-  authorId: string = '';
+  creationDate: Date;
   constructor(commentResponseData: CommentResponse) {
     Object.assign(this, commentResponseData);
   }

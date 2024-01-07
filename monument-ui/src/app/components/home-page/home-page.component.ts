@@ -129,8 +129,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.filteredPosts = posts.sort((a, b) => {
           return b.numberOfLikes - a.numberOfLikes;
         });
-        if(this.jwtService.isTokenValid()){
-          this.getUsersLikes()
+        if (this.jwtService.isTokenValid()) {
+          this.getUsersLikes();
           this.observeUsersLikes();
         }
         this.changeDetectorRef.markForCheck();

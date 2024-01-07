@@ -5,7 +5,16 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { confirmPasswordValidator } from 'src/app/validators/custom-validators';
 
@@ -32,10 +41,7 @@ export class RegisterComponent {
 
   public registerFormGroup: FormGroup = new FormGroup({
     userName: new FormControl<string>('', [Validators.required]),
-    email: new FormControl<string>('', [
-      Validators.required,
-      Validators.email,
-    ]),
+    email: new FormControl<string>('', [Validators.required, Validators.email]),
     password: new FormControl<string>('', [Validators.required]),
   });
 
@@ -49,7 +55,7 @@ export class RegisterComponent {
         this.registerFormGroup.controls['password'].getRawValue(),
       );
     } else {
-      console.log('blb')
+      console.log('blb');
     }
   }
 
