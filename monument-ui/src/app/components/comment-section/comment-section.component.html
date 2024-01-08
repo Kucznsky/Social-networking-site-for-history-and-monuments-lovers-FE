@@ -7,7 +7,7 @@
         </div>
     </form>
     <div class="divider divider-start mt-8">Comments</div>
-    <ng-container *ngIf="comments; else noCommentsMessage">
+    <ng-container *ngIf="comments.length; else noCommentsMessage">
         <ng-container *ngFor="let comment of comments">
             <app-comment-list-item [commentData]="comment"></app-comment-list-item>
         </ng-container>
