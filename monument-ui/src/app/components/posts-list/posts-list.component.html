@@ -1,5 +1,10 @@
 <div class="bg-white shadow-lg p-10 mx-10 mt-4 mb-10 rounded-2xl flex flex-wrap justify-center gap-20">
-    <div *ngFor="let post of posts">
-        <app-post-list-item [post]="post" [isUsersPostSection]="isUsersPostSection" [userId]="userId"></app-post-list-item>
-    </div>
+    <ng-container *ngIf="posts.length; else noPostsMessage">
+        <div *ngFor="let post of posts">
+            <app-post-list-item [post]="post" [isUsersPostSection]="isUsersPostSection" [userId]="userId"></app-post-list-item>
+        </div>
+    </ng-container>
+    <ng-template #noPostsMessage>
+        <div class="font-bold">Looks like there are no posts yet.</div>
+    </ng-template>
 </div>

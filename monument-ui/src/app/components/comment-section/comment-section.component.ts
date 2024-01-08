@@ -9,7 +9,7 @@ import { CommentService } from '../../services/comment.service';
 import { JwtService } from '../../services/jwt.service';
 import { UserService } from '../../services/user.service';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User, UserComment } from '../../models';
 import { Subject, map, takeUntil } from 'rxjs';
 
@@ -36,6 +36,7 @@ export class CommentSectionComponent implements OnInit, OnDestroy {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
@@ -95,7 +96,11 @@ export class CommentSectionComponent implements OnInit, OnDestroy {
   }
 
   public commentInputClicked(): void {
-    this.isClicked = true;
+    if(this.jwtService.isTokenValid()) {
+      this.isClicked = true;
+    } else {
+      this.router.navigate(['/auth'])
+    }
   }
 
   public cancelClicked(): void {

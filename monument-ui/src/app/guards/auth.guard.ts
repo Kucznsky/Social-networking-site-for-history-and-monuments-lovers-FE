@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
@@ -12,7 +13,7 @@ import { JwtService } from '../services/jwt.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(private readonly jwtService: JwtService, private readonly router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -23,10 +24,7 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (!this.jwtService.isTokenValid()) {
-      // this.sessionStorageService.setItem(
-      //   SessionStorageKeys.ShouldOpenLoginModal,
-      //   true,
-      // );
+      this.router.navigate(['/auth']);
       return false;
     } else {
       return true;

@@ -9,6 +9,7 @@ import { UsersPostComponent } from './components/users-post/users-post.component
 import { LikedPostsComponent } from './components/liked-posts/liked-posts.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MessageComponent } from './components/message/message.component';
+import { RegisterLoginPageComponent } from './components/register-login-page/register-login-page.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
         path: 'user-registered',
         component: MessageComponent,
       },
+      {
+        path: 'auth',
+        component: RegisterLoginPageComponent,
+      }
     ],
   },
   { path: '**', redirectTo: 'home' },

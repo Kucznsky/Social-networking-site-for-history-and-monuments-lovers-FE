@@ -54,6 +54,8 @@ export class PostListItemComponent implements OnDestroy {
             this.changeDetectorRef.markForCheck();
           });
       }
+    } else {
+      this.router.navigate(['/auth'])
     }
   }
 

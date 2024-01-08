@@ -1,5 +1,5 @@
 <div class="bg-white shadow-lg p-10 mx-10 mt-4 mb-10 rounded-2xl">
-    <p class="font-bold text-lg mb-4">{{comments.length}} comments</p>
+    <p class="font-bold text-lg mb-4">{{comments.length ? comments.length : 0}} comments</p>
     <form [formGroup]="commentFormGroup" (submit)="createComment()">
         <input type="text" formControlName="comment" placeholder="Type a comment" (click)="commentInputClicked()" class="input w-full bg-white border-light-grey" />
         <div *ngIf="isClicked" class="gap-2 flex justify-end mt-2">

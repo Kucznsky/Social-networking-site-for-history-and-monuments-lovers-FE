@@ -23,6 +23,7 @@ import { PostsListComponent } from './components/posts-list/posts-list.component
 import { MessageComponent } from './components/message/message.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 import { CommentListItemComponent } from './components/comment-list-item/comment-list-item.component';
+import { RegisterLoginPageComponent } from './components/register-login-page/register-login-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt_token');
@@ -48,6 +49,7 @@ export function tokenGetter() {
     MessageComponent,
     CommentSectionComponent,
     CommentListItemComponent,
+    RegisterLoginPageComponent,
   ],
   imports: [
     BrowserModule,
