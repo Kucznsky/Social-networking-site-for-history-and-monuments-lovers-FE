@@ -1,12 +1,14 @@
 <div class="bg-white shadow-md px-2 py-4 flex flex-row gap-4 my-8 w-full">
-    <div class="avatar">
-        <div class="w-12 rounded-full">
-          <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+    <a routerLink="/users-posts/{{commentData.author.id}}">
+        <div class="avatar">
+            <div class="w-12 rounded-full">
+                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            </div>
         </div>
-    </div>
+    </a>
     <div>
         <div class="flex flex-row gap-2">
-            <p class="font-bold text-main">{{commentData.author.userName}}</p>
+            <a class="font-bold text-main" routerLink="/users-posts/{{commentData.author.id}}">{{commentData.author.userName}}</a>
             <p class="text-grey font-thin">{{commentData.creationDate | date: "dd-MM-YYYY"}}</p>           
         </div>
         {{commentData.content}}
