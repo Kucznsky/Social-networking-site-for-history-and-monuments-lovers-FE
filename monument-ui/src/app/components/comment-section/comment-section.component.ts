@@ -59,6 +59,11 @@ export class CommentSectionComponent implements OnInit, OnDestroy {
               return commentObj;
             });
 
+            this.comments.sort((a, b) => {
+              return (
+                new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
+              );
+            });
             this.changeDetectorRef.markForCheck();
           });
       });
