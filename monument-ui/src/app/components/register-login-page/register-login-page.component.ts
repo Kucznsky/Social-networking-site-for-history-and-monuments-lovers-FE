@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-login-page',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./register-login-page.component.scss']
 })
 export class RegisterLoginPageComponent {
-
+  constructor(private router : Router){}
 }
