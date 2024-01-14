@@ -10,6 +10,7 @@ import { LikedPostsComponent } from './components/liked-posts/liked-posts.compon
 import { RegisterComponent } from './components/register/register.component';
 import { MessageComponent } from './components/message/message.component';
 import { RegisterLoginPageComponent } from './components/register-login-page/register-login-page.component';
+import { AuthenticationPageGuard } from './guards/authentication-page.guard';
 
 const routes: Routes = [
   {
@@ -60,10 +61,12 @@ const routes: Routes = [
       {
         path: 'auth/login',
         component: RegisterLoginPageComponent,
+        canActivate: [AuthenticationPageGuard],
       },
       {
         path: 'auth/register',
         component: RegisterLoginPageComponent,
+        canActivate: [AuthenticationPageGuard],
       }
     ],
   },
