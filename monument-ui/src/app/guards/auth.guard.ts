@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (!this.jwtService.isTokenValid()) {
-      this.router.navigate(['/auth']);
+      this.router.navigate(['/auth/login']);
       return false;
     } else {
       return true;

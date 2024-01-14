@@ -55,7 +55,7 @@ export class PostListItemComponent implements OnDestroy {
           });
       }
     } else {
-      this.router.navigate(['/auth'])
+      this.router.navigate(['/auth/login'])
     }
   }
 

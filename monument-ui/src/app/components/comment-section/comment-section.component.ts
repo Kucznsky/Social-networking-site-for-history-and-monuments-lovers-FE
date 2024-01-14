@@ -99,7 +99,7 @@ export class CommentSectionComponent implements OnInit, OnDestroy {
     if(this.jwtService.isTokenValid()) {
       this.isClicked = true;
     } else {
-      this.router.navigate(['/auth'])
+      this.router.navigate(['/auth/login'])
     }
   }
 

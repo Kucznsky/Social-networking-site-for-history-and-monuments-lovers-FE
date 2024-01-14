@@ -1,11 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { NavigationEnd, Router } from '@angular/router';
 import { RegisterComponent } from '../register/register.component';
 import { LoginComponent } from '../login/login.component';
-import { SessionStorageService } from 'src/app/services/session-storage.service';
-import { LocalStorageKeys, SessionStorageKeys } from 'src/app/enums';
-import { Subject, of, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 import { JwtService } from 'src/app/services/jwt.service';
 
@@ -18,12 +15,11 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   @ViewChild(RegisterComponent) register: RegisterComponent;
   @ViewChild(LoginComponent) login: LoginComponent;
   public isUserLoggedIn: boolean;
+  public isAuthScreenVisible: boolean;
   private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(
     private readonly router: Router,
-    // private readonly localStorageService: LocalStorageService,
-    // private readonly sessionStorageService: SessionStorageService,
     private readonly jwtService: JwtService,
     private readonly userAuthService: UserAuthService,
   ) {}
@@ -33,6 +29,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     if (this.jwtService.isTokenValid()) {
       this.userAuthService.getLoggedUser();
     }
+    this.observeRouterChange()
   }
 
   public ngOnDestroy() {
@@ -56,17 +53,12 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     this.register.openModalBtn.nativeElement.click();
   }
 
-  // private observeSessionStorage(): void {
-  //   of(
-  //     this.sessionStorageService.getItem(
-  //       SessionStorageKeys.ShouldOpenLoginModal,
-  //     ),
-  //   )
-  //     .pipe(takeUntil(this.unsubscriber))
-  //     .subscribe((item) => {
-  //       if(item){
-  //         this.openLoginModal(false);
-  //       }
-  //     });
-  // }
+  private observeRouterChange(): void {
+    this.router.events.forEach((event) => {
+      if(event instanceof NavigationEnd) {
+        console.log(/auth/.test(this.router.url))
+        this.isAuthScreenVisible= /auth/.test(this.router.url)
+      }
+    });
+  }
 }

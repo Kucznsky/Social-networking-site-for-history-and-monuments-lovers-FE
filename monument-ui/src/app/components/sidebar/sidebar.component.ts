@@ -22,7 +22,7 @@ export class SidebarComponent implements OnInit {
 
   public isLoggedIn(): void {
     if(!this.jwtService.isTokenValid()) {
-      this.router.navigate(['/auth'])
+      this.router.navigate(['/auth/login'])
     }
   }
 }

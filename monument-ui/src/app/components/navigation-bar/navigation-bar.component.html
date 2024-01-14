@@ -1,18 +1,24 @@
 <div class="navbar justify-between bg-white shadow-md">
     <div>
-      <app-sidebar></app-sidebar>
+      <ng-container *ngIf="!isAuthScreenVisible">
+        <app-sidebar></app-sidebar>
+      </ng-container>
       <div class="flex">
         <a class="btn btn-ghost text-xl text-main" (click)="redirectToHomePage()">History Monument App</a>
       </div>
-      <app-search></app-search>
+      <ng-container *ngIf="!isAuthScreenVisible">
+        <app-search></app-search>
+      </ng-container>
     </div>
     <div class="justify-end gap-2 mr-2">
       <ng-container *ngIf="isUserLoggedIn; else registerLoginPanel">
         <app-user-avatar></app-user-avatar>
       </ng-container>
       <ng-template #registerLoginPanel>
-        <app-login (goToRegister)="openRegisterModal()"></app-login>
-        <app-register (goToLogin)="openLoginModal()"></app-register>
+        <ng-container *ngIf="!isAuthScreenVisible">
+          <app-login (goToRegister)="openRegisterModal()"></app-login>
+          <app-register (goToLogin)="openLoginModal()"></app-register>
+        </ng-container>
       </ng-template>
     </div>
   </div>
