@@ -6,7 +6,7 @@ export class User {
   email: string;
   dateOfJoining: Date;
   // favouritePosts?: string[] = [];
-  // avatar?: string = '';
+  avatar?: string = '';
   // userDescription?: string = '';
   isActive: boolean;
   isStaff: boolean;

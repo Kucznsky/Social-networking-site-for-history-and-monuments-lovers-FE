@@ -3,7 +3,7 @@ export interface UserResponse {
   email: string;
   userName: string;
   // favouritePosts: string[];
-  // avatar: string;
+  avatar: string;
   // userDescription: string;
   dateOfJoining: Date;
   isStaff: boolean;
