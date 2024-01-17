@@ -4,7 +4,9 @@ import {
   Component,
   Input,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersPost } from 'src/app/models';
@@ -16,17 +18,25 @@ import { LikesService } from 'src/app/services/likes.service';
   styleUrls: ['./post-list-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostListItemComponent implements OnDestroy {
+export class PostListItemComponent implements OnInit, OnDestroy {
   @Input() post: UsersPost;
   @Input() isUsersPostSection: boolean;
   @Input() userId: string;
+
+  public postImage
+
   private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(
     private readonly likesService: LikesService,
     private readonly router: Router,
+    private domSanitizer: DomSanitizer,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
+
+  public ngOnInit(): void {
+    this.sanitizeImageUrl()
+  }
 
   public ngOnDestroy() {
     this.unsubscriber.next();
@@ -61,5 +71,9 @@ export class PostListItemComponent implements OnDestroy {
 
   public navigateToPostPage(postId: string): void {
     this.router.navigateByUrl(`/post/${postId}`);
+  }
+
+  private sanitizeImageUrl(): void {
+    this.postImage = this.domSanitizer.bypassSecurityTrustUrl(this.post.thumbnail)
   }
 }

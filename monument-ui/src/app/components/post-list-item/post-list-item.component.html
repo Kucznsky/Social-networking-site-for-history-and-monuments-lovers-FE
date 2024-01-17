@@ -1,6 +1,6 @@
 <div class="card w-96 shadow-lg cursor-pointer">
   <div class="hover:opacity-90 bg-base-100 rounded-t-2xl" (click)="navigateToPostPage(post._id)">
-    <figure><img src="https://cdn.getyourguide.com/img/location/60096d8b4abac.jpeg/99.jpg" alt="SomeCastle" /></figure>
+    <figure><img [src]="this.postImage" alt="SomeCastle" /></figure>
     <div class="card-body p-4">
       <div class="flex flex-row justify-between">
         <h2 class="card-title text-grey">
