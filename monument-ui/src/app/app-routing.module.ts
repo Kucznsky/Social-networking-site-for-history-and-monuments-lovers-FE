@@ -11,6 +11,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { MessageComponent } from './components/message/message.component';
 import { RegisterLoginPageComponent } from './components/register-login-page/register-login-page.component';
 import { AuthenticationPageGuard } from './guards/authentication-page.guard';
+import { UserPageComponent } from './components/user-page/user-page.component';
 
 const routes: Routes = [
   {
@@ -67,6 +68,10 @@ const routes: Routes = [
         path: 'auth/register',
         component: RegisterLoginPageComponent,
         canActivate: [AuthenticationPageGuard],
+      },
+      {
+        path: 'user/:userId',
+        component: UserPageComponent,
       }
     ],
   },

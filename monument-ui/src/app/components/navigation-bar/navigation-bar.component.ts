@@ -56,7 +56,6 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   private observeRouterChange(): void {
     this.router.events.forEach((event) => {
       if(event instanceof NavigationEnd) {
-        console.log(/auth/.test(this.router.url))
         this.isAuthScreenVisible= /auth/.test(this.router.url)
       }
     });
