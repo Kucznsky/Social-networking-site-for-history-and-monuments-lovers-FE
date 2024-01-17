@@ -3,8 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { RegisterComponent } from '../register/register.component';
 import { LoginComponent } from '../login/login.component';
 import { Subject } from 'rxjs';
-import { UserAuthService } from 'src/app/services/user-auth.service';
-import { JwtService } from 'src/app/services/jwt.service';
+import { UserAuthService } from '../../services/user-auth.service';
+import { JwtService } from '../../services/jwt.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -28,6 +28,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     this.isUserLoggedIn = this.jwtService.isTokenValid();
     if (this.jwtService.isTokenValid()) {
       this.userAuthService.getLoggedUser();
+
     }
     this.observeRouterChange()
   }
