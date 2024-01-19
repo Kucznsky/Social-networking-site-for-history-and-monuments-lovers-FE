@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subject, takeUntil } from 'rxjs';
 import { User } from '../../models';
@@ -13,9 +19,9 @@ import { UserAuthService } from '../../services/user-auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserAvatarComponent implements OnInit, OnDestroy {
-  public loggedUser: User
-  public usersAvatar
-  public usersPlaceholerInitials: string
+  public loggedUser: User;
+  public usersAvatar;
+  public usersPlaceholerInitials: string;
 
   private readonly unsubscriber: Subject<void> = new Subject();
 
@@ -23,11 +29,11 @@ export class UserAvatarComponent implements OnInit, OnDestroy {
     private readonly userAuthService: UserAuthService,
     private readonly jwtService: JwtService,
     private readonly domSanitizer: DomSanitizer,
-    private readonly changeDetectorRef: ChangeDetectorRef
+    private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   public ngOnInit(): void {
-    this.getLoggedUsersData()
+    this.getLoggedUsersData();
   }
 
   public ngOnDestroy() {
@@ -42,19 +48,26 @@ export class UserAvatarComponent implements OnInit, OnDestroy {
   }
 
   private getLoggedUsersData(): void {
-    this.userAuthService.getLoggedUserObservable().pipe(takeUntil(this.unsubscriber)).subscribe((user)=>{
-      this.loggedUser = user
-      this.sanitizeImageUrl()
-      this.changeDetectorRef.markForCheck();
-    })
+    this.userAuthService
+      .getLoggedUserObservable()
+      .pipe(takeUntil(this.unsubscriber))
+      .subscribe((user) => {
+        this.loggedUser = user;
+        this.sanitizeImageUrl();
+        this.changeDetectorRef.markForCheck();
+      });
   }
 
   private sanitizeImageUrl(): void {
-    if(this.loggedUser?.avatar){
-      this.usersAvatar = this.domSanitizer.bypassSecurityTrustUrl(this.loggedUser?.avatar)
+    if (this.loggedUser?.avatar) {
+      this.usersAvatar = this.domSanitizer.bypassSecurityTrustUrl(
+        this.loggedUser?.avatar,
+      );
     } else {
       this.usersAvatar = null;
-      this.usersPlaceholerInitials = this.loggedUser.userName.charAt(0).toUpperCase()
+      this.usersPlaceholerInitials = this.loggedUser.userName
+        .charAt(0)
+        .toUpperCase();
     }
   }
 }

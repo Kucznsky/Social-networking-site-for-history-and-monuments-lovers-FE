@@ -7,12 +7,12 @@ import { UserAuthService } from '../../services/user-auth.service';
 @Component({
   selector: 'app-register-login-page',
   templateUrl: './register-login-page.component.html',
-  styleUrls: ['./register-login-page.component.scss']
+  styleUrls: ['./register-login-page.component.scss'],
 })
-export class RegisterLoginPageComponent implements OnInit{
+export class RegisterLoginPageComponent implements OnInit {
   public isLoginFormVisible: boolean;
-  public youDontHaveAnAccountMessage = `You don't have an account?`
-  public youAlreadyHaveAnAccountMessage = `You already have an account?`
+  public youDontHaveAnAccountMessage = `You don't have an account?`;
+  public youAlreadyHaveAnAccountMessage = `You already have an account?`;
 
   public authFormGroup: FormGroup = new FormGroup({
     userName: new FormControl<string>('', [Validators.required]),
@@ -20,28 +20,34 @@ export class RegisterLoginPageComponent implements OnInit{
     password: new FormControl<string>('', [Validators.required]),
   });
 
-  constructor(private router : Router, private readonly userAuthService: UserAuthService){}
+  constructor(
+    private router: Router,
+    private readonly userAuthService: UserAuthService,
+  ) {}
 
   public ngOnInit(): void {
     this.isStringOrRegisterFormOpen();
   }
 
   private isStringOrRegisterFormOpen(): void {
-    const urlFragment = new RegExp('login')
+    const urlFragment = new RegExp('login');
 
-    this.isLoginFormVisible = urlFragment.test(this.router.url)
+    this.isLoginFormVisible = urlFragment.test(this.router.url);
   }
 
   public loginOrRegister(): void {
-    if(this.isLoginFormVisible){
-      this.logIn()
+    if (this.isLoginFormVisible) {
+      this.logIn();
     } else {
-      this.register()
+      this.register();
     }
   }
 
   private logIn(): void {
-    if (this.authFormGroup.get('email').valid && this.authFormGroup.get('password').valid) {
+    if (
+      this.authFormGroup.get('email').valid &&
+      this.authFormGroup.get('password').valid
+    ) {
       this.userAuthService.login(
         this.authFormGroup.controls['email'].getRawValue(),
         this.authFormGroup.controls['password'].getRawValue(),

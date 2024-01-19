@@ -13,7 +13,10 @@ import { JwtService } from '../services/jwt.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService, private readonly router: Router) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly router: Router,
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,

@@ -1,10 +1,31 @@
-<div class="hero min-h-screen bg-base-200">
+<ng-container *ngIf="user | async as userData">
+  <div class="hero place-items-start min-h-screen bg-base-200">
     <div class="hero-content flex-col lg:flex-row">
-      <img src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg" class="max-w-sm rounded-lg shadow-2xl" />
+      <div class="avatar">
+        <ng-container *ngIf="userData.avatar; else placeholder">
+          <div class="w-40 rounded-full">
+            <img [src]="sanitizeImageUrl(userData.avatar)" />
+          </div>
+        </ng-container>
+        <ng-template #placeholder>
+          <div class="avatar placeholder">
+            <div class="bg-neutral text-neutral-content rounded-full w-40">
+              <span class="text-7xl pb-2">{{getUserInitials(userData.userName)}}</span>
+            </div>
+          </div> 
+        </ng-template>
+      </div>
       <div>
-        <h1 class="text-5xl font-bold">Box Office News!</h1>
-        <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-        <button class="btn btn-primary">Get Started</button>
+        <h1 class="text-5xl font-bold">{{userData.userName}}</h1>
+        <p class="py-6">Joined: {{userData.dateOfJoining | date:"dd-MM-YYYY"}}</p>
+        <a routerLink="/users-posts/{{userData.id}}">
+          <button class="btn bg-main text-white hover:bg-main hover:opacity-70 font-bold mr-2">Posts</button>
+        </a>
+        <a routerLink="/liked-posts/{{userData.id}}">
+          <button class="btn bg-main text-white hover:bg-main hover:opacity-70 font-bold">Liked</button>
+        </a>
       </div>
     </div>
   </div>
+</ng-container>
+

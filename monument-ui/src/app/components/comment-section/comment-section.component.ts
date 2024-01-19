@@ -62,7 +62,8 @@ export class CommentSectionComponent implements OnInit, OnDestroy {
 
             this.comments.sort((a, b) => {
               return (
-                new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
+                new Date(b.creationDate).getTime() -
+                new Date(a.creationDate).getTime()
               );
             });
             this.changeDetectorRef.markForCheck();
@@ -96,10 +97,10 @@ export class CommentSectionComponent implements OnInit, OnDestroy {
   }
 
   public commentInputClicked(): void {
-    if(this.jwtService.isTokenValid()) {
+    if (this.jwtService.isTokenValid()) {
       this.isClicked = true;
     } else {
-      this.router.navigate(['/auth/login'])
+      this.router.navigate(['/auth/login']);
     }
   }
 

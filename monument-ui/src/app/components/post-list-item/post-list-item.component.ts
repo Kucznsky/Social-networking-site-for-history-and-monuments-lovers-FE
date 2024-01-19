@@ -23,7 +23,7 @@ export class PostListItemComponent implements OnInit, OnDestroy {
   @Input() isUsersPostSection: boolean;
   @Input() userId: string;
 
-  public postImage
+  public postImage;
 
   private readonly unsubscriber: Subject<void> = new Subject();
 
@@ -35,7 +35,7 @@ export class PostListItemComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.sanitizeImageUrl()
+    this.sanitizeImageUrl();
   }
 
   public ngOnDestroy() {
@@ -65,7 +65,7 @@ export class PostListItemComponent implements OnInit, OnDestroy {
           });
       }
     } else {
-      this.router.navigate(['/auth/login'])
+      this.router.navigate(['/auth/login']);
     }
   }
 
@@ -74,6 +74,8 @@ export class PostListItemComponent implements OnInit, OnDestroy {
   }
 
   private sanitizeImageUrl(): void {
-    this.postImage = this.domSanitizer.bypassSecurityTrustUrl(this.post.thumbnail)
+    this.postImage = this.domSanitizer.bypassSecurityTrustUrl(
+      this.post.thumbnail,
+    );
   }
 }

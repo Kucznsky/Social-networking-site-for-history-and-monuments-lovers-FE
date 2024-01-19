@@ -14,15 +14,20 @@ import { UserAuthService } from 'src/app/services/user-auth.service';
 export class SidebarComponent implements OnInit {
   public userId;
 
-  constructor(private readonly jwtService: JwtService, private readonly router: Router) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly router: Router,
+  ) {}
 
   public ngOnInit() {
-    this.userId = this.jwtService.isTokenValid() ? this.jwtService.getLoggedUsersId() : ''
+    this.userId = this.jwtService.isTokenValid()
+      ? this.jwtService.getLoggedUsersId()
+      : '';
   }
 
   public isLoggedIn(): void {
-    if(!this.jwtService.isTokenValid()) {
-      this.router.navigate(['/auth/login'])
+    if (!this.jwtService.isTokenValid()) {
+      this.router.navigate(['/auth/login']);
     }
   }
 }

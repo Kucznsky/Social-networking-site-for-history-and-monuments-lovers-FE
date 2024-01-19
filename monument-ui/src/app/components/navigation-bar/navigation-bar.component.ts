@@ -28,9 +28,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     this.isUserLoggedIn = this.jwtService.isTokenValid();
     if (this.jwtService.isTokenValid()) {
       this.userAuthService.getLoggedUser();
-
     }
-    this.observeRouterChange()
+    this.observeRouterChange();
   }
 
   public ngOnDestroy() {
@@ -56,8 +55,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   private observeRouterChange(): void {
     this.router.events.forEach((event) => {
-      if(event instanceof NavigationEnd) {
-        this.isAuthScreenVisible= /auth/.test(this.router.url)
+      if (event instanceof NavigationEnd) {
+        this.isAuthScreenVisible = /auth/.test(this.router.url);
       }
     });
   }
