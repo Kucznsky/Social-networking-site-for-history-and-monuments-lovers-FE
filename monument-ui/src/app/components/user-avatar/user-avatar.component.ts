@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, filter, takeUntil } from 'rxjs';
 import { User } from '../../models';
 import { JwtService } from '../../services/jwt.service';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -20,6 +20,7 @@ import { UserAuthService } from '../../services/user-auth.service';
 })
 export class UserAvatarComponent implements OnInit, OnDestroy {
   public loggedUser: User;
+  public loggedUserObservable: Observable<User>
   public usersAvatar;
   public usersPlaceholerInitials: string;
 
@@ -33,6 +34,8 @@ export class UserAvatarComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
+    this.loggedUserObservable = this.userAuthService
+    .getLoggedUserObservable()
     this.getLoggedUsersData();
   }
 
@@ -50,7 +53,7 @@ export class UserAvatarComponent implements OnInit, OnDestroy {
   private getLoggedUsersData(): void {
     this.userAuthService
       .getLoggedUserObservable()
-      .pipe(takeUntil(this.unsubscriber))
+      .pipe(filter((user)=>!!user),takeUntil(this.unsubscriber))
       .subscribe((user) => {
         this.loggedUser = user;
         this.sanitizeImageUrl();
