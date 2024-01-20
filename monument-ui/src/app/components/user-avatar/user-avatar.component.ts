@@ -20,7 +20,7 @@ import { UserAuthService } from '../../services/user-auth.service';
 })
 export class UserAvatarComponent implements OnInit, OnDestroy {
   public loggedUser: User;
-  public loggedUserObservable: Observable<User>
+  public loggedUserObservable: Observable<User>;
   public usersAvatar;
   public usersPlaceholerInitials: string;
 
@@ -34,8 +34,7 @@ export class UserAvatarComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.loggedUserObservable = this.userAuthService
-    .getLoggedUserObservable()
+    this.loggedUserObservable = this.userAuthService.getLoggedUserObservable();
     this.getLoggedUsersData();
   }
 
@@ -53,7 +52,10 @@ export class UserAvatarComponent implements OnInit, OnDestroy {
   private getLoggedUsersData(): void {
     this.userAuthService
       .getLoggedUserObservable()
-      .pipe(filter((user)=>!!user),takeUntil(this.unsubscriber))
+      .pipe(
+        filter((user) => !!user),
+        takeUntil(this.unsubscriber),
+      )
       .subscribe((user) => {
         this.loggedUser = user;
         this.sanitizeImageUrl();

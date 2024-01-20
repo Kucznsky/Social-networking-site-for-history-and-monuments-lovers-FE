@@ -65,7 +65,12 @@ export class RegisterLoginPageComponent implements OnInit {
     }
   }
 
-  // public isFormErroneous(fieldName: string): boolean {
-  //   return this.authFormGroup.get(fieldName).errors
-  // }
+  public isFormErroneous(fieldName: string): boolean {
+    return (
+      (this.authFormGroup.get(fieldName).errors?.['required'] ||
+        this.authFormGroup.get(fieldName).errors?.['email']) &&
+      (this.authFormGroup.get(fieldName).dirty ||
+        this.authFormGroup.get(fieldName).touched)
+    );
+  }
 }

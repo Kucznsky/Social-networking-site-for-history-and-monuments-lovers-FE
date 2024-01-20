@@ -11,20 +11,44 @@
               <span class="label-text">User name</span>
             </label>
             <input type="email" formControlName="userName" placeholder="email" class="input input-bordered bg-white shadow-md" required />
+            <ng-container *ngIf="isFormErroneous('userName')">
+              <div class="text-error">
+                <p>This field is required.</p>
+              </div>
+            </ng-container>
           </div>
           <div class="form-control">
             <label class="label">
               <span class="label-text">Email</span>
             </label>
             <input type="email" formControlName="email" placeholder="email" class="input input-bordered bg-white shadow-md" required />
+            <ng-container *ngIf="isFormErroneous('email')">
+              <div class="text-error">
+                <p *ngIf="authFormGroup.controls['email'].errors?.['email']">
+                  Please, enter valid email address.
+                </p>
+                <p *ngIf="authFormGroup.controls['email'].errors?.['required']">
+                  This field is required.
+                </p>
+              </div>
+            </ng-container>
           </div>
           <div class="form-control">
             <label class="label">
               <span class="label-text">Password</span>
             </label>
             <input type="password" formControlName="password" placeholder="password" class="input input-bordered bg-white shadow-md" required />
+            <ng-container *ngIf="isFormErroneous('password')">
+              <div class="text-error">
+                <p>This field is required.</p>
+              </div>
+            </ng-container>
           </div>
-          <span class="text-sm mt-4 flex flex-row">{{isLoginFormVisible ? youDontHaveAnAccountMessage : youAlreadyHaveAnAccountMessage}}<a class="ml-1" routerLink="{{isLoginFormVisible ? '/auth/register' : '/auth/login'}}">{{isLoginFormVisible ? 'Sign up' : 'Login'}}</a></span>
+          <span class="text-sm mt-4 flex flex-row">{{isLoginFormVisible ? youDontHaveAnAccountMessage : youAlreadyHaveAnAccountMessage}}
+            <a class="ml-1" routerLink="{{isLoginFormVisible ? '/auth/register' : '/auth/login'}}">
+              {{isLoginFormVisible ? 'Sign up' : 'Login'}}
+            </a>
+          </span>
           <div class="form-control mt-6">
             <button type="submit" class="btn bg-main text-white border-none hover:bg-main hover:opacity-70">Login</button>
           </div>
