@@ -10,7 +10,7 @@
             <label class="label">
               <span class="label-text">User name</span>
             </label>
-            <input type="email" formControlName="userName" placeholder="email" class="input input-bordered bg-white shadow-md" required />
+            <input type="email" formControlName="userName" placeholder="user name" class="input input-bordered bg-white shadow-md" required />
             <ng-container *ngIf="isFormErroneous('userName')">
               <div class="text-error">
                 <p>This field is required.</p>
@@ -37,10 +37,17 @@
             <label class="label">
               <span class="label-text">Password</span>
             </label>
-            <input type="password" formControlName="password" placeholder="password" class="input input-bordered bg-white shadow-md" required />
+            <input type="password" formControlName="password" placeholder="password" class="input input-bordered bg-white shadow-md" minlength="8" required />
             <ng-container *ngIf="isFormErroneous('password')">
               <div class="text-error">
-                <p>This field is required.</p>
+                <p *ngIf="authFormGroup.controls['password'].errors?.['required']; else tooShort">
+                  This field is required.
+                </p>
+                <ng-template #tooShort>
+                  <p>
+                    Password needs to be at least 8 characters long.
+                  </p>
+                </ng-template>
               </div>
             </ng-container>
           </div>

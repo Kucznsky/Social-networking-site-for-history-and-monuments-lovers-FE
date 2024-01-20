@@ -17,7 +17,7 @@ export class RegisterLoginPageComponent implements OnInit {
   public authFormGroup: FormGroup = new FormGroup({
     userName: new FormControl<string>('', [Validators.required]),
     email: new FormControl<string>('', [Validators.required, Validators.email]),
-    password: new FormControl<string>('', [Validators.required]),
+    password: new FormControl<string>('', [Validators.required, Validators.minLength(8)]),
   });
 
   constructor(
@@ -67,8 +67,7 @@ export class RegisterLoginPageComponent implements OnInit {
 
   public isFormErroneous(fieldName: string): boolean {
     return (
-      (this.authFormGroup.get(fieldName).errors?.['required'] ||
-        this.authFormGroup.get(fieldName).errors?.['email']) &&
+      (this.authFormGroup.get(fieldName).errors) &&
       (this.authFormGroup.get(fieldName).dirty ||
         this.authFormGroup.get(fieldName).touched)
     );
