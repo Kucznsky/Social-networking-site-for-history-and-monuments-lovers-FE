@@ -2,7 +2,14 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from './local-storage.service';
 import { AuthApiService } from './auth-api.service';
 import { LocalStorageKeys } from '../enums';
-import { BehaviorSubject, Observable, finalize, take } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  finalize,
+  take,
+  throwError,
+} from 'rxjs';
 import { User } from '../models';
 import { UserApiService } from './user-api.service';
 import { JwtService } from './jwt.service';
@@ -15,6 +22,9 @@ export class UserAuthService {
   private loggedUser: BehaviorSubject<any> = new BehaviorSubject<any>(
     undefined,
   );
+  private errorMessage: BehaviorSubject<string> = new BehaviorSubject<string>(
+    '',
+  );
 
   constructor(
     private readonly authApiService: AuthApiService,
@@ -24,20 +34,37 @@ export class UserAuthService {
   ) {}
 
   public register(userName: string, email: string, password: string): void {
+    let failed: boolean;
     this.authApiService
       .register({ email: email, password: password, userName: userName })
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        catchError((e) => {
+          failed = true;
+          this.showErrorMessage(e.error.message);
+          return [];
+        }),
+      )
       .subscribe(() => {
         this.router.navigate(['user-registered']);
       });
   }
 
   public login(email: string, password: string): void {
+    let failed: boolean;
     this.authApiService
       .login({ email: email, password: password })
       .pipe(
+        take(1),
+        catchError((e) => {
+          failed = true;
+          this.showErrorMessage(e.error.message);
+          return [];
+        }),
         finalize(() => {
-          window.location.reload();
+          if (!failed) {
+            window.location.reload();
+          }
         }),
       )
       .subscribe((response) => {
@@ -66,5 +93,13 @@ export class UserAuthService {
 
   public resetLoggedUserData(): void {
     this.loggedUser.next(null);
+  }
+
+  public showErrorMessage(mesage: string): void {
+    this.errorMessage.next(mesage);
+  }
+
+  public getErrorMessageObservable(): Observable<string> {
+    return this.errorMessage.asObservable();
   }
 }
