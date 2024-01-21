@@ -1,3 +1,4 @@
+<ng-container *ngIf="loggedUserObservable | async as userData">
 <div class="dropdown dropdown-end">
     <div class="flex flex-row pl-2">
         <h1 class="flex justify-end pt-3 pr-2 w-96 overflow-hidden text-ellipsis">{{loggedUser.userName}}</h1>
@@ -25,3 +26,4 @@
         </li>
     </ul>
 </div>
+</ng-container>
