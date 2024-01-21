@@ -1,4 +1,4 @@
-<button #openModalBtn class="btn bg-main text-white border-none hover:bg-main hover:opacity-70" onclick="login_modal.showModal()">Login</button>
+<button #openLoginModalBtn class="btn bg-main text-white border-none hover:bg-main hover:opacity-70" onclick="login_modal.showModal()">Login</button>
 <dialog id="login_modal" class="modal">
   <div class="modal-box bg-white shadow-sm pb-8">
     <form method="dialog">
@@ -9,15 +9,22 @@
         <form [formGroup]="loginFormGroup" method="dialog" (submit)="logIn()">
             <div class="flex flex-col">
                 <input type="email" placeholder="Email" formControlName="email" class="input input-bordered bg-white shadow-sm w-full max-w-xs mb-4" />
-                <!-- <div class="label">
-                  <span class="label-text-alt">Bottom Left label</span>
-                </div> -->
+                <ng-container *ngIf="isFormErroneous('email')">
+                  <div *ngIf="loginFormGroup.controls['email'].errors?.['email']" class="label">
+                    <span class="label-text-alt text-error">Please, enter valid email address.</span>
+                  </div>
+                  <div *ngIf="loginFormGroup.controls['email'].errors?.['required']" class="label">
+                    <span class="label-text-alt text-error">This field is required.</span>
+                  </div>
+                </ng-container>
                 <input type="password" placeholder="Password" formControlName="password" class="input input-bordered bg-white shadow-sm w-full max-w-xs" />
-                <!-- <div class="label">
-                  <span class="label-text-alt">Bottom Left label</span>
-                </div> -->
+                <ng-container *ngIf="isFormErroneous('password')">
+                  <div *ngIf="loginFormGroup.controls['password'].errors?.['required']" class="label">
+                    <span class="label-text-alt text-error">This field is required.</span>
+                  </div>
+                </ng-container>
                 <span class="text-sm mt-4 flex flex-row">You don't have an account? <p (click)="redirectToRegister()" class="link text-sm ml-1">Sign up</p></span>
-                <button class="btn bg-main text-white border-none mt-2 w-80 hover:bg-main hover:opacity-70">Login</button>
+                <button [disabled]="isFormErroneous('email') || isFormErroneous('password')" class="btn bg-main text-white border-none mt-2 w-80 hover:bg-main hover:opacity-70">Login</button>
             </div>
         </form>
     </div>

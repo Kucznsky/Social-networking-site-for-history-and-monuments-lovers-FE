@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from './local-storage.service';
 import { AuthApiService } from './auth-api.service';
-import { LocalStorageKeys } from '../enums';
-import {
-  BehaviorSubject,
-  Observable,
-  catchError,
-  finalize,
-  take,
-  throwError,
-} from 'rxjs';
+import { BehaviorSubject, Observable, catchError, finalize, take } from 'rxjs';
 import { User } from '../models';
 import { UserApiService } from './user-api.service';
 import { JwtService } from './jwt.service';

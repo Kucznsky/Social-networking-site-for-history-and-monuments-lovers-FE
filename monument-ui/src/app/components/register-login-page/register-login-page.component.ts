@@ -49,29 +49,11 @@ export class RegisterLoginPageComponent implements OnInit, OnDestroy {
     this.unsubscriber.complete();
   }
 
-  private isStringOrRegisterFormOpen(): void {
-    const urlFragment = new RegExp('login');
-
-    this.isLoginFormVisible = urlFragment.test(this.router.url);
-  }
-
   public loginOrRegister(): void {
     if (this.isLoginFormVisible) {
       this.logIn();
     } else {
       this.register();
-    }
-  }
-
-  private logIn(): void {
-    if (
-      this.authFormGroup.get('email').valid &&
-      this.authFormGroup.get('password').valid
-    ) {
-      this.userAuthService.login(
-        this.authFormGroup.controls['email'].getRawValue(),
-        this.authFormGroup.controls['password'].getRawValue(),
-      );
     }
   }
 
@@ -91,6 +73,24 @@ export class RegisterLoginPageComponent implements OnInit, OnDestroy {
       (this.authFormGroup.get(fieldName).dirty ||
         this.authFormGroup.get(fieldName).touched)
     );
+  }
+
+  private isStringOrRegisterFormOpen(): void {
+    const urlFragment = new RegExp('login');
+
+    this.isLoginFormVisible = urlFragment.test(this.router.url);
+  }
+
+  private logIn(): void {
+    if (
+      this.authFormGroup.get('email').valid &&
+      this.authFormGroup.get('password').valid
+    ) {
+      this.userAuthService.login(
+        this.authFormGroup.controls['email'].getRawValue(),
+        this.authFormGroup.controls['password'].getRawValue(),
+      );
+    }
   }
 
   private observeErrorMessageObs(): void {

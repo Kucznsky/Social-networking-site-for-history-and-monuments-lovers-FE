@@ -1,4 +1,10 @@
-<button #openModalBtn class="btn bg-white shadow-md border-light-grey hover:bg-white hover:border-light-grey" onclick="register_modal.showModal()">Sign up</button>
+<div class="toast toast-top toast-center" *ngIf="errorMessage !== ''">
+  <div role="alert" class="alert alert-error">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+    <span>{{errorMessage}}</span>
+  </div>
+</div>
+<button #openRegisterModalBtn class="btn bg-white shadow-md border-light-grey hover:bg-white hover:border-light-grey" onclick="register_modal.showModal()">Sign up</button>
 <dialog id="register_modal" class="modal">
   <div class="modal-box bg-white p-8">
     <form method="dialog">
@@ -9,10 +15,33 @@
       <form [formGroup]="registerFormGroup" method="dialog" (submit)="register()">
           <div class="flex flex-col">
               <input type="text" placeholder="user name" formControlName="userName" class="input input-bordered bg-white shadow-sm w-full max-w-xs mb-4" />
+              <ng-container *ngIf="isFormErroneous('userName')">
+                <div *ngIf="registerFormGroup.controls['userName'].errors?.['required']" class="label">
+                  <span class="label-text-alt text-error">This field is required.</span>
+                </div>
+              </ng-container>
               <input type="email" placeholder="Email" formControlName="email" class="input input-bordered bg-white shadow-sm w-full max-w-xs mb-4" />
+              <ng-container *ngIf="isFormErroneous('email')">
+                <div *ngIf="registerFormGroup.controls['email'].errors?.['email']" class="label">
+                  <span class="label-text-alt text-error">Please, enter valid email address.</span>
+                </div>
+                <div *ngIf="registerFormGroup.controls['email'].errors?.['required']" class="label">
+                  <span class="label-text-alt text-error">This field is required.</span>
+                </div>
+              </ng-container>
               <input type="password" placeholder="Password" formControlName="password" min="8" class="input input-bordered bg-white shadow-sm w-full max-w-xs mb-4" />
+              <ng-container *ngIf="isFormErroneous('password')">
+                <div *ngIf="registerFormGroup.controls['password'].errors?.['required']; else tooShort" class="label">
+                  <span class="label-text-alt text-error">This field is required.</span>
+                </div>
+                <ng-template #tooShort>
+                  <div class="label">
+                    <span class="label-text-alt text-error">Password needs to be at least 5 characters long.</span>
+                  </div>
+                </ng-template>
+              </ng-container>
               <span class="text-sm mt-4 flex flex-row">You already have an account? <p (click)="redirectToLogin()" class="link text-sm ml-1">Log in</p></span>
-              <button class="btn bg-main text-white border-none mt-2 w-80 hover:bg-main hover:opacity-70">Sign up</button>
+              <button [disabled]="isFormErroneous('email') || isFormErroneous('password')" class="btn bg-main text-white border-none mt-2 w-80 hover:bg-main hover:opacity-70">Sign up</button>
           </div>
       </form>
     </div>

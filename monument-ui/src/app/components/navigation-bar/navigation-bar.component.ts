@@ -45,12 +45,12 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     if (isRegisterModalOpen) {
       this.register.closeBtn.nativeElement.click();
     }
-    this.login.openModalBtn.nativeElement.click();
+    this.login.openLoginModalBtn.nativeElement.click();
   }
 
   public openRegisterModal(): void {
     this.login.closeBtn.nativeElement.click();
-    this.register.openModalBtn.nativeElement.click();
+    this.register.openRegisterModalBtn.nativeElement.click();
   }
 
   private observeRouterChange(): void {
