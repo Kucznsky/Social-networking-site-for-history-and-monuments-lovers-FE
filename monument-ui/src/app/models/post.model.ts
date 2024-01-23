@@ -16,13 +16,8 @@ export class UsersPost {
   public archivalImages: string[] = [];
   public content: string = '';
   public published: Date;
-  public isLiked = false;
 
   constructor(postResponseData: PostResponse) {
     Object.assign(this, postResponseData);
-  }
-
-  public setIsLikedValue() {
-    this.isLiked = !this.isLiked;
   }
 }

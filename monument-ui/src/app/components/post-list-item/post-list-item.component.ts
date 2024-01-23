@@ -9,8 +9,9 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { UsersPost } from 'src/app/models';
-import { LikesService } from 'src/app/services/likes.service';
+import { UsersPost } from '../../models';
+import { LikesService } from '../../services/likes.service';
+import { JwtService } from '../../services/jwt.service';
 
 @Component({
   selector: 'app-post-list-item',
@@ -22,7 +23,8 @@ export class PostListItemComponent implements OnInit, OnDestroy {
   @Input() post: UsersPost;
   @Input() isUsersPostSection: boolean;
   @Input() userId: string;
-
+  
+  public isLiked = false;
   public postImage;
 
   private readonly unsubscriber: Subject<void> = new Subject();
@@ -30,12 +32,14 @@ export class PostListItemComponent implements OnInit, OnDestroy {
   constructor(
     private readonly likesService: LikesService,
     private readonly router: Router,
-    private domSanitizer: DomSanitizer,
+    private readonly domSanitizer: DomSanitizer,
+    private readonly jwtService: JwtService,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   public ngOnInit(): void {
     this.sanitizeImageUrl();
+    this.isLikedByLoggedUser()
   }
 
   public ngOnDestroy() {
@@ -50,7 +54,7 @@ export class PostListItemComponent implements OnInit, OnDestroy {
           .removeLike(this.userId, this.post._id)
           .pipe(takeUntil(this.unsubscriber))
           .subscribe(() => {
-            this.post.isLiked = !isLiked;
+            this.isLiked = !isLiked;
             this.post.numberOfLikes -= 1;
             this.changeDetectorRef.markForCheck();
           });
@@ -59,7 +63,7 @@ export class PostListItemComponent implements OnInit, OnDestroy {
           .addLike(this.userId, this.post._id)
           .pipe(takeUntil(this.unsubscriber))
           .subscribe(() => {
-            this.post.isLiked = !isLiked;
+            this.isLiked = !isLiked;
             this.post.numberOfLikes += 1;
             this.changeDetectorRef.markForCheck();
           });
@@ -77,5 +81,12 @@ export class PostListItemComponent implements OnInit, OnDestroy {
     this.postImage = this.domSanitizer.bypassSecurityTrustUrl(
       this.post.thumbnail,
     );
+  }
+
+  private isLikedByLoggedUser(): void {
+    if(this.jwtService.getAccessToken()){
+      const likes = this.likesService.getUsersLikesValue()
+      this.isLiked = likes.some((like)=>like.postId === this.post._id)
+    }
   }
 }

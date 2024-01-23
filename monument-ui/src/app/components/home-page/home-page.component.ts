@@ -41,6 +41,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.postService.getAllPosts();
     this.observeListOfPosts();
     this.observeQueryParams();
+    if(this.jwtService.isTokenValid()){
+      this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId())
+    }
   }
 
   public ngOnDestroy() {
@@ -129,25 +132,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.filteredPosts = posts.sort((a, b) => {
           return b.numberOfLikes - a.numberOfLikes;
         });
-        if (this.jwtService.isTokenValid()) {
-          this.getUsersLikes();
-          this.observeUsersLikes();
-        }
         this.changeDetectorRef.markForCheck();
-      });
-  }
-
-  private observeUsersLikes(): void {
-    this.likesService
-      .getUsersLikesObservable()
-      .pipe(takeUntil(this.unsubscriber))
-      .subscribe((likes) => {
-        this.posts.forEach((post) => {
-          if (likes.some((like) => like.postId === post._id)) {
-            post.isLiked = true;
-          }
-          this.changeDetectorRef.detectChanges();
-        });
       });
   }
 
@@ -181,7 +166,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getUsersLikes(): void {
-    this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId());
-  }
+  // private getUsersLikes(): void {
+  //   this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId());
+  // }
 }

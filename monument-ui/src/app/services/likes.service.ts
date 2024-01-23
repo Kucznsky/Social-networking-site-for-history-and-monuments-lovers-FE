@@ -1,17 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { LikesApiService } from './likes-api.service';
-import { BehaviorSubject, Observable, take, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { LikeResponseBody } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LikesService {
+export class LikesService implements OnDestroy {
   private usersLikes: BehaviorSubject<LikeResponseBody[]> = new BehaviorSubject<
     LikeResponseBody[]
   >([]);
+  
+  private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(private readonly likesApiService: LikesApiService) {}
+
+  public ngOnDestroy(): void {
+    this.unsubscriber.next();
+    this.unsubscriber.complete();
+  }
 
   public addLike(userId: string, postId: string): Observable<void> {
     return this.likesApiService.addNewLike({ userId, postId });
@@ -24,7 +31,7 @@ export class LikesService {
   public getUsersLikes(userId: string): void {
     this.likesApiService
       .fetchUserLikes(userId)
-      .pipe(take(1))
+      .pipe(takeUntil(this.unsubscriber))
       .subscribe((usersLikes) => {
         this.usersLikes.next(usersLikes);
       });

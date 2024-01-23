@@ -29,9 +29,11 @@ export class LikedPostsComponent {
   ) {}
 
   public ngOnInit(): void {
-    this.getUsersLikes();
     this.postService.getAllPosts();
     this.observeListOfPosts();
+    if(this.jwtService.isTokenValid()){
+      this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId())
+    }
   }
 
   public ngOnDestroy() {
@@ -48,14 +50,7 @@ export class LikedPostsComponent {
         this.posts = posts.filter((post) =>
           likes.some((like) => like.postId === post._id),
         );
-        this.posts.map((post) => {
-          return (post.isLiked = true);
-        });
         this.changeDetectorRef.markForCheck();
       });
-  }
-
-  private getUsersLikes(): void {
-    this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId());
   }
 }

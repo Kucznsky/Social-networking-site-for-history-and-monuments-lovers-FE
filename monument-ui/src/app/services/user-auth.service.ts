@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AuthApiService } from './auth-api.service';
-import { BehaviorSubject, Observable, catchError, finalize, take } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, finalize, take, takeUntil } from 'rxjs';
 import { User } from '../models';
 import { UserApiService } from './user-api.service';
 import { JwtService } from './jwt.service';
 import { Router } from '@angular/router';
+import { LikesService } from './likes.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserAuthService {
+export class UserAuthService implements OnDestroy {
   private loggedUser: BehaviorSubject<any> = new BehaviorSubject<any>(
     undefined,
   );
@@ -17,19 +18,27 @@ export class UserAuthService {
     '',
   );
 
+  private readonly unsubscriber: Subject<void> = new Subject();
+
   constructor(
     private readonly authApiService: AuthApiService,
     private readonly userApiService: UserApiService,
     private readonly jwtService: JwtService,
+    private readonly likeService: LikesService,
     private readonly router: Router,
   ) {}
+
+  public ngOnDestroy(): void {
+    this.unsubscriber.next();
+    this.unsubscriber.complete();
+  }
 
   public register(userName: string, email: string, password: string): void {
     let failed: boolean;
     this.authApiService
       .register({ email: email, password: password, userName: userName })
       .pipe(
-        take(1),
+        takeUntil(this.unsubscriber),
         catchError((e) => {
           failed = true;
           this.showErrorMessage(e.error.message);
@@ -46,7 +55,7 @@ export class UserAuthService {
     this.authApiService
       .login({ email: email, password: password })
       .pipe(
-        take(1),
+        takeUntil(this.unsubscriber),
         catchError((e) => {
           failed = true;
           this.showErrorMessage(e.error.message);
@@ -68,9 +77,10 @@ export class UserAuthService {
   public getLoggedUser(): void {
     if (this.jwtService.isTokenValid()) {
       const loggedUsersId = this.jwtService.getLoggedUsersId();
-      this.userApiService.fetchUser(loggedUsersId).subscribe((userResponse) => {
+      this.userApiService.fetchUser(loggedUsersId).pipe(takeUntil(this.unsubscriber),).subscribe((userResponse) => {
         this.loggedUser.next(userResponse);
       });
+      this.likeService.getUsersLikes(this.jwtService.getLoggedUsersId())
     }
   }
 
