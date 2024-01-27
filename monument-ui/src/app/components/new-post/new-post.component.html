@@ -1,1 +1,44 @@
-<p>new-post works!</p>
+<div class="flex flex-col justify-center">
+    <div class="bg-white shadow-lg p-10 mx-60 mt-10 mb-10 rounded-2xl flex flex-wrap justify-center">
+        <form class="w-full" [formGroup]="newPostFormGroup">
+            <ng-container *ngIf="activeStep === steps.AddDescription">
+                <div class="w-full">
+                    <div class="label">
+                        <span class="label-text">Title</span>
+                    </div>
+                    <input formControlName="title" maxlength="100" type="text" placeholder="Type here" class="input input-bordered bg-white shadow-md w-full" />
+                    <div class="label">
+                        <span class="label-text">Category</span>
+                    </div>
+                    <select formControlName="category" class="select select-bordered join-item bg-white shadow-md">
+                        <option class="font-semibold" disabled selected>Category</option>
+                        <option [ngValue]="categories.IndustrialObjects" value="searchOptions.Title" class="font-semibold">{{categories.IndustrialObjects}}</option>
+                        <option [ngValue]="categories.MilitaryStructures" value="searchOptions.User" class="font-semibold">{{categories.MilitaryStructures}}</option>
+                        <option [ngValue]="categories.PalacesAndVillas" value="searchOptions.Label" class="font-semibold">{{categories.PalacesAndVillas}}</option>
+                        <option [ngValue]="categories.ReligiousObjects" value="searchOptions.Label" class="font-semibold">{{categories.ReligiousObjects}}</option>
+                        <option [ngValue]="categories.Other" value="searchOptions.Label" class="font-semibold">{{categories.Other}}</option>
+                      </select>
+                    <div class="label">
+                        <span class="label-text">Description</span>
+                    </div>
+                    <textarea formControlName="description" maxlength="1000" class="textarea textarea-bordered bg-white shadow-md h-40 w-full" placeholder="Enter monument description"></textarea>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="activeStep === steps.AddLocalisation">
+
+            </ng-container>
+            <ng-container *ngIf="activeStep === steps.AddImages">
+
+            </ng-container>
+            <div class="flex flex-row justify-between mt-5">
+                <button (click)="previousStep(this.activeStep)" class="btn shadow-sm bg-white border-light-grey hover:bg-light-grey hover:opacity-70 hover:border-light-grey">Previous Step</button>
+                <button (click)="nextStep(this.activeStep)" class="btn bg-main text-white border-none hover:bg-main hover:opacity-70 font-bold">{{getBtnLabel()}}</button>
+            </div>
+        </form>
+    </div>
+    <ul class="steps px-80">
+        <li class="step step-info font-semibold">Describe monument</li>
+        <li class="step font-semibold" [ngClass]="{'step-info': activeStep !== steps.AddDescription}">Share localisation</li>
+        <li class="step font-semibold" [ngClass]="{'step-info': activeStep === steps.AddImages}">Add images</li>
+    </ul>
+</div>
