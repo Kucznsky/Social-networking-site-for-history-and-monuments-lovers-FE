@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
@@ -59,6 +60,7 @@ export function tokenGetter() {
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxDropzoneModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

@@ -2,10 +2,10 @@
 <div class="dropdown dropdown-end">
     <div class="flex flex-row pl-2">
         <h1 class="flex justify-end pt-3 pr-2 w-96 overflow-hidden text-ellipsis">{{loggedUser.userName}}</h1>
-        <ng-container *ngIf="!!this.usersAvatar; else placeholder">
+        <ng-container *ngIf="usersAvatar; else placeholder">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                 <div class="w-10 rounded-full">
-                    <img [src]="this.usersAvatar" />
+                    <img [src]="usersAvatar" />
                 </div>
             </div>
         </ng-container>

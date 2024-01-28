@@ -64,6 +64,18 @@ export class NewPostComponent {
   }
 
   public getBtnLabel(): string {
-    return this.activeStep === Steps.AddImages ? 'Create Post' : 'Previous Step'
+    return this.activeStep === Steps.AddImages ? 'Create Post' : 'Next Step'
   }
+
+  files: File[] = [];
+
+	public onSelect(event) {
+		console.log(event);
+		this.files.push(...event.addedFiles);
+	}
+
+	public onRemove(event) {
+		console.log(event);
+		this.files.splice(this.files.indexOf(event), 1);
+	}
 }

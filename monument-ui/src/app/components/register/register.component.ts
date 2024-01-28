@@ -10,18 +10,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
-  UntypedFormControl,
-  UntypedFormGroup,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { UserAuthService } from 'src/app/services/user-auth.service';
-import { confirmPasswordValidator } from 'src/app/validators/custom-validators';
 
 @Component({
   selector: 'app-register',

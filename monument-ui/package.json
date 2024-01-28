@@ -20,13 +20,15 @@
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
     "@auth0/angular-jwt": "^5.2.0",
+    "@ngx-dropzone/cdk": "^17.2.0",
     "date-fns": "^3.0.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
     "filepond": "^4.30.6",
+    "ngx-dropzone": "^3.1.0",
     "prettier-eslint": "^16.1.2",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
+    "tslib": "^2.6.2",
     "zone.js": "~0.12.0"
   },
   "devDependencies": {

@@ -4,7 +4,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { Category, SortingOptions } from 'src/app/enums';
+import { Category, SortingOptions } from '../../enums';
 
 @Component({
   selector: 'app-sorting',

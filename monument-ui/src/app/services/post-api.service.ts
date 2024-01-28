@@ -9,7 +9,7 @@ import { NewPost } from '../models';
   providedIn: 'root',
 })
 export class PostApiService {
-  constructor(private http: HttpClient) {}
+  constructor( private http: HttpClient ) {}
 
   public fetchAllPosts(): Observable<PostResponse[]> {
     return this.http.get<PostResponse[]>(`${POST_URL}/all`);
