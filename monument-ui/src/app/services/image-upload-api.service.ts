@@ -47,8 +47,9 @@ export class ImageUploadApiService {
       headers: header,
     };
 
-    const blb = {blb: file,}
-
-    return this.http.post<void>(`${UPLOAD_IMG_URL}/user-avatar/${userId}`, blb, httpOptions)
+    const body = new FormData()
+    body.append('userAvatar', file)
+    
+    return this.http.post<void>(`${UPLOAD_IMG_URL}/user-avatar/${userId}`, body, httpOptions)
   }
 }

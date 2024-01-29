@@ -3,8 +3,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute} from '@angular/router';
+import { Observable, Subject, takeUntil} from 'rxjs';
 import { User } from '../../models';
 import { UserService } from '../../services/user.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -64,7 +64,9 @@ export class UserPageComponent implements OnInit, OnDestroy {
   public uploadUserAvatar(): void {
     if(this.newAvatar){
       this.imageUploadApiService.uploadUserAvatar(this.newAvatar[0], this.userId).pipe(takeUntil(this.unsubscriber)).subscribe(()=>{
-        window.location.reload()
+        setTimeout(() => {
+          window.location.reload()
+        }, 500);
       })
     }
   }
