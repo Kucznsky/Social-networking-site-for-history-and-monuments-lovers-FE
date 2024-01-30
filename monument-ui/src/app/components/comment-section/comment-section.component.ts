@@ -11,7 +11,7 @@ import { UserService } from '../../services/user.service';
 import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User, UserComment } from '../../models';
-import { Subject, map, takeUntil } from 'rxjs';
+import { Subject, forkJoin, map, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-comment-section',
@@ -43,31 +43,28 @@ export class CommentSectionComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.getPostId();
     this.getLoggedUser();
-    this.userService
-      .getAuthorsOfTheComments(this.postId)
+    forkJoin([
+      this.userService.getAuthorsOfTheComments(this.postId),
+      this.commentService.getComments(this.postId),
+    ])
       .pipe(takeUntil(this.unsubscriber))
-      .subscribe((authors) => {
-        this.commentService
-          .getComments(this.postId)
-          .pipe(takeUntil(this.unsubscriber))
-          .subscribe((comments) => {
-            this.comments = comments.map((comment) => {
-              const author = authors.find(
-                (author) => author.id === comment.author.toString(),
-              );
-              const commentObj = new UserComment(comment);
-              commentObj.author = author;
-              return commentObj;
-            });
+      .subscribe(([authors, comments]) => {
+        this.comments = comments.map((comment) => {
+          const author = authors.find(
+            (author) => author.id === comment.author.toString(),
+          );
+          const commentObj = new UserComment(comment);
+          commentObj.author = author;
+          return commentObj;
+        });
 
-            this.comments.sort((a, b) => {
-              return (
-                new Date(b.creationDate).getTime() -
-                new Date(a.creationDate).getTime()
-              );
-            });
-            this.changeDetectorRef.markForCheck();
-          });
+        this.comments.sort((a, b) => {
+          return (
+            new Date(b.creationDate).getTime() -
+            new Date(a.creationDate).getTime()
+          );
+        });
+        this.changeDetectorRef.markForCheck();
       });
   }
 
