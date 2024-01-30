@@ -10,7 +10,7 @@ export class LikesService implements OnDestroy {
   private usersLikes: BehaviorSubject<LikeResponseBody[]> = new BehaviorSubject<
     LikeResponseBody[]
   >([]);
-  
+
   private readonly unsubscriber: Subject<void> = new Subject();
 
   constructor(private readonly likesApiService: LikesApiService) {}

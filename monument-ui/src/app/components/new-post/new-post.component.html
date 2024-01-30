@@ -6,7 +6,7 @@
                     <div class="label">
                         <span class="label-text">Title</span>
                     </div>
-                    <input formControlName="title" maxlength="100" type="text" placeholder="Type here" class="input input-bordered bg-white shadow-md w-full" />
+                    <input formControlName="title" maxlength="100" type="text" placeholder="Title" class="input input-bordered bg-white shadow-md w-full" />
                     <div class="label">
                         <span class="label-text">Category</span>
                     </div>
@@ -21,21 +21,42 @@
                     <div class="label">
                         <span class="label-text">Description</span>
                     </div>
-                    <textarea formControlName="description" maxlength="1000" class="textarea textarea-bordered bg-white shadow-md h-40 w-full" placeholder="Enter monument description"></textarea>
+                    <textarea formControlName="description" placeholder="Description" maxlength="1000" class="textarea textarea-bordered bg-white shadow-md h-40 w-full" placeholder="Enter monument description"></textarea>
                 </div>
             </ng-container>
             <ng-container *ngIf="activeStep === steps.AddLocalisation">
-
+                <!-- placeholder for the interactive map for dev purposes, later to be replaced by an actual map-->
+                <input formControlName="localisation" type="text" placeholder="localisation" class="input input-bordered bg-white shadow-md w-full">
+                <!--  -->
             </ng-container>
             <ng-container *ngIf="activeStep === steps.AddImages">
-                <div class="custom-dropzone" ngx-dropzone [maxFileSize]="2000000" [accept]="'image/*'" (change)="onSelect($event)">
+                <h1>Post thumbnail</h1>
+                <div class="custom-dropzone" ngx-dropzone [maxFileSize]="2000000" [multiple]="false" [accept]="'image/*'" (change)="onSelect($event, imageTypes.Thumbnail)">
                     <ngx-dropzone-label>
                         <div>
-                            <h2>My custom dropzone</h2>
+                            <h2>Post thumbnail</h2>
                         </div>
                     </ngx-dropzone-label>
-                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
-                        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of thumbnail" [file]="f" [removable]="true" (removed)="onRemove(f,imageTypes.Thumbnail)"></ngx-dropzone-image-preview>
+                </div>
+                <h1>Modern Images(optional)</h1>
+                <div class="custom-dropzone-multiple" ngx-dropzone [maxFileSize]="2000000" [accept]="'image/*'" (change)="onSelect($event,imageTypes.Modern)">
+                    <ngx-dropzone-label>
+                        <div>
+                            <h2>Modern Images</h2>
+                        </div>
+                    </ngx-dropzone-label>
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let blb of oldImages" [file]="blb" [removable]="true" (removed)="onRemove(blb,imageTypes.Modern)">
+                    </ngx-dropzone-image-preview>
+                </div>
+                <h1>Old Images (optional)</h1>
+                <div class="custom-dropzone-multiple" ngx-dropzone [maxFileSize]="2000000" [accept]="'image/*'" (change)="onSelect($event,imageTypes.Old)">
+                    <ngx-dropzone-label>
+                        <div>
+                            <h2>Old Images</h2>
+                        </div>
+                    </ngx-dropzone-label>
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let blb of modernImages" [file]="blb" [removable]="true" (removed)="onRemove(blb,imageTypes.Old)">
                     </ngx-dropzone-image-preview>
                 </div>
             </ng-container>

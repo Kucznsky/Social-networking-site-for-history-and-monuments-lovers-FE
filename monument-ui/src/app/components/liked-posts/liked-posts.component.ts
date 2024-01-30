@@ -31,8 +31,8 @@ export class LikedPostsComponent {
   public ngOnInit(): void {
     this.postService.getAllPosts();
     this.observeListOfPosts();
-    if(this.jwtService.isTokenValid()){
-      this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId())
+    if (this.jwtService.isTokenValid()) {
+      this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId());
     }
   }
 

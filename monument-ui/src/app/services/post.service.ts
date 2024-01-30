@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, take } from 'rxjs';
 import { UsersPost } from '../models';
 import { PostApiService } from './post-api.service';
+import { ImageUploadApiService } from './image-upload-api.service';
+import { Category } from '../enums';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +17,11 @@ export class PostService {
     undefined,
   );
 
-  constructor(private postApiService: PostApiService) {}
+  constructor(
+    private readonly postApiService: PostApiService,
+    private imageUploadApiService: ImageUploadApiService,
+    private readonly router: Router,
+  ) {}
 
   public getAllPosts(): void {
     this.postApiService.fetchAllPosts().subscribe((posts) => {
@@ -30,6 +37,35 @@ export class PostService {
     return this.postApiService
       .fetchPost(postId)
       .pipe(map((post) => new UsersPost(post)));
+  }
+
+  public createPost(
+    file: File,
+    title: string,
+    description: string,
+    category: Category,
+    localisation: string,
+    authorId: string,
+  ): void {
+    this.imageUploadApiService
+      .uploadPostThumbnail(file)
+      .pipe(
+        switchMap((imageUrl: string) => {
+          console.log(imageUrl);
+          const body = {
+            category: category,
+            title: title,
+            content: description,
+            localisation: localisation,
+            authorId: authorId,
+            thumbnail: imageUrl,
+          };
+          return this.postApiService.uploadPost(body);
+        }),
+      )
+      .subscribe(() => {
+        this.router.navigate(['/home']);
+      });
   }
 
   // public getPostValue(): UsersPost {

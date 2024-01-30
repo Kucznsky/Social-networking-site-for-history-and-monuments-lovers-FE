@@ -7,6 +7,6 @@ export class NewPost {
   localisation = '';
   authorId = '';
   thumbnail: string;
-  oldPictures? :string []
-  modernPictures?:string[]
+  oldPictures?: string[];
+  modernPictures?: string[];
 }

@@ -9,11 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { UserAuthService } from 'src/app/services/user-auth.service';
 

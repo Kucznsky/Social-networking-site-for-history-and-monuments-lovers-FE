@@ -1,6 +1,14 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AuthApiService } from './auth-api.service';
-import { BehaviorSubject, Observable, Subject, catchError, finalize, take, takeUntil } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  catchError,
+  finalize,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { User } from '../models';
 import { UserApiService } from './user-api.service';
 import { JwtService } from './jwt.service';
@@ -77,10 +85,13 @@ export class UserAuthService implements OnDestroy {
   public getLoggedUser(): void {
     if (this.jwtService.isTokenValid()) {
       const loggedUsersId = this.jwtService.getLoggedUsersId();
-      this.userApiService.fetchUser(loggedUsersId).pipe(takeUntil(this.unsubscriber),).subscribe((userResponse) => {
-        this.loggedUser.next(userResponse);
-      });
-      this.likeService.getUsersLikes(this.jwtService.getLoggedUsersId())
+      this.userApiService
+        .fetchUser(loggedUsersId)
+        .pipe(takeUntil(this.unsubscriber))
+        .subscribe((userResponse) => {
+          this.loggedUser.next(userResponse);
+        });
+      this.likeService.getUsersLikes(this.jwtService.getLoggedUsersId());
     }
   }
 

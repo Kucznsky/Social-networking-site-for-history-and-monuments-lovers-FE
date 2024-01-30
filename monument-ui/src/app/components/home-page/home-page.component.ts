@@ -41,8 +41,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.postService.getAllPosts();
     this.observeListOfPosts();
     this.observeQueryParams();
-    if(this.jwtService.isTokenValid()){
-      this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId())
+    if (this.jwtService.isTokenValid()) {
+      this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId());
     }
   }
 

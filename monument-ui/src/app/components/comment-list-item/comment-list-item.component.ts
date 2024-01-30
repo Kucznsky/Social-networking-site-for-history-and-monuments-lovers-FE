@@ -11,18 +11,16 @@ export class CommentListItemComponent implements OnInit {
   @Input() commentData: UserComment;
 
   public userAvatar;
-  public usersPlaceholerInitials: string
+  public usersPlaceholerInitials: string;
 
-  constructor(
-    private domSanitizer: DomSanitizer,
-  ) {}
+  constructor(private domSanitizer: DomSanitizer) {}
 
   public ngOnInit(): void {
     this.sanitizeImageUrl();
   }
 
   private sanitizeImageUrl(): void {
-    if(this.commentData.author.avatar){
+    if (this.commentData.author.avatar) {
       this.userAvatar = this.domSanitizer.bypassSecurityTrustUrl(
         this.commentData.author.avatar,
       );

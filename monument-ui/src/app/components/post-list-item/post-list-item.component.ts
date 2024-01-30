@@ -23,7 +23,7 @@ export class PostListItemComponent implements OnInit, OnDestroy {
   @Input() post: UsersPost;
   @Input() isUsersPostSection: boolean;
   @Input() userId: string;
-  
+
   public isLiked = false;
   public postImage;
 
@@ -39,7 +39,7 @@ export class PostListItemComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.sanitizeImageUrl();
-    this.isLikedByLoggedUser()
+    this.isLikedByLoggedUser();
   }
 
   public ngOnDestroy() {
@@ -84,9 +84,9 @@ export class PostListItemComponent implements OnInit, OnDestroy {
   }
 
   private isLikedByLoggedUser(): void {
-    if(this.jwtService.getAccessToken()){
-      const likes = this.likesService.getUsersLikesValue()
-      this.isLiked = likes.some((like)=>like.postId === this.post._id)
+    if (this.jwtService.getAccessToken()) {
+      const likes = this.likesService.getUsersLikesValue();
+      this.isLiked = likes.some((like) => like.postId === this.post._id);
     }
   }
 }
