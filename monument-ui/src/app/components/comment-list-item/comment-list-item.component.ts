@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { UserComment } from 'src/app/models';
+import { UserComment } from '../../models';
 
 @Component({
   selector: 'app-comment-list-item',
@@ -13,7 +13,7 @@ export class CommentListItemComponent implements OnInit {
   public userAvatar;
   public usersPlaceholerInitials: string;
 
-  constructor(private domSanitizer: DomSanitizer) {}
+  constructor(private readonly domSanitizer: DomSanitizer) {}
 
   public ngOnInit(): void {
     this.sanitizeImageUrl();

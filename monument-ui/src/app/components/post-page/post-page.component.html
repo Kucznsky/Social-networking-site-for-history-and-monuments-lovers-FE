@@ -1,8 +1,41 @@
-<div *ngIf="postData && postAuthor" class="bg-white shadow-lg p-10 mx-10 mt-4 mb-10 rounded-2xl flex flex-wrap justify-center">
-    {{postData.title}}
-    {{postAuthor.userName}}
-    {{postData.category}}
-    {{postData.content}}
-    {{postData.localisation}}
+<div *ngIf="postData && postAuthor" class="grid grid-rows-3 grid-flow-col gap-4 bg-white shadow-lg p-10 mx-10 mt-4 mb-10 rounded-2xl">
+    <div class="row-span-3">
+        <div class="flex flex-row">
+            <a routerLink="/user/{{postAuthor.id}}">
+                <div class="avatar">
+                    <ng-container *ngIf="userAvatar; else placeholder">
+                        <div class="w-12 rounded-full">
+                            <img [src]="userAvatar" />
+                        </div>
+                    </ng-container>
+                    <ng-template #placeholder>
+                        <div class="avatar placeholder">
+                            <div class="bg-neutral text-neutral-content rounded-full w-10 z-10">
+                                <span class="text-2xl pb-1">{{usersPlaceholerInitials}}</span>
+                            </div>
+                        </div> 
+                    </ng-template>
+                </div>
+            </a>
+            <a class="font-bold text-main pt-3 ml-4" routerLink="/user/{{postAuthor.id}}">{{postAuthor.userName}}</a>
+        </div>
+        <div class="mt-4">{{postData.localisation}}</div>
+        <div class="badge badge-secondary font-semibold bg-main border-none">{{postData.category}}</div>
+        <div class="h-40 w-40 bg-grey text-white mt-4">interactive map placeholder</div>
+    </div>
+    <div class="col-span-2">
+        <div class="flex flex-row">
+            <div class="flex flex-col">
+                <div>
+                    {{postData.title}}
+                </div>
+                <div>
+                    {{postData.content}}
+                </div>
+            </div>
+            <img class="w-60" [src]="userThumbnail" />
+        </div>
+    </div>
+    <div class="row-span-2 col-span-2">03</div>
 </div>
 <app-comment-section></app-comment-section>
