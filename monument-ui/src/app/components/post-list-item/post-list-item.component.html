@@ -1,15 +1,17 @@
 <div class="card w-96 shadow-lg cursor-pointer">
   <div class="hover:opacity-90 bg-base-100 rounded-t-2xl" (click)="navigateToPostPage(post._id)">
-    <figure><img [src]="this.postImage" alt="SomeCastle" /></figure>
+    <figure class="max-h-48"><img [src]="this.postImage" alt="SomeCastle" /></figure>
     <div class="card-body p-4">
       <div class="flex flex-row justify-between">
-        <h2 class="card-title text-grey">
-          {{post.title}}
-        </h2>
+        <div class="truncate">
+          <h2 class="card-title text-grey truncate">
+            {{post.title}}
+          </h2>
+        </div>
         <h6 class="text-grey">{{post.localisation}}</h6>
       </div>
       <div class="badge badge-secondary font-semibold bg-main border-none">{{post.category}}</div>
-      <div class="text-grey mt-4 overflow-hidden text-ellipsis">{{post.content}}</div>
+      <div class="text-grey mt-4  max-w-xs truncate">{{post.content}}</div>
     </div>
   </div>
   <hr class="bg-grey">
