@@ -40,15 +40,17 @@ export class PostPageComponent implements OnInit, OnDestroy {
     this.postId = this.activatedRoute.snapshot.paramMap.get('id');
     this.postService
       .getPostById(this.postId)
-      .pipe(switchMap((post)=>{
-        this.postData = post;
-        return this.userService.getUserById(post.author.toString())
-      }), takeUntil(this.unsubscriber))
+      .pipe(
+        switchMap((post) => {
+          this.postData = post;
+          return this.userService.getUserById(post.author.toString());
+        }),
+        takeUntil(this.unsubscriber),
+      )
       .subscribe((user) => {
-          this.postAuthor = user;
-          this.changeDetectorRef.markForCheck();
-          this.sanitizeImageUrl();
-
+        this.postAuthor = user;
+        this.changeDetectorRef.markForCheck();
+        this.sanitizeImageUrl();
       });
   }
 
@@ -73,4 +75,3 @@ export class PostPageComponent implements OnInit, OnDestroy {
     }
   }
 }
-

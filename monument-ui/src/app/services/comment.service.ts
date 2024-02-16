@@ -29,4 +29,8 @@ export class CommentService {
   public getComments(postId: string): Observable<CommentResponse[]> {
     return this.commentApiService.getComments(postId);
   }
+
+  public deleteComment(commentId: string): Observable<void> {
+    return this.commentApiService.deleteComment(commentId);
+  }
 }

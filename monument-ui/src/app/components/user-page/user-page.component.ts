@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { User } from '../../models';
 import { UserService } from '../../services/user.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { JwtService } from '../../services/jwt.service';
 import { ImageUploadApiService } from '../../services/image-upload-api.service';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 
 @Component({
   selector: 'app-user-page',
@@ -17,6 +18,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
   public isLoggedUserPage: boolean;
   public showImageDropzone = false;
   public newAvatar: File[] = [];
+  public isViewedByAdmin: boolean;
 
   private userId: string;
   private readonly unsubscriber: Subject<void> = new Subject();
@@ -27,11 +29,16 @@ export class UserPageComponent implements OnInit, OnDestroy {
     private readonly domSanitizer: DomSanitizer,
     private readonly imageUploadApiService: ImageUploadApiService,
     private readonly jwtService: JwtService,
+    private readonly userAuthService: UserAuthService,
+    private readonly router: Router,
   ) {}
 
   public ngOnInit(): void {
     this.userId = this.activatedRoute.snapshot.paramMap.get('userId');
     this.user = this.userService.getUserById(this.userId);
+    if (this.jwtService.isTokenValid()) {
+      this.isViewedByAdmin = this.userAuthService.isUserAdmin();
+    }
     this.checkIfIsLoggedUsersPage();
   }
 
@@ -72,6 +79,15 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   public showOrHideImageDropzone() {
     this.showImageDropzone = !this.showImageDropzone;
+  }
+
+  public deleteUser(userId: string): void {
+    this.userService
+      .removeUser(userId)
+      .pipe(takeUntil(this.unsubscriber))
+      .subscribe(() => {
+        this.router.navigate(['home']);
+      });
   }
 
   public getBtnLabel(): string {

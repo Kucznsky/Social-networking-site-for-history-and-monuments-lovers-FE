@@ -48,8 +48,9 @@
           <button class="btn bg-main text-white hover:bg-main hover:opacity-70 font-bold mr-2">Posts</button>
         </a>
         <a routerLink="/liked-posts/{{userData.id}}">
-          <button class="btn bg-main text-white hover:bg-main hover:opacity-70 font-bold">Liked</button>
+          <button class="btn bg-main text-white hover:bg-main hover:opacity-70 font-bold mr-2">Liked</button>
         </a>
+        <button *ngIf="isViewedByAdmin" class="btn bg-error text-white font-bold" (click)="deleteUser(userData.id)">Delete user</button>
       </div>
     </div>
   </div>

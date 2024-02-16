@@ -100,11 +100,17 @@ export class UserAuthService implements OnDestroy {
   }
 
   public getLoggedUserValue(): User {
-    return this.loggedUser.value();
+    return this.loggedUser.getValue();
   }
 
   public resetLoggedUserData(): void {
     this.loggedUser.next(null);
+  }
+
+  public isUserAdmin(): boolean {
+    console.log(this.getLoggedUserValue());
+    const user = this.getLoggedUserValue();
+    return user.isAdmin;
   }
 
   public showErrorMessage(mesage: string): void {

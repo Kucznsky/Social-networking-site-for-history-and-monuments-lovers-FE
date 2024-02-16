@@ -28,7 +28,11 @@ export class CommentApiService {
       .pipe(map((response) => response.createdComment));
   }
 
-  public getComments(postId): Observable<CommentResponse[]> {
-    return this.http.get<CommentResponse[]>(`${COMMENT_URL}/${postId}`);
+  public getComments(commentId: string): Observable<CommentResponse[]> {
+    return this.http.get<CommentResponse[]>(`${COMMENT_URL}/${commentId}`);
+  }
+
+  public deleteComment(commentId: string): Observable<void> {
+    return this.http.delete<void>(`${COMMENT_URL}/${commentId}`);
   }
 }

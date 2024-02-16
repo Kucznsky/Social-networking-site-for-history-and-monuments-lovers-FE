@@ -24,4 +24,8 @@ export class UserService {
   public getAuthorsOfTheComments(postId: string): Observable<User[]> {
     return this.userApiService.fetchUsersByPostId(postId);
   }
+
+  public removeUser(userId: string): Observable<void> {
+    return this.userApiService.deleteUser(userId);
+  }
 }

@@ -68,6 +68,10 @@ export class PostService {
       });
   }
 
+  public deletePost(postId: string): Observable<void> {
+    return this.postApiService.deletePost(postId);
+  }
+
   // public getPostValue(): UsersPost {
   //   return this.post.getValue()
   // }
