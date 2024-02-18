@@ -24,6 +24,8 @@ export class NewPostComponent {
   public modernImages: File[] = [];
   public oldImages: File[] = [];
 
+  public areMultiplePicturesFeatureEnabled = false
+
   constructor(
     private readonly postService: PostService,
     private readonly jwtService: JwtService,

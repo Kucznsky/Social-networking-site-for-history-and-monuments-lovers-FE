@@ -23,7 +23,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
   public postAuthor: User;
   public postData: UsersPost;
   public userAvatar;
-  public userThumbnail;
+  public postThumbnail;
   public usersPlaceholerInitials: string;
 
   private readonly unsubscriber: Subject<void> = new Subject();
@@ -60,7 +60,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
   }
 
   private sanitizeImageUrl(): void {
-    this.userThumbnail = this.domSanitizer.bypassSecurityTrustUrl(
+    this.postThumbnail = this.domSanitizer.bypassSecurityTrustUrl(
       this.postData.thumbnail,
     );
     if (this.postAuthor.avatar) {

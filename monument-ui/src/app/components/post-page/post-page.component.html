@@ -1,6 +1,17 @@
-<div *ngIf="postData && postAuthor" class="grid grid-rows-3 grid-flow-col gap-4 bg-white shadow-lg p-10 mx-10 mt-4 mb-10 rounded-2xl">
-    <div class="row-span-3">
-        <div class="flex flex-row">
+<div class="grid grid-cols-3 grid-rows-2 gap-4 bg-white shadow-lg p-10 mx-10 mt-4 mb-10 rounded-2xl">
+    <div class="col-span-2 pl-4">
+        <img class="w-3/5 rounded-xl border border-light-grey" [src]="postThumbnail" />
+    </div>
+    <div class="col-span-2 col-start-1 row-start-2 pt-8 pl-4">
+        <h1 class="text-3xl font-bold text-main">
+            About the monument
+        </h1>
+        <h3 class="mt-4 text-xl">
+            {{postData.content}}
+        </h3>
+    </div>
+    <div class="row-span-2 col-start-3 row-start-1 border-l border-l-grey pl-4">
+        <div class="flex flex-row mb-8">
             <a routerLink="/user/{{postAuthor.id}}">
                 <div class="avatar">
                     <ng-container *ngIf="userAvatar; else placeholder">
@@ -17,25 +28,12 @@
                     </ng-template>
                 </div>
             </a>
-            <a class="font-bold text-main pt-3 ml-4" routerLink="/user/{{postAuthor.id}}">{{postAuthor.userName}}</a>
+            <a class="font-bold text-main pt-3 ml-4 text-lg" routerLink="/user/{{postAuthor.id}}">{{postAuthor.userName}}</a>
         </div>
-        <div class="mt-4">{{postData.localisation}}</div>
-        <div class="badge badge-secondary font-semibold bg-main border-none">{{postData.category}}</div>
+        <div class="font-bold text-2xl mb-2">{{postData.title}}</div>
+        <div class="mt-4 text-lg mb-2">{{postData.localisation}}</div>
+        <div class="badge badge-secondary font-semibold bg-main border-none text-lg p-4">{{postData.category}}</div>
         <div class="h-40 w-40 bg-grey text-white mt-4">interactive map placeholder</div>
     </div>
-    <div class="col-span-2">
-        <div class="flex flex-row">
-            <div class="flex flex-col">
-                <div>
-                    {{postData.title}}
-                </div>
-                <div>
-                    {{postData.content}}
-                </div>
-            </div>
-            <img class="w-60" [src]="userThumbnail" />
-        </div>
-    </div>
-    <div class="row-span-2 col-span-2">03</div>
 </div>
 <app-comment-section></app-comment-section>

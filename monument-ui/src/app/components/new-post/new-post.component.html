@@ -39,26 +39,28 @@
                     </ngx-dropzone-label>
                     <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of thumbnail" [file]="f" [removable]="true" (removed)="onRemove(f,imageTypes.Thumbnail)"></ngx-dropzone-image-preview>
                 </div>
-                <h1>Modern Images(optional)</h1>
-                <div class="custom-dropzone-multiple" ngx-dropzone [maxFileSize]="2000000" [accept]="'image/*'" (change)="onSelect($event,imageTypes.Modern)">
-                    <ngx-dropzone-label>
-                        <div>
-                            <h2>Modern Images</h2>
-                        </div>
-                    </ngx-dropzone-label>
-                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let blb of oldImages" [file]="blb" [removable]="true" (removed)="onRemove(blb,imageTypes.Modern)">
-                    </ngx-dropzone-image-preview>
-                </div>
-                <h1>Old Images (optional)</h1>
-                <div class="custom-dropzone-multiple" ngx-dropzone [maxFileSize]="2000000" [accept]="'image/*'" (change)="onSelect($event,imageTypes.Old)">
-                    <ngx-dropzone-label>
-                        <div>
-                            <h2>Old Images</h2>
-                        </div>
-                    </ngx-dropzone-label>
-                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let blb of modernImages" [file]="blb" [removable]="true" (removed)="onRemove(blb,imageTypes.Old)">
-                    </ngx-dropzone-image-preview>
-                </div>
+                <ng-container *ngIf="areMultiplePicturesFeatureEnabled">
+                    <h1>Modern Images(optional)</h1>
+                    <div class="custom-dropzone-multiple" ngx-dropzone [maxFileSize]="2000000" [accept]="'image/*'" (change)="onSelect($event,imageTypes.Modern)">
+                        <ngx-dropzone-label>
+                            <div>
+                                <h2>Modern Images</h2>
+                            </div>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let blb of oldImages" [file]="blb" [removable]="true" (removed)="onRemove(blb,imageTypes.Modern)">
+                        </ngx-dropzone-image-preview>
+                    </div>
+                    <h1>Old Images (optional)</h1>
+                    <div class="custom-dropzone-multiple" ngx-dropzone [maxFileSize]="2000000" [accept]="'image/*'" (change)="onSelect($event,imageTypes.Old)">
+                        <ngx-dropzone-label>
+                            <div>
+                                <h2>Old Images</h2>
+                            </div>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let blb of modernImages" [file]="blb" [removable]="true" (removed)="onRemove(blb,imageTypes.Old)">
+                        </ngx-dropzone-image-preview>
+                    </div>
+                </ng-container>
             </ng-container>
             <div class="flex flex-row justify-between mt-5">
                 <button (click)="previousStep(this.activeStep)" class="btn shadow-sm bg-white border-light-grey hover:bg-light-grey hover:opacity-70 hover:border-light-grey">Previous Step</button>
