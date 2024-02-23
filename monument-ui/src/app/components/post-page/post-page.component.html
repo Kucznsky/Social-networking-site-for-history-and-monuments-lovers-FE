@@ -10,7 +10,7 @@
             {{postData.content}}
         </h3>
     </div>
-    <div class="row-span-2 col-start-3 row-start-1 border-l border-l-grey pl-4">
+    <div class="row-span-2 col-start-3 row-start-1 border-l border-l-grey pl-10">
         <div class="flex flex-row mb-8">
             <a routerLink="/user/{{postAuthor.id}}">
                 <div class="avatar">
@@ -33,7 +33,7 @@
         <div class="font-bold text-2xl mb-2">{{postData.title}}</div>
         <div class="mt-4 text-lg mb-2">{{postData.localisation}}</div>
         <div class="badge badge-secondary font-semibold bg-main border-none text-lg p-4">{{postData.category}}</div>
-        <div class="h-40 w-40 bg-grey text-white mt-4">interactive map placeholder</div>
+        <div class="max-h-96 w-full bg-grey text-white mt-8 m-auto"><app-map-component [localisation]="postData.localisation"></app-map-component></div>
     </div>
 </div>
 <app-comment-section></app-comment-section>
