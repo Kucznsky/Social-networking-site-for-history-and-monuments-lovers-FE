@@ -26,8 +26,9 @@
             </ng-container>
             <ng-container *ngIf="activeStep === steps.AddLocalisation">
                 <!-- placeholder for the interactive map for dev purposes, later to be replaced by an actual map-->
-                <input formControlName="localisation" type="text" placeholder="localisation" class="input input-bordered bg-white shadow-md w-full">
+                <!-- <input formControlName="localisation" type="text" placeholder="localisation" class="input input-bordered bg-white shadow-md w-full"> -->
                 <!--  -->
+                <app-map-component [isOpenInNewPostForm]="true" (selectedCoordinates)="setLocalisation($event)"></app-map-component>
             </ng-container>
             <ng-container *ngIf="activeStep === steps.AddImages">
                 <h1>Post thumbnail</h1>

@@ -24,7 +24,7 @@ export class NewPostComponent {
   public modernImages: File[] = [];
   public oldImages: File[] = [];
 
-  public areMultiplePicturesFeatureEnabled = false
+  public areMultiplePicturesFeatureEnabled = false;
 
   constructor(
     private readonly postService: PostService,
@@ -121,5 +121,9 @@ export class NewPostComponent {
         this.oldImages.splice(this.oldImages.indexOf(event), 1);
         break;
     }
+  }
+
+  public setLocalisation(localisation: string): void {
+    this.newPostFormGroup.controls['localisation'].setValue(localisation)
   }
 }
