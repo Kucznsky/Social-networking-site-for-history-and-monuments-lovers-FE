@@ -26,6 +26,7 @@ import { CommentSectionComponent } from './components/comment-section/comment-se
 import { CommentListItemComponent } from './components/comment-list-item/comment-list-item.component';
 import { RegisterLoginPageComponent } from './components/register-login-page/register-login-page.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
+import { MapComponentComponent } from './map-component/map-component.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt_token');
@@ -53,6 +54,7 @@ export function tokenGetter() {
     CommentListItemComponent,
     RegisterLoginPageComponent,
     UserPageComponent,
+    MapComponentComponent,
   ],
   imports: [
     BrowserModule,
