@@ -139,35 +139,41 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private observeQueryParams(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params['searchBy']) {
-        switch(params['searchBy']) {
+        switch (params['searchBy']) {
           case SearchBy.Title:
             if (params['searchedPost'] === '') {
               this.filteredPosts = this.posts;
             } else {
-              this.filteredPosts = this.posts.filter(
-                (post) => post.title.toLocaleLowerCase().includes(params['searchedPost'].toLocaleLowerCase()),
+              this.filteredPosts = this.posts.filter((post) =>
+                post.title
+                  .toLocaleLowerCase()
+                  .includes(params['searchedPost'].toLocaleLowerCase()),
               );
             }
             this.changeDetectorRef.markForCheck();
             break;
-          case SearchBy.Localisation: 
+          case SearchBy.Localisation:
             if (params['searchedPost'] === '') {
               this.filteredPosts = this.posts;
             } else {
-              this.filteredPosts = this.posts.filter((post)=>post.localisation.localisationName.toLocaleLowerCase().includes(params['searchedPost'].toLocaleLowerCase()))
+              this.filteredPosts = this.posts.filter((post) =>
+                post.localisation.localisationName
+                  .toLocaleLowerCase()
+                  .includes(params['searchedPost'].toLocaleLowerCase()),
+              );
             }
             this.changeDetectorRef.markForCheck();
             break;
           case SearchBy.User:
             this.userService
-            .getUserByUserName(params['searchedPost'])
-            .pipe(takeUntil(this.unsubscriber))
-            .subscribe((user) => {
-              this.filteredPosts = this.posts.filter(
-                (post) => post.author.toString() === user.id,
-              );
-              this.changeDetectorRef.markForCheck();
-            });
+              .getUserByUserName(params['searchedPost'])
+              .pipe(takeUntil(this.unsubscriber))
+              .subscribe((user) => {
+                this.filteredPosts = this.posts.filter(
+                  (post) => post.author.toString() === user.id,
+                );
+                this.changeDetectorRef.markForCheck();
+              });
             break;
         }
       } else {

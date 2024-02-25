@@ -1,6 +1,4 @@
-import {
-  Component,
-} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Category, ImageType, Steps } from 'src/app/enums';
 import { Localisation } from 'src/app/models';
@@ -122,6 +120,6 @@ export class NewPostComponent {
   }
 
   public setLocalisation(localisation: Localisation): void {
-    this.newPostFormGroup.controls['localisation'].setValue(localisation)
+    this.newPostFormGroup.controls['localisation'].setValue(localisation);
   }
 }

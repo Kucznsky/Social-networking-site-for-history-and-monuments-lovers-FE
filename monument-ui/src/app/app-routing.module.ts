@@ -12,6 +12,7 @@ import { MessageComponent } from './components/message/message.component';
 import { RegisterLoginPageComponent } from './components/register-login-page/register-login-page.component';
 import { AuthenticationPageGuard } from './guards/authentication-page.guard';
 import { UserPageComponent } from './components/user-page/user-page.component';
+import { NotVerifiedMessageComponent } from './not-verified-message/not-verified-message.component';
 
 const routes: Routes = [
   {
@@ -21,21 +22,18 @@ const routes: Routes = [
         path: 'home',
         component: HomePageComponent,
         data: {
-          //permissions
         },
       },
       {
         path: 'post/:id',
         component: PostPageComponent,
         data: {
-          //permissions
         },
       },
       {
         path: 'new-post',
         component: NewPostComponent,
         data: {
-          //permissions
         },
         canActivate: [AuthGuard],
       },
@@ -43,7 +41,6 @@ const routes: Routes = [
         path: 'users-posts/:id',
         component: UsersPostComponent,
         data: {
-          //permissions
         },
         canActivate: [AuthGuard],
       },
@@ -51,13 +48,16 @@ const routes: Routes = [
         path: 'liked-posts/:id',
         component: LikedPostsComponent,
         data: {
-          //permissions
         },
         canActivate: [AuthGuard],
       },
       {
         path: 'user-registered',
         component: MessageComponent,
+      },
+      {
+        path: 'not-verified',
+        component: NotVerifiedMessageComponent,
       },
       {
         path: 'auth/login',

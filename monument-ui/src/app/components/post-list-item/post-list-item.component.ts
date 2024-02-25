@@ -25,7 +25,6 @@ export class PostListItemComponent implements OnInit, OnDestroy {
   @Input() post: UsersPost;
   @Input() isUsersPostSection: boolean;
   @Input() userId: string;
-  // @Input() isAdmin: boolean;
   public isViewedByAdmin = false;
 
   public isLiked = false;
@@ -50,7 +49,6 @@ export class PostListItemComponent implements OnInit, OnDestroy {
     }
     this.sanitizeImageUrl();
     this.isLikedByLoggedUser();
-    this.shouldShowDeleteButton();
   }
 
   public ngOnDestroy() {
@@ -59,7 +57,11 @@ export class PostListItemComponent implements OnInit, OnDestroy {
   }
 
   public addRemoveLike(isLiked: boolean): void {
-    if (this.userId) {
+    if (!this.userId) {
+      this.router.navigate(['/auth/login']);
+    } else if (!this.userAuthService.isUserVerifiedByEmail()) {
+      this.router.navigate(['/not-verified']);
+    } else {
       if (isLiked) {
         this.likesService
           .removeLike(this.userId, this.post._id)
@@ -79,8 +81,6 @@ export class PostListItemComponent implements OnInit, OnDestroy {
             this.changeDetectorRef.markForCheck();
           });
       }
-    } else {
-      this.router.navigate(['/auth/login']);
     }
   }
 
@@ -96,10 +96,6 @@ export class PostListItemComponent implements OnInit, OnDestroy {
 
   public navigateToPostPage(postId: string): void {
     this.router.navigateByUrl(`/post/${postId}`);
-  }
-
-  private shouldShowDeleteButton(): void {
-    // this.isPermittedToDelete = (this.isAdmin || this.userId === this.post.author.toString())
   }
 
   private sanitizeImageUrl(): void {

@@ -12,6 +12,7 @@ import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User, UserComment } from '../../models';
 import { Subject, forkJoin, map, switchMap, takeUntil } from 'rxjs';
+import { UserAuthService } from 'src/app/services/user-auth.service';
 
 @Component({
   selector: 'app-comment-section',
@@ -34,6 +35,7 @@ export class CommentSectionComponent implements OnInit, OnDestroy {
   constructor(
     private readonly commentService: CommentService,
     private readonly userService: UserService,
+    private readonly userAuthService: UserAuthService,
     private readonly jwtService: JwtService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly router: Router,
@@ -94,10 +96,12 @@ export class CommentSectionComponent implements OnInit, OnDestroy {
   }
 
   public commentInputClicked(): void {
-    if (this.jwtService.isTokenValid()) {
-      this.isClicked = true;
-    } else {
+    if (!this.jwtService.isTokenValid()) {
       this.router.navigate(['/auth/login']);
+    } else if (!this.userAuthService.isUserVerifiedByEmail()) {
+      this.router.navigate(['/not-verified']);
+    } else {
+      this.isClicked = true;
     }
   }
 

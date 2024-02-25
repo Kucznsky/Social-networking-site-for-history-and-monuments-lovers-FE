@@ -108,9 +108,13 @@ export class UserAuthService implements OnDestroy {
   }
 
   public isUserAdmin(): boolean {
-    console.log(this.getLoggedUserValue());
     const user = this.getLoggedUserValue();
     return user.isAdmin;
+  }
+
+  public isUserVerifiedByEmail(): boolean {
+    const user = this.getLoggedUserValue();
+    return user.isActive;
   }
 
   public showErrorMessage(mesage: string): void {
