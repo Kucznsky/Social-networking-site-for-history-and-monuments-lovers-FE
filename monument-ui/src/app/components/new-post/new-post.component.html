@@ -6,7 +6,7 @@
                     <div class="label">
                         <span class="label-text">Title</span>
                     </div>
-                    <input formControlName="title" maxlength="100" type="text" placeholder="Title" class="input input-bordered bg-white shadow-md w-full" />
+                    <input formControlName="title" maxlength="48" type="text" placeholder="Title" class="input input-bordered bg-white shadow-md w-full" />
                     <div class="label">
                         <span class="label-text">Category</span>
                     </div>
@@ -25,9 +25,6 @@
                 </div>
             </ng-container>
             <ng-container *ngIf="activeStep === steps.AddLocalisation">
-                <!-- placeholder for the interactive map for dev purposes, later to be replaced by an actual map-->
-                <!-- <input formControlName="localisation" type="text" placeholder="localisation" class="input input-bordered bg-white shadow-md w-full"> -->
-                <!--  -->
                 <app-map-component [isOpenInNewPostForm]="true" (selectedCoordinates)="setLocalisation($event)"></app-map-component>
             </ng-container>
             <ng-container *ngIf="activeStep === steps.AddImages">

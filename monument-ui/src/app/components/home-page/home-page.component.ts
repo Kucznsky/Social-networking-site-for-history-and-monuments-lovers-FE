@@ -139,17 +139,27 @@ export class HomePageComponent implements OnInit, OnDestroy {
   private observeQueryParams(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params['searchBy']) {
-        if (params['searchBy'] === SearchBy.Title) {
-          if (params['searchedPost'] === '') {
-            this.filteredPosts = this.posts;
-          } else {
-            this.filteredPosts = this.posts.filter(
-              (post) => post.title === params['searchedPost'],
-            );
-          }
-          this.changeDetectorRef.markForCheck();
-        } else {
-          this.userService
+        switch(params['searchBy']) {
+          case SearchBy.Title:
+            if (params['searchedPost'] === '') {
+              this.filteredPosts = this.posts;
+            } else {
+              this.filteredPosts = this.posts.filter(
+                (post) => post.title.toLocaleLowerCase().includes(params['searchedPost'].toLocaleLowerCase()),
+              );
+            }
+            this.changeDetectorRef.markForCheck();
+            break;
+          case SearchBy.Localisation: 
+            if (params['searchedPost'] === '') {
+              this.filteredPosts = this.posts;
+            } else {
+              this.filteredPosts = this.posts.filter((post)=>post.localisation.localisationName.toLocaleLowerCase().includes(params['searchedPost'].toLocaleLowerCase()))
+            }
+            this.changeDetectorRef.markForCheck();
+            break;
+          case SearchBy.User:
+            this.userService
             .getUserByUserName(params['searchedPost'])
             .pipe(takeUntil(this.unsubscriber))
             .subscribe((user) => {
@@ -158,6 +168,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
               );
               this.changeDetectorRef.markForCheck();
             });
+            break;
         }
       } else {
         this.filteredPosts = this.posts;
@@ -165,8 +176,4 @@ export class HomePageComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  // private getUsersLikes(): void {
-  //   this.likesService.getUsersLikes(this.jwtService.getLoggedUsersId());
-  // }
 }

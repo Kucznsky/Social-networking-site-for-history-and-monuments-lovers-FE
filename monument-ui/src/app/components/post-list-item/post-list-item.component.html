@@ -3,12 +3,12 @@
     <figure class="max-h-48"><img [src]="this.postImage" alt="SomeCastle" /></figure>
     <div class="card-body p-4">
       <div class="flex flex-row justify-between">
-        <div class="truncate">
-          <h2 class="card-title text-grey truncate">
+        <div class="max-w-xs overflow-hidden">
+          <h2 class="card-title text-grey text-wrap">
             {{post.title}}
           </h2>
         </div>
-        <h6 class="text-grey max-w-xs truncate ml-8">{{post.localisation.localisationName}}</h6>
+        <h6 class="text-grey max-w-xs text-wrap ml-8">{{post.localisation.localisationName}}</h6>
       </div>
       <div class="badge badge-secondary font-semibold bg-main border-none">{{post.category}}</div>
       <div class="text-grey mt-4  max-w-xs truncate">{{post.content}}</div>
