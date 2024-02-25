@@ -1,11 +1,9 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Category, ImageType, Steps } from 'src/app/enums';
+import { Localisation } from 'src/app/models';
 import { JwtService } from 'src/app/services/jwt.service';
 import { PostService } from 'src/app/services/post.service';
 
@@ -35,7 +33,7 @@ export class NewPostComponent {
     title: new FormControl<string>('', [Validators.required]),
     description: new FormControl<string>('', [Validators.required]),
     category: new FormControl<Category>(Category.Other, [Validators.required]),
-    localisation: new FormControl<string>('', [Validators.required]),
+    localisation: new FormControl<Localisation>(null, [Validators.required]),
     thumbnail: new FormControl<File>(null, [Validators.required]),
     oldPictures: new FormControl<File[]>([]),
     modernPictures: new FormControl<File[]>([]),
@@ -123,7 +121,7 @@ export class NewPostComponent {
     }
   }
 
-  public setLocalisation(localisation: string): void {
+  public setLocalisation(localisation: Localisation): void {
     this.newPostFormGroup.controls['localisation'].setValue(localisation)
   }
 }

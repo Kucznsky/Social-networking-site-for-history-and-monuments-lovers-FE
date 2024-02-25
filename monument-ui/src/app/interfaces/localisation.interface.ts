@@ -1,5 +1,5 @@
 export interface LocalisationResponse {
-  latitude: string;
-  longtitude: string;
-  locationName: string;
+  latitude: number;
+  longtitude: number;
+  localisationName: string;
 }

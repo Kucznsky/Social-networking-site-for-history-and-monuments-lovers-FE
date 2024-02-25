@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Localisation } from '../models';
 
 declare const L: any;
 
@@ -8,19 +9,17 @@ declare const L: any;
   styleUrls: ['./map-component.component.scss'],
 })
 export class MapComponentComponent implements OnInit {
-  @Input() localisation = '53.13333,23.16433';
+  @Input() localisation: Localisation = {latitude: 53.13333, longtitude: 23.16433, localisationName: 'Bialystok'};
   @Input() isOpenInNewPostForm = false;
-  @Output() selectedCoordinates: EventEmitter<string> = new EventEmitter();
+  @Output() selectedCoordinates: EventEmitter<Localisation> = new EventEmitter();
 
   private map: any;
   private marker: any;
   private popup: any;
+  private geocodeService: any
 
   public ngOnInit(): void {
-    const coordinates = this.localisation
-      .split(',')
-      .map((coordinate) => parseFloat(coordinate));
-    this.map = L.map('map').setView([coordinates[0], coordinates[1]], 12);
+    this.map = L.map('map').setView([this.localisation.latitude, this.localisation.longtitude], 12);
     this.popup = L.popup();
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
@@ -28,19 +27,26 @@ export class MapComponentComponent implements OnInit {
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(this.map);
     if (!this.isOpenInNewPostForm) {
-      this.marker = L.marker([coordinates[0], coordinates[1]]).addTo(this.map);
+      this.marker = L.marker([this.localisation.latitude, this.localisation.longtitude]).addTo(this.map);
+      this.marker.bindPopup(`<b>${this.localisation.latitude}, ${this.localisation.longtitude}</b><br>${this.localisation.localisationName}.`).openPopup()
     }
     if(this.isOpenInNewPostForm){
       this.map.on('click', this.selectLocalisation)
     }
+    this.geocodeService = L.esri.Geocoding.geocodeService();
   }
 
   private selectLocalisation = (event: any) => {
+    let localisationName: string
+    this.geocodeService.reverse().latlng(event.latlng).run((error, result) => {
+      localisationName = `${result.address.Subregion}, ${result.address.Region}, ${result.address.CntryName}`
+      const localisationObj = new Localisation({latitude: event.latlng.lat, longtitude: event.latlng.lng, localisationName: localisationName})
+      this.selectedCoordinates.emit(localisationObj)
+    });
+
+
     this.popup
         .setLatLng(event.latlng)
         .setContent(`Selected ${event.latlng.lat.toString()}, ${event.latlng.lng.toString()}`)
         .openOn(this.map);
-
-    this.selectedCoordinates.emit(`${event.latlng.lat.toString()},${event.latlng.lng.toString()}`)
-  }
-}
+  }}

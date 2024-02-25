@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, switchMap, take } from 'rxjs';
-import { UsersPost } from '../models';
+import { Localisation, UsersPost } from '../models';
 import { PostApiService } from './post-api.service';
 import { ImageUploadApiService } from './image-upload-api.service';
 import { Category } from '../enums';
@@ -44,7 +44,7 @@ export class PostService {
     title: string,
     description: string,
     category: Category,
-    localisation: string,
+    localisation: Localisation,
     authorId: string,
   ): void {
     this.imageUploadApiService

@@ -10,8 +10,7 @@ export class UsersPost {
   public numberOfLikes: number = 0;
   public numberOFComments: number = 0;
   public author: User = new User();
-  // public localisation: Localisation = new Localisation();
-  public localisation: string;
+  public localisation: Localisation = new Localisation();
   public thumbnail: string = '';
   public modernImages: string[] = [];
   public archivalImages: string[] = [];
