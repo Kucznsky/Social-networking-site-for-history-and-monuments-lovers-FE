@@ -51,8 +51,6 @@ export class NewPostComponent {
         this.newPostFormGroup.controls['localisation'].getRawValue(),
         userId,
       );
-    } else {
-      console.log('blb');
     }
   }
 
