@@ -13,22 +13,16 @@ export class PostService {
   private listOfPosts: BehaviorSubject<UsersPost[]> = new BehaviorSubject<
     UsersPost[]
   >([]);
-  private post: BehaviorSubject<UsersPost> = new BehaviorSubject<UsersPost>(
-    undefined,
-  );
-
   constructor(
     private readonly postApiService: PostApiService,
     private imageUploadApiService: ImageUploadApiService,
     private readonly router: Router,
   ) {}
-
   public getAllPosts(): void {
     this.postApiService.fetchAllPosts().subscribe((posts) => {
       this.listOfPosts.next(posts.map((post) => new UsersPost(post)));
     });
   }
-
   public getPostsObservable(): Observable<UsersPost[]> {
     return this.listOfPosts.asObservable();
   }
@@ -51,7 +45,6 @@ export class PostService {
       .uploadPostThumbnail(file)
       .pipe(
         switchMap((imageUrl: string) => {
-          console.log(imageUrl);
           const body = {
             category: category,
             title: title,
@@ -71,8 +64,4 @@ export class PostService {
   public deletePost(postId: string): Observable<void> {
     return this.postApiService.deletePost(postId);
   }
-
-  // public getPostValue(): UsersPost {
-  //   return this.post.getValue()
-  // }
 }

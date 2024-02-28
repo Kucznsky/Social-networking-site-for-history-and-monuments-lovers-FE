@@ -33,8 +33,6 @@ export class PostApiService {
     header.append('Content-Type', 'application/json');
     header.append('Authorization', 'Bearer ' + token);
 
-    console.log(body);
-
     const httpOptions = {
       headers: header,
     };
@@ -44,6 +42,5 @@ export class PostApiService {
 
   public editPost(body: NewPost, id: string): Observable<PostResponse> {
     return this.http.put<PostResponse>(`${POST_URL}/${id}`, body);
-    //I'm not sure yet, if I'll allow to edit posts in the first version of the app
   }
 }

@@ -33,23 +33,6 @@ export class ImageUploadApiService {
     });
   }
 
-  // public uploadOtherImages(files: File[]): Observable<string[]> {
-  //   const token = this.jwtService.getAccessToken();
-  //   const header = new HttpHeaders();
-  //   header.append('Content-Type', 'application/json');
-  //   header.append('Authorization', 'Bearer ' + token);
-
-  //   const httpOptions = {
-  //     headers: header,
-  //   };
-
-  //   return this.http.post<string[]>(
-  //     `${UPLOAD_IMG_URL}/post-thumbnail`,
-  //     files,
-  //     httpOptions,
-  //   );
-  // }
-
   public uploadUserAvatar(file: File, userId: string): Observable<void> {
     const token = this.jwtService.getAccessToken();
     const header = new HttpHeaders();

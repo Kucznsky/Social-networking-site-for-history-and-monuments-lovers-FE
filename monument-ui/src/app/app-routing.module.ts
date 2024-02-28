@@ -21,34 +21,29 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomePageComponent,
-        data: {
-        },
+        data: {},
       },
       {
         path: 'post/:id',
         component: PostPageComponent,
-        data: {
-        },
+        data: {},
       },
       {
         path: 'new-post',
         component: NewPostComponent,
-        data: {
-        },
+        data: {},
         canActivate: [AuthGuard],
       },
       {
         path: 'users-posts/:id',
         component: UsersPostComponent,
-        data: {
-        },
+        data: {},
         canActivate: [AuthGuard],
       },
       {
         path: 'liked-posts/:id',
         component: LikedPostsComponent,
-        data: {
-        },
+        data: {},
         canActivate: [AuthGuard],
       },
       {

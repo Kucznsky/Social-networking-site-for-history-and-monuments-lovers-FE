@@ -90,7 +90,6 @@ export class PostListItemComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscriber))
       .subscribe(() => {
         window.location.reload();
-        console.log('post deleted');
       });
   }
 

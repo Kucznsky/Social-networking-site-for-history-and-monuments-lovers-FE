@@ -45,7 +45,7 @@
                                 <h2>Modern Images</h2>
                             </div>
                         </ngx-dropzone-label>
-                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let blb of oldImages" [file]="blb" [removable]="true" (removed)="onRemove(blb,imageTypes.Modern)">
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let img of oldImages" [file]="img" [removable]="true" (removed)="onRemove(img,imageTypes.Modern)">
                         </ngx-dropzone-image-preview>
                     </div>
                     <h1>Old Images (optional)</h1>
@@ -55,7 +55,7 @@
                                 <h2>Old Images</h2>
                             </div>
                         </ngx-dropzone-label>
-                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let blb of modernImages" [file]="blb" [removable]="true" (removed)="onRemove(blb,imageTypes.Old)">
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let img of modernImages" [file]="img" [removable]="true" (removed)="onRemove(img,imageTypes.Old)">
                         </ngx-dropzone-image-preview>
                     </div>
                 </ng-container>

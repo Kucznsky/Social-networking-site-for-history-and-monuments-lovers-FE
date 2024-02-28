@@ -39,8 +39,6 @@ export class NewPostComponent {
 
   public createPost(): void {
     this.newPostFormGroup.controls['thumbnail'].setValue(this.thumbnail[0]);
-    // this.newPostFormGroup.controls['modernImages'].setValue(this.modernImages);
-    // this.newPostFormGroup.controls['oldImages'].setValue(this.modernImages);
     const userId = this.jwtService.getLoggedUsersId();
     if (this.newPostFormGroup.valid) {
       this.postService.createPost(
@@ -86,15 +84,12 @@ export class NewPostComponent {
   public onSelect(event, imageType: ImageType) {
     switch (imageType) {
       case ImageType.Thumbnail:
-        console.log(event);
         this.thumbnail.push(...event.addedFiles);
         break;
       case ImageType.Modern:
-        console.log(event);
         this.modernImages.push(...event.addedFiles);
         break;
       case ImageType.Old:
-        console.log(event);
         this.oldImages.push(...event.addedFiles);
         break;
     }
@@ -103,15 +98,12 @@ export class NewPostComponent {
   public onRemove(event, imageType: ImageType) {
     switch (imageType) {
       case ImageType.Thumbnail:
-        console.log(event);
         this.thumbnail.splice(this.thumbnail.indexOf(event), 1);
         break;
       case ImageType.Modern:
-        console.log(event);
         this.modernImages.splice(this.modernImages.indexOf(event), 1);
         break;
       case ImageType.Old:
-        console.log(event);
         this.oldImages.splice(this.oldImages.indexOf(event), 1);
         break;
     }

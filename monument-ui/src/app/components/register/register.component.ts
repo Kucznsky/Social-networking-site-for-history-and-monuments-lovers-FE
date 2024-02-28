@@ -24,17 +24,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   @ViewChild('openRegisterModalBtn') openRegisterModalBtn: ElementRef;
   @ViewChild('closeBtn') closeBtn: ElementRef;
 
-  //TODO add confirmPassword validation
-  // public registerFormGroup: FormGroup = new FormGroup({
-  //   userName: new FormControl<string>('', [Validators.required]),
-  //   email: new FormControl<string>('', [
-  //     Validators.required,
-  //     Validators.email,
-  //   ]),
-  //   password: new FormControl<string>('', [Validators.required]),
-  //   confirmPassword: new FormControl<string>('', [Validators.required]),
-  // }, confirmPasswordValidator);
-
   public errorMessage = '';
 
   public registerFormGroup: FormGroup = new FormGroup({

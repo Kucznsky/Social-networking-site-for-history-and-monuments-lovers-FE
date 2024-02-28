@@ -31,7 +31,6 @@ export class SearchComponent {
         searchBy: this.selectedOption,
         searchedPost: this.searchFormControl,
       },
-      // skipLocationChange: true,
     });
   }
 }
